@@ -69,15 +69,15 @@
 		<!--end:: Global Optional Vendors -->
 
 		<!--begin::Global Theme Styles(used by all pages) -->
-		<link href="{{ asset('assets/css/demo1/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Layout Skins(used by all pages) -->
-		<link href="{{ asset('assets/css/demo1/skins/header/base/light.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/css/demo1/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/css/demo1/skins/brand/dark.css" rel="stylesheet') }}" type="text/css" />
-		<link href="{{ asset('assets/css/demo1/skins/aside/dark.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/skins/header/base/light.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/skins/brand/dark.css" rel="stylesheet') }}" type="text/css" />
+		<link href="{{ asset('assets/css/skins/aside/dark.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
@@ -225,12 +225,12 @@
 		<!--end:: Global Optional Vendors -->
 
 		<!--begin::Global Theme Bundle(used by all pages) -->
-		<script src="{{ asset('assets/js/demo1/scripts.bundle.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/js/scripts.bundle.js') }}" type="text/javascript"></script>
 
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Scripts(used by this page) -->
-		<script src="{{ asset('assets/js/demo1/pages/login/login-general.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/js/pages/login/login-general.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 	</body>
