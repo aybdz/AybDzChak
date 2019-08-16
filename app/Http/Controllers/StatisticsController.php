@@ -10,6 +10,7 @@ use App\OrderDetail;
 use App\Credit;
 use App\Transaction;
 use App\User;
+use App\Client;
 
 use DB;
 use Auth;
@@ -21,6 +22,7 @@ class StatisticsController extends Controller
 	public $tranYesterday;
 	public $tranMonth;
 	public $tranWeek;
+	public $state;
 
 
     public function __construct()
@@ -38,10 +40,20 @@ class StatisticsController extends Controller
 
 		$users         = User::all();
 		$capital       = $this->getCapital();
+		$this->getOrderDetaills() ;
+		$this->getCapiteOfMonth() ;
+		$this->getCreditOfMonth() ;
+		$this->getClientDetaills() ;
+		$this->getCreditDetaills() ;
+		$this->getOrderOfMonth() ;
+		$this->getTransactionDetaills() ;
 		// recete par tt les admin ( utilisateur )
 		$this->getRecet($users);
 
-        return view('statistics')->with('capital',$capital)->with('users',$users)->with('transactions',$this->transactions)->with('tranYesterday',$this->tranYesterday)->with('tranWeek',$this->tranWeek)->with('tranMonth',$this->tranMonth);
+
+		$this->GetBenefitOfMonth();
+
+        return view('statistics')->with('state',$this->state)->with('capital',$capital)->with('users',$users)->with('transactions',$this->transactions)->with('tranYesterday',$this->tranYesterday)->with('tranWeek',$this->tranWeek)->with('tranMonth',$this->tranMonth);
         
     }
 
@@ -57,6 +69,7 @@ class StatisticsController extends Controller
     private function getCapital()
     {
 		$products = Product::all();
+		$this->state['productNbr'] = $products->count();
 		$somme    = 0;
     	foreach ($products as $product) {
     		$somme = $somme + $product->qty * $product->priceA;	
@@ -64,9 +77,92 @@ class StatisticsController extends Controller
     	return $somme;
     }
 
-    private function GetBenefit()
-    {
 
+    private function getOrderDetaills()
+    {
+		$orders = Order::all();
+		$this->state['ordersNbr'] = $orders->count();
+    }
+
+    private function getTransactionDetaills()
+    {
+		$transactions = Transaction::all();
+		$this->state['transactionNbr'] = $transactions->count();
+    }
+
+    private function getClientDetaills()
+    {
+		$clients = Client::all();
+		$this->state['clientNbr'] = $clients->count();
+    }
+
+    private function getCreditDetaills()
+    {
+		$credit = Client::sum('credit');
+		$this->state['CreditTotal'] = $credit;
+    }
+
+    private function getCapiteOfMonth()
+    {
+		$now                          = Carbon::now();
+		$from                         = $now->startOfMonth()->toDateString();
+		$to                           = $now->endOfMonth()->toDateString();
+		$amount                       = Transaction::whereBetween('created_at', [$from, $to])->sum('amount');
+		$this->state['CapiteOfMonth'] = $amount;
+    }
+
+    private function getCreditOfMonth()
+    {
+		$now                          = Carbon::now();
+		$from                         = $now->startOfMonth()->toDateString();
+		$to                           = $now->endOfMonth()->toDateString();
+		$amount                       = Credit::whereBetween('created_at', [$from, $to])->sum('staid');
+		$this->state['CreditOfMonth'] = $amount;
+    }
+
+    private function getOrderOfMonth()
+    {
+    	$now                       = Carbon::now();
+		$from                      = $now->startOfMonth()->toDateString();
+		$to                        = $now->endOfMonth()->toDateString();
+    	$count                     = Order::whereBetween('created_at', [$from, $to])->count();
+		$this->state['OrderOfMonth'] = $count;
+    }
+
+    private function GetBenefitOfMonth()
+    {
+		$now                          = Carbon::now();
+		$from                         = $now->startOfMonth()->toDateString();
+		$to                           = $now->endOfMonth()->toDateString();
+		$OrderSample                  = Order::where('idClient','0')->whereBetween('created_at', [$from, $to])->get();
+		$OrderClient                  = Order::where('idClient','!=','0')->whereBetween('created_at', [$from, $to])->get();
+		$this->state['benefitSample'] = $this->calculateBenefitSample($OrderSample);
+		$this->state['benefitClient'] = $this->calculateBenefitClient($OrderClient);
+		
+    }
+
+    private function calculateBenefitSample($orders)
+    {
+    	$benefit = 0;
+    	foreach ($orders as $order) {
+    		foreach ($order->OrderDetail as $orderDetail) {
+    			$benefit = $benefit + ($orderDetail->priceV - $orderDetail->priceA) * $orderDetail->qty ;
+    		}
+    	}
+    	return $benefit;
+    }
+
+    private function calculateBenefitClient($orders)
+    {
+    	$benefit = 0;
+    	foreach ($orders as $order) {
+    		$somme   = 0;
+    		foreach ($order->OrderDetail as $orderDetail) {
+    			$somme = $somme + ($orderDetail->priceA * $orderDetail->qty) ;
+    		}
+    		$benefit = $benefit + ($order->Credit->paid - $somme);
+    	}
+    	return $benefit;
     }
 
     private function getRecet($users)

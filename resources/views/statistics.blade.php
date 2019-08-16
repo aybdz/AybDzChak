@@ -265,37 +265,224 @@
 							<div class="kt-widget12__content">
 								<div class="kt-widget12__item">
 									<div class="kt-widget12__info">
-										<span class="kt-widget12__desc">Capital</span>
-										<span class="kt-widget12__value">DA {{$capital}}</span>
+										<span class="kt-widget12__desc">Recettes :</span>
+										<span class="kt-widget12__value">{{$state['CapiteOfMonth']}} DA </span>
 									</div>
 									<div class="kt-widget12__info">
-										<span class="kt-widget12__desc">Finance Review Date</span>
-										<span class="kt-widget12__value">July 24,2019</span>
+										<span class="kt-widget12__desc">à partir de la Date :</span>
+										<span class="kt-widget12__value">{{Carbon\Carbon::now()->startOfMonth()->toDateString()}}</span>
 									</div>
 								</div>
 								<div class="kt-widget12__item">
 									<div class="kt-widget12__info">
-										<span class="kt-widget12__desc">Avarage Revenue</span>
-										<span class="kt-widget12__value">$60M</span>
+										<span class="kt-widget12__desc">Gagner :</span>
+										<span class="kt-widget12__value">{{$state['benefitSample']+$state['benefitClient']}} DA </span>
 									</div>
 									<div class="kt-widget12__info">
-										<span class="kt-widget12__desc">Revenue Margin</span>
-										<div class="kt-widget12__progress">
-											<div class="progress kt-progress--sm">
-												<div class="progress-bar kt-bg-brand" role="progressbar" style="width: 40%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-											</div>
-											<span class="kt-widget12__stat">
-												40%
-											</span>
-										</div>
+										<span class="kt-widget12__desc">Commandes :</span>
+										<span class="kt-widget12__value">{{$state['OrderOfMonth']}}</span>
 									</div>
 								</div>
+								
 							</div>	
 						</div>
 					</div>
 				</div>
 
 				<!--end:: Widgets/Order Statistics-->
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="kt-portlet">
+				<div class="kt-portlet__body  kt-portlet__body--fit">
+					<div class="row row-no-padding row-col-separator-xl">
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::Total Profit-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Total 
+										</h4>
+										<span class="kt-widget24__desc">
+											Capital
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-brand">
+										{{$capital}}DA
+									</span>
+								</div>
+							</div>
+
+							<!--end::Total Profit-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Feedbacks-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Produis
+										</h4>
+										<span class="kt-widget24__desc">
+											Nombre de produis
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-warning">
+										{{$state['productNbr']}}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Feedbacks-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Orders-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Commande
+										</h4>
+										<span class="kt-widget24__desc">
+											Nombre de commandes
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-danger">
+										{{$state['ordersNbr']}}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Orders-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Users-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Clients
+										</h4>
+										<span class="kt-widget24__desc">
+											Nombre de client
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-success">
+										{{$state['clientNbr'] }}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Users-->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="kt-portlet">
+				<div class="kt-portlet__body  kt-portlet__body--fit">
+					<div class="row row-no-padding row-col-separator-xl">
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::Total Profit-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Credit
+										</h4>
+										<span class="kt-widget24__desc">
+											Total Credit
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-brand">
+										{{$state['CreditTotal']}} DA
+									</span>
+								</div>
+							</div>
+
+							<!--end::Total Profit-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Feedbacks-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Transaction
+										</h4>
+										<span class="kt-widget24__desc">
+											Nombre de Transactions
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-warning">
+										{{$state['transactionNbr']}}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Feedbacks-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Orders-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											Nombre de commandes
+										</h4>
+										<span class="kt-widget24__desc">
+											Fresh Order Amount
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-danger">
+										{{$state['ordersNbr']}}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Orders-->
+						</div>
+						<div class="col-md-12 col-lg-6 col-xl-3">
+
+							<!--begin::New Users-->
+							<div class="kt-widget24">
+								<div class="kt-widget24__details">
+									<div class="kt-widget24__info">
+										<h4 class="kt-widget24__title">
+											New Users
+										</h4>
+										<span class="kt-widget24__desc">
+											Joined New User
+										</span>
+									</div>
+									<span class="kt-widget24__stats kt-font-success">
+										{{$state['clientNbr'] }}
+									</span>
+								</div>
+								
+							</div>
+
+							<!--end::New Users-->
+						</div>
+					</div>
+					
+				</div>
 			</div>
 		</div>
 
