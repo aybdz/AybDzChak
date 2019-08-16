@@ -26,7 +26,6 @@ class Controller extends BaseController
     public function dashboard()
     {
     	if (Auth::check()) {
-            
             $clients = Client::all();
             return view('welcome')->with('clients',$clients);
         }else{
