@@ -101,7 +101,7 @@
 							</div>
 							<div class="kt-login__signin">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Sign In To Admin</h3>
+									<h3 class="kt-login__title"> Admin</h3>
 								</div>
 								<form  method="POST" action="{{ URL('/login') }}">
 									{{ csrf_field() }}
