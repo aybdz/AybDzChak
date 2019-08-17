@@ -138,15 +138,15 @@
                                             <tr data-row="0" id="tr'.{{$order->id}}.'" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->hash}}</strong></label>
+                                                        <label ><strong>{{$order->hash}}</strong></label>
                                                     </span>
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                         @if($order->client == null)
-                                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>Commande sample</strong></label>
+                                                            <label><strong>Commande sample</strong></label>
                                                         @else
-                                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->client->name}}</strong></label>
+                                                            <label><strong>{{$order->client->name}}</strong></label>
                                                         @endif
                                                     </span>
                                                 </td>
@@ -157,12 +157,12 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->total.' DA'}} </strong></label>
+                                                        <label><strong>{{$order->total.' DA'}} </strong></label>
                                                     </span>
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->created_at}} </strong></label>
+                                                        <label><strong>{{$order->created_at}} </strong></label>
                                                     </span>
                                                 </td>
                                                 <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
