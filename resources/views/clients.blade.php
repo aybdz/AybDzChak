@@ -136,7 +136,7 @@
                                             <tr data-row="0" id="tr'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">
+                                                        <label >
                                                             <strong>
                                                                 <a href="{{ url('client/'.$client->id) }}">{{$client->hash}}</a>
                                                             </strong>
@@ -145,21 +145,19 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">
+                                                        <label >
                                                             <strong>
                                                                 <a href="{{ url('client/'.$client->id) }}">{{$client->name}}</a>
                                                             </strong>
                                                         </label>
                                                     </span>
                                                 </td>
-                                                <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span >
+                                                <td data-field="ShipDate" class="kt-datatable__cell">
                                                         <span class="kt-font-bold">{{$client->telephonne}} </span>
-                                                    </span>
                                                 </td>
-                                                <td class="kt-datatable__cell" >
+                                                <td class="kt-datatable__cell" style="text-align:center;" >
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$client->credit .' DA'}} </strong></label>
+                                                        <label><strong>{{$client->credit .' DA'}} </strong></label>
                                                     </span>
                                                 </td>
                                                 <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
