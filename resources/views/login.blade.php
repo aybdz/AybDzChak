@@ -30,7 +30,7 @@
 
 		
 		<!--begin::Page Vendors Styles(used by this page) -->
-		<link href="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/pages/general/login/login-2.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Page Vendors Styles -->
 
@@ -88,43 +88,62 @@
 	<!-- begin::Body -->
 	<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
 
-		<!-- begin:: Page -->
-		<div class="kt-grid kt-grid--ver kt-grid--root">
-			<div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v4 kt-login--signin" id="kt_login">
-				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url({{ asset('assets/media/bg/bg-2.jpg') }});">
+
+			<!-- begin:: Page -->
+			<div class="kt-grid kt-grid--ver kt-grid--root">
+			<div class="kt-grid kt-grid--hor kt-grid--root kt-login kt-login--v2 kt-login--signin" id="kt_login">
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url({{ asset('assets/media/bg/bg-1.jpg') }});">
 					<div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
 						<div class="kt-login__container">
 							<div class="kt-login__logo">
 								<a href="#">
-									<img src="{{ asset('assets/media/logos/logo-5.png')}}">
+									<img src="{{ asset('assets/media/logos/logo-mini-2-md.png') }}">
 								</a>
 							</div>
 							<div class="kt-login__signin">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title"> Admin</h3>
+									<h3 class="kt-login__title">Connecter Vous</h3>
 								</div>
-								<form  method="POST" action="{{ URL('/login') }}">
+								<form class="kt-form" method="POST" action="{{ URL('/login') }}">
 									{{ csrf_field() }}
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Nom d'utilistaeur " name="username" autocomplete="off">
 									</div>
 									<div class="input-group">
-										<input class="form-control" type="password" placeholder="Password" name="password">
+									<input class="form-control" type="password" placeholder="Mot de passe" name="password">
 									</div>
 									<div class="row kt-login__extra">
-		                                <div class="form-check">
-		                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-		                                    <label class="form-check-label" for="remember">
-		                                        {{ __('Remember Me') }}
-		                                    </label>
-		                                </div>
+										<div class="col">
+											<label class="kt-checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
+												<input type="checkbox" for="remember"  > Rester Connecté ?
+												<span></span>
+											</label>
+										</div>
+										<div class="col kt-align-right">
+											<a href="javascript:;" id="kt_login_forgot" class="kt-link kt-login__link">Mot de passe oublier ?</a>
+										</div>
 									</div>
 									<div class="kt-login__actions">
-										<button  class="btn btn-brand btn-pill kt-login__btn-primary">Sign In</button>
+										<button type="submite" class="btn btn-pill kt-login__btn-primary">Connecter</button>
 									</div>
 								</form>
 							</div>
+							<div class="kt-login__forgot">
+								<div class="kt-login__head">
+									<h3 class="kt-login__title">Mot de passe oublier ?</h3>
+									<div class="kt-login__desc">Taper votre email pour changer votre mor de passe:</div>
+								</div>
+								<form class="kt-form" action="">
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="Votre email" name="email" id="kt_email" autocomplete="off">
+									</div>
+									<div class="kt-login__actions">
+										<button id="kt_login_forgot_submit" class="btn btn-pill kt-login__btn-primary">Envoyer</button>&nbsp;&nbsp;
+										<button id="kt_login_forgot_cancel" class="btn btn-pill kt-login__btn-secondary">Annuler</button>
+									</div>
+								</form>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -132,6 +151,10 @@
 		</div>
 
 		<!-- end:: Page -->
+
+
+
+
 
 		<!-- begin::Global Config(global config for global JS sciprts) -->
 		<script>
