@@ -334,9 +334,11 @@
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="{{ asset('assets/js/pages/login/login-general.js') }}" type="text/javascript"></script>
 
+        <!--begin::Page Scripts(used by this page) -->
+		<script src="{{ asset('assets/js//pages/crud/metronic-datatable/base/html-table.js') }}" type="text/javascript"></script>
 		
-		<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-		<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+		<!--<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>-->
+		<!--<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>-->
 		<!--end::Page Scripts -->
 </body>
 </html>
