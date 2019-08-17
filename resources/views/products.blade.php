@@ -244,7 +244,6 @@
 												<th title="Field #5">Qty</th>
 												<th title="Field #6">Servir par</th>
 												<th title="Field #7">Actions</th>
-                                                <th title="Field #8" >date</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -321,8 +320,6 @@
                                                         </div>
                                                     </span>
                                                     </td>
-
-                                                <td>date</td>
     											</tr>
                                             @endforeach 
 										</tbody>
