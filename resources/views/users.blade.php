@@ -111,11 +111,11 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="kt-portlet__body kt-portlet__body--fit">
+                   <div class="kt-portlet__body">
                         <!--begin: Datatable -->
                         <div class=" kt-portlet__body kt-portlet__body--fit">
                             <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-                                <table class=" kt-datatable__table" id="userTable" >
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="userTable" >
                                     <thead class="kt-datatable__head coll">
                                         <tr class="kt-datatable__row" style="left: 0px;">
                                             <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">

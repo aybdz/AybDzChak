@@ -111,7 +111,7 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="kt-portlet__body">
                         <!--begin: Datatable -->
                         <div class=" kt-portlet__body kt-portlet__body--fit">
                             <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">

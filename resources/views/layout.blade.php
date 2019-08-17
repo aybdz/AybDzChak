@@ -81,6 +81,9 @@
   
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 		<link rel="stylesheet" href="{{asset('css/dataTables.bootstrap.min.css')}}">
+
+		<!--begin::Page Vendors Styles(used by this page) -->
+		<link href="{{asset('assets/vendors/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 	
 	@yield('styles')
 
@@ -337,8 +340,15 @@
         <!--begin::Page Scripts(used by this page) -->
 		<script src="{{ asset('assets/js//pages/crud/metronic-datatable/base/html-table.js') }}" type="text/javascript"></script>
 		
-		<!--<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>-->
-		<!--<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>-->
+
+
+		<!--begin::Page Vendors(used by this page) -->
+		<script src="{{ asset('assets/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
+
+		<!--end::Page Vendors -->
+
+		<!--begin::Page Scripts(used by this page) -->
+		<script src="{{ asset('assets/js/pages/crud/datatables/basic/headers.js') }}" type="text/javascript"></script>
 		<!--end::Page Scripts -->
 </body>
 </html>
