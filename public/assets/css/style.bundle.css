@@ -33683,3 +33683,37 @@ body {
       .kt-footer .kt-footer__menu .kt-footer__menu-link:first-child {
         padding-left: 0;
         margin-left: 0; } }
+
+
+/** Style added **/
+
+.kt-widget__subhead h3 {
+  font-size: 20px;
+  color: #6c7293;
+  line-height:24px;
+}
+.kt-widget__subhead>h3.col-4.credit-c {
+  color: #fd397a;
+      font-size: 22px;
+      font-weight: 600;
+    }
+.kt-widget__subhead i {
+  padding-right: 5px;
+  font-size: 22px;
+  color: #5d78ff;
+}
+.btn-pop-footer{
+    border-top: 1px solid #ebedf2;
+    margin-top: 2rem;
+    padding-top: 20px;
+  }
+  a#cmdConfirmation {
+    color: #fff;
+}
+.labelforcommand {
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+  color: #6c7293;
+  font-weight: 500;
+}
