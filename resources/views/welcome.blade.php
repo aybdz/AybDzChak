@@ -200,7 +200,7 @@
 											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
 												<td class="kt-datatable__cell" data-field="RecordID">
 													<span style="width: 150px;">
-														<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">{{$product->id}}</label>
+														<label class="">{{$product->id}}</label>
 													</span>
 												</td>
 												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">
@@ -266,7 +266,9 @@
 		</div>
 
 		<!--End::Section-->
-    </div>
+	</div>
+	
+
      <!--begin::Modal-->
     <div class="modal fade" id="addItemClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -301,12 +303,12 @@
 		                                <tr data-row="0" id="tr'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
 		                                    <td class="kt-datatable__cell" data-field="RecordID">
 		                                        <span >
-		                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$client->hash}}</strong></label>
+		                                            <label class=""><strong>{{$client->hash}}</strong></label>
 		                                        </span>
 		                                    </td>
 		                                    <td class="kt-datatable__cell" data-field="RecordID">
 		                                        <span >
-		                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$client->name}}</strong></label>
+		                                            <label class=""><strong>{{$client->name}}</strong></label>
 		                                        </span>
 		                                    </td>
 		                                    <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
@@ -316,7 +318,7 @@
 		                                    </td>
 		                                    <td class="kt-datatable__cell" >
 		                                        <span >
-		                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$client->credit .' DA'}} </strong></label>
+		                                            <label class=""><strong>{{$client->credit .' DA'}} </strong></label>
 		                                        </span>
 		                                    </td>
 		                                    <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
@@ -352,13 +354,12 @@
 								<div class="kt-widget__top">
 									<div class="kt-widget__content">
 										<div class="kt-widget__head">
-											<h1 href="#" class="kt-widget__username" id="ClientName" >
-												
-											</h1>
+											
 										</div>
-										<div class="kt-widget__subhead">
-											<h3 href="#"  id="ClientCredit"></h3>
-											<h3 href="#" id="ClientPhone"></h3>
+										<div class="row kt-widget__subhead">
+										    <h3 class="col-4" href="#"  id="ClientName" ></h3>
+											<h3 class="col-4" href="#" id="ClientPhone"></h3>
+											<h3 class="col-4 credit-c" href="#"  id="ClientCredit"></h3>
 										</div>
 									</div>
 								</div>
@@ -366,34 +367,47 @@
 									<br>
 									<form class="form-inline">
 										<input type="hidden" id="IdClient">
-									  <label class="sr-only" for="totalCmd">Total :</label>
-									  <div class="input-group  mr-sm-2 col-lg-3">
+
+									<div class="col-lg-4">
+									<div class="labelforcommand" for="totalCmd">Total</div>
+									  <div class="input-group">
+									  <input type="text" class="form-control" id="totalCmd" disabled="disabled">
 									    <div class="input-group-prepend">
 									      <div class="input-group-text">DA</div>
 									    </div>
-									    <input type="text" class="form-control" id="totalCmd" disabled="disabled">
 									  </div>
-									  <label class="sr-only" for="verse">Versé</label>
-									  <div class="input-group  mr-sm-2 col-lg-3">
-									    <div class="input-group-prepend">
-									      <div class="input-group-text">DA</div>
-									    </div>
-									    <input type="text" class="form-control" id="verse" >
-									  </div>
+									</div>
 									  
-									  <label class="sr-only" for="reste">Reste</label>
-									  <div class="input-group  mr-sm-2 col-lg-3">
+									<div class="col-lg-4">
+									<div class="labelforcommand" for="verse">Versement</div>
+									  <div class="input-group">
+									  <input type="text" class="form-control" placeholder="Versement" id="verse" >
 									    <div class="input-group-prepend">
 									      <div class="input-group-text">DA</div>
 									    </div>
+									  </div>
+                                    </div>
+									  
+
+									<div class="col-lg-4">
+									  <div class="labelforcommand">Restant</div>
+									  <div class="input-group">
 									    <input type="text" class="form-control" id="reste" disabled="disabled" >
-									  </div>
-									  
+									    <div class="input-group-prepend">
+									      <div class="input-group-text">DA</div>
+									    </div>
+									   </div>
+									</div>
+
 									</form>
-									<a rel="nofollow"  id="cmdConfirmation" class="btn btn-lg btn-brand"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a>
+									
 								</div>
 							</div>
+							<div class=" text-center btn-pop-footer">
+						<a rel="nofollow"  id="cmdConfirmation" class="btn btn-small btn-brand col-6"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a></div>
 						</div>
+						
+						
 					</div>
                 </div>
             </div>
@@ -535,11 +549,11 @@
 
  		$('.addToModel').on('click', function () {
  			$('#ClientName').empty();
- 			$('#ClientName').append($(this).data('name')+' <i class="flaticon2-correct"></i>');
+ 			$('#ClientName').append(' <i class="la la-user"></i>'+$(this).data('name'));
  			$('#ClientPhone').empty();
- 			$('#ClientPhone').append('<i class="flaticon2-phone"></i> '+$(this).data('phone'));
+ 			$('#ClientPhone').append('<i class="la la-phone"></i> '+$(this).data('phone'));
  			$('#ClientCredit').empty();
- 			$('#ClientCredit').append('<i class="flaticon-coins"></i> '+$(this).data('credit')+' DA');
+ 			$('#ClientCredit').append('<i class="la la-money"></i> '+$(this).data('credit')+' DA');
  			$('#totalCmd').val($('#totalCartVal').val());
  			$('#reste').val($('#totalCartVal').val());
  			$('#IdClient').val($(this).data('id'))
