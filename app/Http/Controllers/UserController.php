@@ -124,8 +124,11 @@ class UserController extends Controller
     	if (!Auth::check()) {
     		return view('login');
     	}
-    	$user = User::findOrFail($id);
-    	return view('user')->with('user',$user);
+        
+        $user        = User::findOrFail($id);
+        $tc          = new TransactionController();
+        $Trasactions = $tc->getUserTransaction($id);
+    	return view('user')->with('user',$user)->with('Trasactions',$Trasactions);
     }
 
     

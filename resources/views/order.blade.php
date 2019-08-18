@@ -125,14 +125,15 @@
                                   @endif
                                 </strong>
                                 <strong class="kt-widget3__status kt-font-info  col-xl-3">
-                                    Total : {{$orders[0]->Order->total}} DA
+                                    Total-acheter : {{$orders[0]->Order->total}},00 DA
                                 </strong>
+                                @if($orders[0]->Order->Credit != null)
                                  <strong class="kt-widget3__status kt-font-info  col-xl-3">
-                                    pay : {{$orders[0]->Order->Credit->paid}} DA
+                                    verser : {{$orders[0]->Order->Credit->paid}},00  DA
                                 </strong> <strong class="kt-widget3__status kt-font-info col-xl-3">
-                                    reste : {{$orders[0]->Order->Credit->staid}} DA
-                                   
+                                    restant  : {{$orders[0]->Order->Credit->staid}},00  DA
                                 </strong>
+                                @endif
                             </div>
                         </div>
                         <div class="kt-widget3__body">
@@ -214,7 +215,7 @@
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                        
-                                                            <label ><strong>{{$order->priceV}}</strong></label>
+                                                            <label ><strong>{{$order->priceV}},00 DA</strong></label>
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
@@ -224,7 +225,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                       <strong>{{$order->priceV*$order->qty.' DA'}} </strong>
+                                                       <strong>{{$order->priceV*$order->qty.',00  DA'}} </strong>
                                                     </span>
                                                 </td>
                                                 <td class="kt-datatable__cell" >

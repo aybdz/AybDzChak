@@ -12,6 +12,10 @@ class Transaction extends Model
 	    return $this->belongsTo('App\Client', 'idClient', 'id');
 	}
 
+	public function Credit(){
+	    return $this->belongsTo('App\Credit', 'idCredit', 'id');
+	}
+
 	public function Order(){
 	    return $this->hasOne('App\Order', 'id', 'idOrder');
 	}

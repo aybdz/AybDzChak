@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $products = Product::all();
+            $products = Product::orderBy('created_at', 'desc')->get();
             return view('products')->with('products',$products);
         }else{
             return view('login');

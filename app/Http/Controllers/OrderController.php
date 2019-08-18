@@ -32,7 +32,7 @@ class OrderController extends Controller
         if (!Auth::check()) {
             return view('login');
         }
-        $orders = Order::all();
+        $orders = Order::orderBy('id', 'desc')->get();
         return view('orders')->with('orders',$orders);
     }
 

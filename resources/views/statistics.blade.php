@@ -150,7 +150,9 @@
 											<div class="kt-widget31__content">
 												<div class="kt-widget12__info">
 													<h5 class="kt-widget31__username">
+														<a href="{{ url('user/'.$val['idUser']) }}">
 														{{$val['name'].' ( '.$val['userName'].' ) '}}
+														</a>
 													</h5>
 												</div>
 											</div>
@@ -161,7 +163,7 @@
 													</div>
 												</div>
 												<div class="kt-widget12__info">												
-													<h5 class="kt-widget31__username">{{$val['amount']}} DA</h5>
+													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
@@ -175,7 +177,9 @@
 											<div class="kt-widget31__content">
 												<div class="kt-widget12__info">
 													<h5 class="kt-widget31__username">
+														<a href="{{ url('user/'.$val['idUser']) }}">
 														{{$val['name'].' ( '.$val['userName'].' ) '}}
+														</a>
 													</h5>
 												</div>
 											</div>
@@ -186,7 +190,7 @@
 													</div>
 												</div>
 												<div class="kt-widget12__info">												
-													<h5 class="kt-widget31__username">{{$val['amount']}} DA</h5>
+													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
@@ -200,7 +204,9 @@
 											<div class="kt-widget31__content">
 												<div class="kt-widget12__info">
 													<h5 class="kt-widget31__username">
+														<a href="{{ url('user/'.$val['idUser']) }}">
 														{{$val['name'].' ( '.$val['userName'].' ) '}}
+														</a>
 													</h5>
 												</div>
 											</div>
@@ -211,7 +217,7 @@
 													</div>
 												</div>
 												<div class="kt-widget12__info">												
-													<h5 class="kt-widget31__username">{{$val['amount']}} DA</h5>
+													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
@@ -225,7 +231,9 @@
 											<div class="kt-widget31__content">
 												<div class="kt-widget12__info">
 													<h5 class="kt-widget31__username">
+														<a href="{{ url('user/'.$val['idUser']) }}">
 														{{$val['name'].' ( '.$val['userName'].' ) '}}
+														</a>
 													</h5>
 												</div>
 											</div>
@@ -236,7 +244,7 @@
 													</div>
 												</div>
 												<div class="kt-widget12__info">												
-													<h5 class="kt-widget31__username">{{$val['amount']}} DA</h5>
+													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
@@ -266,7 +274,7 @@
 								<div class="kt-widget12__item">
 									<div class="kt-widget12__info">
 										<span class="kt-widget12__desc">Recettes :</span>
-										<span class="kt-widget12__value">{{$state['CapiteOfMonth']}} DA </span>
+										<span class="kt-widget12__value">{{$state['CapiteOfMonth']}}.00 DA</span>
 									</div>
 									<div class="kt-widget12__info">
 										<span class="kt-widget12__desc">à partir de la Date :</span>
@@ -276,7 +284,7 @@
 								<div class="kt-widget12__item">
 									<div class="kt-widget12__info">
 										<span class="kt-widget12__desc">Gagner :</span>
-										<span class="kt-widget12__value">{{$state['benefitSample']+$state['benefitClient']}} DA </span>
+										<span class="kt-widget12__value">{{$state['benefitSample']+$state['benefitClient']}}.00 DA  </span>
 									</div>
 									<div class="kt-widget12__info">
 										<span class="kt-widget12__desc">Commandes :</span>
@@ -311,7 +319,7 @@
 										</span>
 									</div>
 									<span class="kt-widget24__stats kt-font-brand">
-										{{$capital}}DA
+										{{$capital}}.00 DA 
 									</span>
 								</div>
 							</div>
@@ -407,7 +415,7 @@
 										</span>
 									</div>
 									<span class="kt-widget24__stats kt-font-brand">
-										{{$state['CreditTotal']}} DA
+										{{$state['CreditTotal']}}.00 DA 
 									</span>
 								</div>
 							</div>

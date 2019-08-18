@@ -143,6 +143,63 @@
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
+                                Trasactions
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="container kt-portlet__body kt-portlet__body--fit">
+                        <!--begin: Datatable -->
+                            <div class="table-responsive">
+                                <table class="table " id="trasactionTable" >
+                                    <thead >
+                                        <tr >
+                                            <th >#</th>
+                                            <th >Type</th>
+                                            <th >Montant</th>
+                                            <th >Client</th>
+                                            <th >Credit</th>
+                                            <th >Commande</th>
+                                            <th >Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody  >
+                                        @foreach($Trasactions as $Trasaction)
+                                            <tr >
+                                                <td >{{$Trasaction->hash}}</td>
+                                                <td >{{$Trasaction->type}}</td>
+                                                <td ><h4>{{$Trasaction->amount}} DA</h4></td>
+                                                @if($Trasaction->idClient != '0')
+                                                <td><a href="{{ url('client/'.$Trasaction->idClient) }}">{{$Trasaction->Client->hash}}</a></td>
+                                                @else
+                                                <td>Pas un client</td>
+                                                @endif
+                                                @if($Trasaction->idCredit != '0')
+                                                <td><a href="{{ url('credit/'.$Trasaction->idCredit) }}">{{$Trasaction->idCredit}}</a></td>
+                                                @else
+                                                <td>Pas un Credit</td>
+                                                @endif
+                                                @if($Trasaction->idOrder != '0')
+                                                <td><a href="{{ url('order/'.$Trasaction->idOrder) }}">{{$Trasaction->Order->hash}}</a></td>
+                                                @else
+                                                <td>Pas une Commande</td>
+                                                @endif
+                                                <td >{{$Trasaction->created_at}}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        <!--end: Datatable -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
                                 Stock
                             </h3>
                         </div>
@@ -364,6 +421,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#userTable').DataTable();
+        $('#trasactionTable').DataTable();
+        $('#updateTable').DataTable();
     });
 </script>
 <script type="text/javascript">

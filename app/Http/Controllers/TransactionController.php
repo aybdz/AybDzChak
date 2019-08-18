@@ -92,6 +92,12 @@ class TransactionController extends Controller
         return $token;
     }
 
+    public function getUserTransaction($id)
+    {
+        $transactions = Transaction::where('idUser',$id)->orderBy('created_at', 'desc')->get();
+        return $transactions;
+    }
+
 
     /**
      * Show the form for creating a new resource.

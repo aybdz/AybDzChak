@@ -556,7 +556,37 @@
               headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
               success:function(data){
                 if(!data.err){
-					$('#tabProduct').load(' #tabProduct');
+                	var cart = $.map(data.product, function(value, index) {
+					    return [value];
+					});
+                	$('#tabProduct').empty();
+                	var op = '';
+                	var source = "{!! asset('image/') !!}";
+                	for(var i =0;i<cart.length;i++)
+                	{
+                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+						op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+						op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].id+'</label></span></td>'
+						op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+						op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+						op += '<div class="kt-user-card-v2__details">'                                
+						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+						op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
+						op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" id="pQty'+cart[i].rowId+'"></div></td>'
+						op += '<td data-field="Type" class="kt-datatable__cell"><span style="width: 200px;">'
+						op += '<div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'							
+						op += '<div class="kt-badge kt-badge--xl kt-badge--brand">{{(Auth::user()->name)[0]}}           </div></div>'				
+						op += '<div class="kt-user-card-v2__details">'			
+						op += '<a class="kt-user-card-v2__name" href="#">{{Auth::user()->name}}</a>'	
+						op += '<span class="kt-user-card-v2__desc">Admin</span></div></div></span></td>'
+						op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+						op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+						op += '<a href="#"  onclick="delete_Product('+cart[i].rowId+')"   class="btn btn-danger btn-elevate btn-circle btn-icon" >'
+						op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+                	}
+					$('#tabProduct').append(op);
+					//$('#tabProduct').load(' #tabProduct');
 					$('#totalCart').load(' #totalCart');   
                 }else{
                 	if (data.message=='stock')

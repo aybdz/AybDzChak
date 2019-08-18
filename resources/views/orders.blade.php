@@ -165,40 +165,11 @@
                                                         <label><strong>{{$order->created_at}} </strong></label>
                                                     </span>
                                                 </td>
-                                                <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span style="overflow: visible; position: relative;  " >
-                                                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="flaticon-more-1"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-md dropdown-menu-fit">
-                                                            <!--begin::Nav-->
-                                                            <ul class="kt-nav">
-                                                                <li class="kt-nav__head">
-                                                                    Export Options
-                                                                    <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
-                                                                </li>
-                                                                <li class="kt-nav__separator"></li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="#"  id="add{{$order->id}}" data-id="{{$order->id}}" data-hash ="{{$order->hash}}" data-adress="{{$order->adress}}" data-name="{{$order->name}}" data-telephonne="{{$order->telephonne}}"  class="kt-nav__link editClient" data-toggle="modal" data-target="#kt_modal_5">
-                                                                        <i class="kt-nav__link-icon flaticon2-edit"></i>
-                                                                        <span class="kt-nav__link-text">Modifier</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="#"  onclick="delete_Client({{$order->id}})"   class="kt-nav__link" >
-                                                                        <i class="kt-nav__link-icon flaticon2-delete"></i>
-                                                                        <span class="kt-nav__link-text">Supprimé</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="{{ url('order/'.$order->id) }}"    class="kt-nav__link" >
-                                                                        <i class="kt-nav__link-icon flaticon2-add-1"></i>
-                                                                        <span class="kt-nav__link-text">More Details</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </span>
+                                                <td >
+                                                    <a href="{{ url('order/'.$order->id) }}"    class="kt-nav__link" >
+                                                        <i class="kt-nav__link-icon flaticon2-add-1"></i>
+                                                        <span class="kt-nav__link-text">More Details</span>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
