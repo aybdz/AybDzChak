@@ -117,17 +117,22 @@
                                 <img class="kt-widget3__img" src="./assets/media/users/user1.jpg" alt="">
                             </div>
                             <div class="kt-widget3__info ">
-                                <strong  class="kt-font-info kt-widget3__username">
+                                <strong  class="kt-font-info kt-widget3__username col-xl-3">
                                   @if($orders[0]->Order->Client != null)
                                     Nom & prénom : {{$orders[0]->Order->Client->name}}
                                   @else
                                     Type : commande sample
                                   @endif
                                 </strong>
-                            <strong class="kt-widget3__status kt-font-info pull-right">
-                                Total : {{$orders[0]->Order->total}} DA
-                            </strong>
-
+                                <strong class="kt-widget3__status kt-font-info  col-xl-3">
+                                    Total : {{$orders[0]->Order->total}} DA
+                                </strong>
+                                 <strong class="kt-widget3__status kt-font-info  col-xl-3">
+                                    pay : {{$orders[0]->Order->Credit->paid}} DA
+                                </strong> <strong class="kt-widget3__status kt-font-info col-xl-3">
+                                    reste : {{$orders[0]->Order->Credit->staid}} DA
+                                   
+                                </strong>
                             </div>
                         </div>
                         <div class="kt-widget3__body">
@@ -209,7 +214,7 @@
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                        
-                                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->priceV}}</strong></label>
+                                                            <label ><strong>{{$order->priceV}}</strong></label>
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
@@ -219,12 +224,12 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->priceV*$order->qty.' DA'}} </strong></label>
+                                                       <strong>{{$order->priceV*$order->qty.' DA'}} </strong>
                                                     </span>
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$order->created_at}} </strong></label>
+                                                        <strong>{{$order->created_at}} </strong>
                                                     </span>
                                                 </td>
                                             </tr>
