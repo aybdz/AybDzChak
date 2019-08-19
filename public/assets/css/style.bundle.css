@@ -33717,3 +33717,45 @@ body {
   color: #6c7293;
   font-weight: 500;
 }
+
+/** commande detail style**/
+.kt-widget3__user-img {
+  display: inline-block;
+}
+
+.kt-user-card__name {
+  display: inline-block;
+}
+
+.container.kt-widget3__item {
+  padding-bottom: 20px;
+}
+
+h3.kt-portlet__head-title.commande-head {
+  color: #ffffff !important;
+}
+
+strong.commande-header-profil {
+  padding-left: 10px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+p.command-prix {
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 100;
+}
+
+p.command-prix strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+p.command-prix.total strong {
+  color: #3fc7d1;
+  font-size: 18px;
+}
