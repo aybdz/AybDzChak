@@ -106,6 +106,11 @@
 								</div>
 								<form class="kt-form" method="POST" action="{{ URL('/login') }}">
 									{{ csrf_field() }}
+									@if($status = Session::get('statuslogin'))
+										<div class="alert alert-danger" role="alert">
+										  {{ $status}}
+										</div>
+									@endif
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Nom d'utilistaeur " name="username" autocomplete="off">
 									</div>

@@ -541,7 +541,7 @@
             });
  		})
 
- 		$('#verse').on('mouseut, keyup ,change',function () {
+ 		$('#verse').on('mouseout, keyup ,change',function () {
  			var tc = $('#totalCartVal').val();
  			var t = tc.replace(",", "");
  			$('#reste').val(parseFloat(t)-parseFloat($('#verse').val()));
@@ -560,7 +560,7 @@
  			$('#closeAddItemClient').click();
  		})
         $('#addClientTable').DataTable();
-	  	$('#bareCode').on("mouseut, keyup ",delay(function(){
+	  	$('#bareCode').on("mouseout, keyup ",delay(function(){
 	  		var id = $('#bareCode').val();
 	 		$.ajax({
               type: "POST",
@@ -587,7 +587,7 @@
 						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 						op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
 						op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" id="pQty'+cart[i].rowId+'"></div></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" id="pQty'+cart[i].rowId+'"></div></td>'
 						op += '<td data-field="Type" class="kt-datatable__cell"><span style="width: 200px;">'
 						op += '<div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'							
 						op += '<div class="kt-badge kt-badge--xl kt-badge--brand">{{(Auth::user()->name)[0]}}           </div></div>'				
@@ -600,6 +600,10 @@
 						op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
                 	}
 					$('#tabProduct').append(op);
+					for(var i =0;i<cart.length;i++)
+                	{
+                		$("#pQty"+cart[i].rowId ).addClass( "pQty" )
+                	}
 					//$('#tabProduct').load(' #tabProduct');
 					$('#totalCart').load(' #totalCart');   
                 }else{
@@ -632,43 +636,42 @@
 	  };
 	}
  	
- 	$('.pQty').on('mouseut, keyup ',function () {
+	 	$('.pQty').on('mouseout , keyup ',function () {
+			var id  = $(this).data('id');
+			var qty = $(this).val();
+			if (qty != '') {
+		 		$.ajax({
+		          type: "POST",
+		          url: "{{URL::to('/addCartStock') }}",
+		          dataType: "json",
+		          data:{'id':id, 'qty':qty},
+		          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		          success:function(data){
+		          	console.log(data)
+		            if(data.err){
+		            	if (data.message=='stock')
+		            	{
+		            		swal.fire(
+		                        'Eroor',
+		                        "le produit ñ est plus dans le stock (max = "+data.qty+" )",
+		                        'error'
+		                    )
+		                    $("#pQty"+id).val(data.cQty);
+		            	}else{
+		            		swal.fire(
+			                    'Eroor',
+			                    "une erreur s'est produite veuillez réessayer svp.",
+			                    'error'
+			                )
+		            	}
+		            }else{
 
-		var id  = $(this).data('id');
-		var qty = $(this).val();
-		if (qty != '') {
-	 		$.ajax({
-	          type: "POST",
-	          url: "{{URL::to('/addCartStock') }}",
-	          dataType: "json",
-	          data:{'id':id, 'qty':qty},
-	          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	          success:function(data){
-	          	console.log(data)
-	            if(data.err){
-	            	if (data.message=='stock')
-	            	{
-	            		swal.fire(
-	                        'Eroor',
-	                        "le produit ñ est plus dans le stock (max = "+data.qty+" )",
-	                        'error'
-	                    )
-	                    $("#pQty"+id).val(data.cQty);
-	            	}else{
-	            		swal.fire(
-		                    'Eroor',
-		                    "une erreur s'est produite veuillez réessayer svp.",
-		                    'error'
-		                )
-	            	}
-	            }else{
-
-						$('#totalCart').load(' #totalCart');   
-	            }
-	          }
-	    	})
-    	}
- 	})
+							$('#totalCart').load(' #totalCart');   
+		            }
+		          }
+		    	})
+	    	}
+	 	})
 
  	function delete_Product(id) {
         swal.fire({

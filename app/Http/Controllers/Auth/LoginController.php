@@ -52,7 +52,7 @@ class LoginController extends Controller
             $this->middleware('guest:web');
             return redirect()->intended('dashboard');
         }else   {
-            return  redirect()->back()->with('statuslogin', 'veuillez vérifier  votre email ou mote de pass svp !'); 
+            return  redirect()->back()->with('statuslogin', 'veuillez vérifier  votre usermame ou mote de pass svp !'); 
         }
         
     }
