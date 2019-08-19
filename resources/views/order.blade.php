@@ -24,6 +24,7 @@
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
         </div>
+        <!-- end:: Subheader -->
         <div class="kt-subheader__toolbar">
             <div class="kt-subheader__wrapper">
                 <a href="#" class="btn kt-subheader__btn-primary">
@@ -99,91 +100,89 @@
         </div>
     </div>
 </div>
+<!--end::Nav menus-->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
-         <div class="row">
-            <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+         <div class="row ">
+            <div class="col ">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/command-profil.jpg') }}); background-position: bottom;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
+                            <h3 class="kt-portlet__head-title commande-head">
                                 Commande : {{$orders[0]->Order->hash}}
                             </h3>
                         </div>
+                        <div class="kt-portlet__head-label ">
+                            <h3 class="kt-portlet__head-title commande-head">
+                                Le : {{$orders[0]->Order->created_at}}
+                            </h3>
+                        </div>
+                        
                     </div>
                     <div class="container kt-widget3__item">
                         <div class="kt-widget3__header">
                             <div class="kt-widget3__user-img">
-                                <img class="kt-widget3__img" src="./assets/media/users/user1.jpg" alt="">
+                                <img class="kt-widget3__img" src="{{ asset('assets/media/users/default.jpg') }}" alt="">
                             </div>
-                            <div class="kt-widget3__info ">
-                                <strong  class="kt-font-info kt-widget3__username col-xl-3">
+
+                            <div class="kt-user-card__name">
+                             <p><strong  class="commande-header-profil">
                                   @if($orders[0]->Order->Client != null)
-                                    Nom & prénom : {{$orders[0]->Order->Client->name}}
+                                      {{$orders[0]->Order->Client->name}}
                                   @else
                                     Type : commande sample
                                   @endif
-                                </strong>
-                                <strong class="kt-widget3__status kt-font-info  col-xl-3">
-                                    Total-acheter : {{$orders[0]->Order->total}},00 DA
-                                </strong>
+                                </strong></p>
+
+                                <p><strong class="commande-header-profil">
+                                    {{$orders[0]->Order->Client->telephonne}}
+                                </strong></p>
+					        </div>
+
+                            <div class="kt-widget3__status kt-font-info pull-right">
+                                <p class="command-prix">
+                                    Total-acheter : <strong> {{$orders[0]->Order->total}},00 DA </strong>
+                                </p>
                                 @if($orders[0]->Order->Credit != null)
-                                 <strong class="kt-widget3__status kt-font-info  col-xl-3">
-                                    verser : {{$orders[0]->Order->Credit->paid}},00  DA
-                                </strong> <strong class="kt-widget3__status kt-font-info col-xl-3">
-                                    restant  : {{$orders[0]->Order->Credit->staid}},00  DA
-                                </strong>
+                                 <p class="command-prix">
+                                    Verser : <strong> {{$orders[0]->Order->Credit->paid}},00  DA </strong>
+                                </p> 
+                                <p class="command-prix total">
+                                    Restant  : <strong> {{$orders[0]->Order->Credit->staid}},00  DA </strong>
+                                </p>
                                 @endif
                             </div>
-                        </div>
-                        <div class="kt-widget3__body">
-                            <strong class="kt-widget3__text">
-                                
-                                <br>
-                                <strong class="kt-widget3__status kt-font-info">
-                                    Qty : {{$orders[0]->Order->qty}}
-                                </strong>
-                                <strong class="kt-widget3__status kt-font-info pull-right">
-                                    N° téléphonne : {{$orders[0]->Order->created_at}}
-                                </strong>
-                            </strong >
-                            <br><br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- begin table -->
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Commandes
-                            </h3>
-                        </div>
-                    </div>
+                        <br>
                     <div class="container">
                         <!--begin: Datatable -->
                                 <table class="table table-striped table-bordered" id="userTable"  style="width:100%">
                                     <thead >
                                         <tr >
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >#</span>
+                                                <span >Commande num°</span>
                                             </th>
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Produit</span>
+                                                <span >Nom de produit</span>
                                             </th>
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Prix</span>
+                                                <span >Prix d'uniter</span>
                                             </th>
-                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Qty</span></th>
+                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Quantité</span></th>
                                             <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Total</span></th>
+                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Prix total</span></th>
                                             
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Date & Heure</span>
+                                                <span >Date de transaction</span>
                                             </th>
                                         </tr>
                                     </thead>
@@ -192,7 +191,7 @@
                                             <tr data-row="0" id="tr'.{{$order->id}}.'" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>
+                                                        <label><strong>
                                                         @if($order->Product == null)
                                                             le produit a été supprimé
                                                         @else
@@ -203,7 +202,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>
+                                                        <label><strong>
                                                         @if($order->Product == null)
                                                             le produit a été supprimé
                                                         @else
