@@ -108,14 +108,10 @@
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/command-profil.jpg') }}); background-position: bottom;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title commande-head">
                                 Commande : {{$orders[0]->Order->hash}}
-                            </h3>
                         </div>
                         <div class="kt-portlet__head-label ">
-                            <h3 class="kt-portlet__head-title commande-head">
                                 Le : {{$orders[0]->Order->created_at}}
-                            </h3>
                         </div>
                         
                     </div>
@@ -126,7 +122,7 @@
                             </div>
 
                             <div class="kt-user-card__name">
-                             <p><strong  class="commande-header-profil">
+                             <p><strong  class="commande-header-profil name-st">
                                   @if($orders[0]->Order->Client != null)
                                       {{$orders[0]->Order->Client->name}}
                                   @else
