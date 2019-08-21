@@ -33721,6 +33721,7 @@ body {
 /** commande detail style**/
 .kt-widget3__user-img {
   display: inline-block;
+  vertical-align: top;
 }
 
 .kt-user-card__name {
@@ -33758,4 +33759,15 @@ p.command-prix strong {
 p.command-prix.total strong {
   color: #3fc7d1;
   font-size: 18px;
+}
+
+/*Client detail */
+.client-btn-st {
+  float: right;
+  padding: 0px 0px 40px 50px;
+}
+.commande-header-profil.name-st{
+  color: #3fc7d1;
+  font-weight: 500;
+font-size: 16px;
 }
