@@ -99,22 +99,48 @@
         </div>
     </div>
 </div>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+
+ <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
-        <div class="row">
-            <div class="col-xl-12">
+          <div class="row ">
+            <div class="col ">
                 @if(isset($err) && $err)
                     <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
                 @endif
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/command-profil.jpg') }}); background-position: bottom;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Utilisateur : {{$Client->hash}}
-                            </h3>
                         </div>
-                        <div class="kt-portlet__head-toolbar">
-                            <div class="dropdown dropdown-inline">
+                        <div class="kt-portlet__head-label ">
+                        Utilisateur : {{$Client->hash}}
+                        </div>
+                    </div>
+
+                    <div class="container kt-widget3__item">
+                        <div class="kt-widget3__header">
+
+                            <div class="kt-widget3__user-img">
+                                <img class="kt-widget3__img" src="{{ asset('image/client/'.$Client->img) }}" alt="">
+                            </div>
+
+                            <div class="kt-user-card__name">
+
+                             <p><strong  class="commande-header-profil name-st">
+                                 {{$Client->name}}
+                                </strong></p>
+
+                                <p><strong  class="commande-header-profil">
+                                {{$Client->telephonne}}
+                                </strong></p>
+
+                                <p><strong class="commande-header-profil">
+                                {{$Client->adress}}
+                                </strong></p>
+
+					        </div>
+
+                            <div class="kt-widget3__status kt-font-info pull-right">
+                            <div class="client-btn-st">
                                 <?php $disabled = ""; ?>
                                 @if(0 == (int)$Client->credit )
                                     <?php $disabled = "disabled"; ?>
@@ -123,39 +149,23 @@
                                     <i class="flaticon-coins"></i> Verser
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="container kt-widget3__item">
-                        <div class="kt-widget3__header">
-                           
-                            <div class="kt-widget3__info ">
-                                <strong  class="kt-font-info kt-widget3__username">
-                                  Nom & prénom : {{$Client->name}}
-                                </strong>
-
-                            <strong class="kt-widget3__status kt-font-info pull-right">
-                                Crédit : {{$Client->credit}} DA
-                            </strong>
-
+                            <div class="client-st">
+                                <p class="command-prix total">
+                                 Crédit : <strong>  {{$Client->credit}} ,00  DA </strong>
+                                </p></div>
                             </div>
-                        </div>
-                        <div class="kt-widget3__body">
-                            <strong class="kt-widget3__text">
-                                
-                                <br>
-                                <strong class="kt-widget3__status kt-font-info">
-                                    Adress : {{$Client->adress}}
-                                </strong>
-                                <strong class="kt-widget3__status kt-font-info pull-right">
-                                    N° téléphonne : {{$Client->telephonne}}
-                                </strong>
-                            </strong >
-                            <br><br>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+
+
+
+
+
+
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
