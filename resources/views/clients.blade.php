@@ -133,7 +133,7 @@
                                     </thead>
                                     <tbody class="kt-datatable__body ps ps--active-y" >
                                         @foreach($clients as $client)
-                                            <tr data-row="0" id="tr'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
+                                            <tr data-row="0" id="rowClient'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                         <label >
@@ -278,7 +278,7 @@
                                 'error'
                             )
                         }else{
-                            $('#tr'+id).remove();
+                            $('#rowClient'+id).remove();
                             swal.fire(
                                 'Supprimé!',
                                 "Le Client a été supprimé.",

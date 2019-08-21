@@ -122,7 +122,7 @@
                     <div class="container kt-widget3__item">
                         <div class="kt-widget3__header">
                             <div class="kt-widget3__user-img">
-                                <img class="kt-widget3__img" src="{{ asset('assets/media/users/default.jpg') }}" alt="">
+                                <img class="kt-widget3__img" src="{{ asset('image/client/'.$orders[0]->Order->Client->img) }}" alt="">
                             </div>
 
                             <div class="kt-user-card__name">

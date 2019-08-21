@@ -6,6 +6,7 @@ use App\Client;
 use Illuminate\Http\Request;
 
 use Auth;
+use DB;
 
 class ClientController extends Controller
 {
@@ -52,7 +53,7 @@ class ClientController extends Controller
         $client->idUser     = Auth::user()->id;
         $save               = $client->save();
         if ($save) {
-            $err = false;
+            $err     = false;
         }
         return response()->json($err);
     }
@@ -118,7 +119,16 @@ class ClientController extends Controller
             $Client->adress     = $request->adress;
             $Client->telephonne = $request->telephonne;
             $save               = $Client->save();
-            if ($save) {
+            /*if ($save) {
+                if($request->file('photo')!= null){
+                $imageName   = $client->id . '.' . $request->file('photo')->getClientOriginalExtension();
+                $request->file('photo')->move(base_path() . '/public/image/client/', $imageName);
+                $client->img = $imageName ;
+                $save        = $client->save();
+                if ($save) {
+                    $err     = false;
+                }
+            }*/
                 $err = false;
             }
         }

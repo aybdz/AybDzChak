@@ -240,7 +240,7 @@
 												</td>
 												<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">
 													<span style="overflow: visible; position: relative; width: 80px; " >
-														<a href="#"  onclick="delete_Product('{{$product->rowId}}')"   class="btn btn-danger btn-elevate btn-circle btn-icon" >
+														<a href="#"     class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" data-rowid="{{$product->rowId}}" >
 															<i class="kt-nav__link-icon flaticon-delete"></i>
 														</a>
 								                    </span>
@@ -587,7 +587,7 @@
 						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 						op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
 						op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" id="pQty'+cart[i].rowId+'"></div></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 						op += '<td data-field="Type" class="kt-datatable__cell"><span style="width: 200px;">'
 						op += '<div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'							
 						op += '<div class="kt-badge kt-badge--xl kt-badge--brand">{{(Auth::user()->name)[0]}}           </div></div>'				
@@ -596,14 +596,10 @@
 						op += '<span class="kt-user-card-v2__desc">Admin</span></div></div></span></td>'
 						op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
 						op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-						op += '<a href="#"  onclick="delete_Product('+cart[i].rowId+')"   class="btn btn-danger btn-elevate btn-circle btn-icon" >'
+						op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
 						op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
                 	}
 					$('#tabProduct').append(op);
-					for(var i =0;i<cart.length;i++)
-                	{
-                		$("#pQty"+cart[i].rowId ).addClass( "pQty" )
-                	}
 					//$('#tabProduct').load(' #tabProduct');
 					$('#totalCart').load(' #totalCart');   
                 }else{
@@ -636,7 +632,7 @@
 	  };
 	}
  	
-	 	$('.pQty').on('mouseout , keyup ',function () {
+	 	$('body').on('mouseout, keyup ,blur,change','.pQty',function () {
 			var id  = $(this).data('id');
 			var qty = $(this).val();
 			if (qty != '') {
@@ -673,8 +669,10 @@
 	    	}
 	 	})
 
- 	function delete_Product(id) {
-        swal.fire({
+ 	
+ 	$('body').on('click','.deletePrduct',function () {
+        var id  = $(this).data('rowid');
+ 		swal.fire({
             title: 'Êtes-vous sûr?',
             text: "Vous ne pourrez pas revenir en arrière!",
             type: 'warning',
@@ -720,6 +718,8 @@
 
             }
         });
-    }
+ 	})
+        
+    
  </script>
 @endsection
