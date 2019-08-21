@@ -119,8 +119,8 @@ class ClientController extends Controller
             $Client->adress     = $request->adress;
             $Client->telephonne = $request->telephonne;
             $save               = $Client->save();
-            /*if ($save) {
-                if($request->file('photo')!= null){
+            if ($save) {
+             /*   if($request->file('photo')!= null){
                 $imageName   = $client->id . '.' . $request->file('photo')->getClientOriginalExtension();
                 $request->file('photo')->move(base_path() . '/public/image/client/', $imageName);
                 $client->img = $imageName ;
