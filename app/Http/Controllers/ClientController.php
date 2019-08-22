@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use DB;
+use File;
 
 class ClientController extends Controller
 {
@@ -110,6 +111,23 @@ class ClientController extends Controller
         return $token;
     }
 
+    public function editClientImg(Request $request)
+    {
+        $client = Client::findOrFail($request->id);
+        if($client != null){
+            if($request->file('photo')!= null){
+                $imageName   = $client->id . '.' . $request->file('photo')->getClientOriginalExtension();
+                $request->file('photo')->move(base_path() . '/public/image/client/', $imageName);
+                $client->img = $imageName ;
+                $save        = $client->save();
+                if ($save) {
+                    $err     = false;
+                }
+            }
+        }
+        return redirect()->back();
+    }
+
     public function editClient(Request $request)
     {
         $err = true;
@@ -133,6 +151,11 @@ class ClientController extends Controller
             }
         }
         return response()->json($err);
+    }
+
+    public function updateImgClient(Request $request)
+    {
+        
     }
 
     public function removeClient(Request $request)

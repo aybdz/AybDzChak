@@ -49,6 +49,7 @@ Route::middleware('web')->group(function () {
 	Route::get('/clients', 'ClientController@index')->name('clients');
 	Route::post('/addClient', 'ClientController@addClient')->name('addClient');
 	Route::post('/editClient', 'ClientController@editClient')->name('editClient');
+	Route::post('/editClientImg', 'ClientController@editClientImg')->name('editClientImg');
 	Route::post('/deleteClient', 'ClientController@removeClient')->name('deleteClient');
 	Route::get('/client/{id}', 'ClientController@showClient')->name('Client');
 
