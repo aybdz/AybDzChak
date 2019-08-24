@@ -70,6 +70,17 @@ Route::middleware('web')->group(function () {
 	// statistics
 	Route::get('/statistics','StatisticsController@ShowStatistics')->name('statistics');
 
-	// statistics
+	// Providers route
+	Route::get('/providers', 'ProviderController@index')->name('providers');
+	Route::post('/addProvider', 'ProviderController@addProvider')->name('addProvider');
+	Route::post('/editProviderStatus', 'ProviderController@editProviderStatus')->name('editProviderStatus');
+	Route::get('/provider/{id}', 'ProviderController@showProvider')->name('provider');
+	/*Route::post('/editClient', 'ClientController@editClient')->name('editClient');
+	Route::post('/editClientImg', 'ClientController@editClientImg')->name('editClientImg');
+	Route::post('/deleteClient', 'ClientController@removeClient')->name('deleteClient');
+	Route::get('/client/{id}', 'ClientController@showClient')->name('Client');*/
+
+
+
 });
 
