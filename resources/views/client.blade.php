@@ -107,7 +107,7 @@
                 @if(isset($err) && $err)
                     <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
                 @endif
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/command-profil.jpg') }}); background-position: bottom;">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
                         </div>

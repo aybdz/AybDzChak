@@ -105,7 +105,7 @@
         <!--Begin::Section-->
          <div class="row ">
             <div class="col ">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/command-profil.jpg') }}); background-position: bottom;">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
                         <div class="kt-portlet__head-label">
                                 Commande : {{$orders[0]->Order->hash}}
@@ -117,8 +117,8 @@
                     </div>
                     <div class="container kt-widget3__item">
                         <div class="kt-widget3__header">
-                            <div class="kt-widget3__user-img">
-                                <img class="kt-widget3__img" src="{{ asset('image/client/'.$orders[0]->Order->Client->img) }}" alt="">
+                            <div class="kt-avatar kt-avatar--outline kt-avatar--circle">
+                                <img class="kt-avatar__holder" src="{{ asset('image/client/'.$orders[0]->Order->Client->img) }}" alt="">
                             </div>
 
                             <div class="kt-user-card__name">

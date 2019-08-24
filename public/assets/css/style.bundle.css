@@ -33771,3 +33771,17 @@ p.command-prix.total strong {
   font-weight: 500;
 font-size: 16px;
 }
+/*login */
+.kt-login.kt-login--v2 .kt-login__wrapper .kt-login__container .kt-form .form-control {
+  color: #fff;
+}
+/* image produit table */
+.kt-user-card-v2__pic {
+  width: 50px;
+  height: auto;
+  text-align: center;
+}
+/*header info member color*/
+.kt-portlet__head-label {
+  color: #cfd7ff;
+}
