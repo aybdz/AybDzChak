@@ -75,10 +75,8 @@ Route::middleware('web')->group(function () {
 	Route::post('/addProvider', 'ProviderController@addProvider')->name('addProvider');
 	Route::post('/editProviderStatus', 'ProviderController@editProviderStatus')->name('editProviderStatus');
 	Route::get('/provider/{id}', 'ProviderController@showProvider')->name('provider');
-	/*Route::post('/editClient', 'ClientController@editClient')->name('editClient');
-	Route::post('/editClientImg', 'ClientController@editClientImg')->name('editClientImg');
-	Route::post('/deleteClient', 'ClientController@removeClient')->name('deleteClient');
-	Route::get('/client/{id}', 'ClientController@showClient')->name('Client');*/
+	Route::get('/AddProvider/{id}', 'ProviderController@showIndex')->name('AddProvider');
+	Route::post('/StoreProvider', 'ProviderController@store')->name('StoreProvider');
 
 
 

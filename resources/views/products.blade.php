@@ -152,8 +152,8 @@
                                         <tbody>
                                             @foreach($products as $product)
                                                 <tr id="tr'.{{$product->id}}.'">
-                                                    <td>{{$product->bareCode}}</td>
-                                                    <td>
+                                                    <td class="text-center">{{$product->bareCode}}</td>
+                                                    <td class="text-center">
                                                         <div class="kt-user-card-v2"> 
                                                             <div class="kt-user-card-v2__pic">                                
                                                                 <img alt="photo" src=" {{ asset('image/'.$product->img) }}">                            
@@ -165,15 +165,15 @@
                                                         </div>
                                                     </td>
                                                     @if(Auth::user()->type == "su")
-                                                        <td>{{$product->priceA}} DA</td>
+                                                        <td class="text-center">{{$product->priceA}} DA</td>
                                                     @endif
-                                                    <td>{{$product->priceV}} DA</td>
-                                                    <td>
+                                                    <td class="text-center">{{$product->priceV}} DA</td>
+                                                    <td class="text-center">
                                                         <div class="kt-user-card-v2__details"> 
-                                                        <input class="form-control" style="width: 80px; text-align: center;"  type="text" value="{{$product->qty}}" id="pQty{{$product->id}}" disabled="disabled">
+                                                        <input class="form-control " style="width: 80px; text-align: center;"  type="text" value="{{$product->qty}}" id="pQty{{$product->id}}" disabled="disabled">
                                                         </div>
                                                     </td>
-                                                    <td> 
+                                                    <td class="text-center">  
                                                         <div class="kt-user-card-v2">                           
                                                             <div class="kt-user-card-v2__pic">                              
                                                                 <div class="kt-badge kt-badge--xl kt-badge--brand">{{($product->user->name)[0]}}</div>  
@@ -184,7 +184,7 @@
                                                             </div>                      
                                                         </div>
                                                     </td>
-                                                    <td > <span style="overflow: visible; position: relative;  " >
+                                                    <td class="text-center"> <span style="overflow: visible; position: relative;  " >
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="flaticon-more-1"></i>
                                                         </button>
@@ -195,12 +195,14 @@
                                                                     <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
                                                                 </li>
                                                                 <li class="kt-nav__separator"></li>
+                                                                @if(Auth::user()->type == "su")
                                                                 <li class="kt-nav__item">
-                                                                    <a id="add{{$product->id}}" onclick="add_Product({{$product->id}},{{$product->qty}})"  class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_5">
+                                                                    <a id="add{{$product->id}}" onclick="add_Product({{$product->id}},{{$product->qty}},{{$product->priceA}},'{{$product->priceV}}')"  class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_5">
                                                                         <i class="kt-nav__link-icon flaticon2-add-1"></i>
                                                                         <span class="kt-nav__link-text">Ajouter Au Stock</span>
                                                                     </a>
                                                                 </li>
+                                                                @endif
                                                                 <li class="kt-nav__item">
                                                                     <a href="#"  onclick="delete_Product({{$product->id}})"   class="kt-nav__link" >
                                                                         <i class="kt-nav__link-icon flaticon2-delete"></i>
@@ -215,7 +217,7 @@
                                                                 </li>
                                                                 <li class="kt-nav__item">
                                                                     <a href="{{ url('/details/'.$product->id) }}"  class="kt-nav__link">
-                                                                        <i class="kt-nav__link-icon  flaticon-visible"></i>
+                                                                        <i class="kt-nav__link-icon  flaticon-plus"></i>
                                                                         <span class="kt-nav__link-text">Plus de détails</span>
                                                                     </a>
                                                                 </li>
@@ -239,167 +241,12 @@
                         <!-- end:: Content -->
                         
 
-                        
-        <!--Begin::Section--
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Produits
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body kt-portlet__body--fit">
-                        <!--begin: Datatable --><!--
-                        <div class="kt-portlet__body kt-portlet__body--fit">
-                            <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-                                <table class="kt-datatable__table" id="productTable" >
-                                    <thead class="kt-datatable__head">
-                                        <tr class="kt-datatable__row" style="left: 0px;">
-                                            <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">#</span></th>
-                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Produit</span>
-                                            </th>
-                                            @if(Auth::user()->type == "su")
-                                                <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                    <span >Prix d'achat</span>
-                                                </th>
-                                            @endif
-                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Prix de vente</span></th>
-                                            <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span >Qty</span></th>
-                                            <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Servir par</span></th>
-                                            <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span >Actions</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="kt-datatable__body ps ps--active-y" >
-                                        @foreach($products as $product)
-                                            <tr data-row="0" id="tr'.{{$product->id}}.'" class="kt-datatable__row" style="left: 0px;">
-                                                <td class="kt-datatable__cell" data-field="RecordID">
-                                                    <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$product->bareCode}}</strong></label>
-                                                    </span>
-                                                </td>
-                                                <td data-field="ShipName" data-autohide-disabled="false" style="text-align: center;" class="kt-datatable__cell">
-                                                    <span >                        
-                                                        <div class="kt-user-card-v2"> 
-                                                            <div class="kt-user-card-v2__pic">                                
-                                                                <img alt="photo" src=" {{ asset('image/'.$product->img) }}">                            
-                                                            </div>                            
-                                                            <div class="kt-user-card-v2__details">                                
-                                                                <div class="kt-user-card-v2__name">{{$product->name}}
-                                                                </div>                                
-                                                            </div>                        
-                                                        </div>
-                                                    </span>
-                                                </td>
-                                                @if(Auth::user()->type == "su")
-                                                    <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
-                                                        <span >
-                                                            <span class="kt-font-bold">{{$product->priceA}} DA</span>
-                                                        </span>
-                                                    </td>
-                                                @endif
-                                                <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span >
-                                                        <span class="kt-font-bold">{{$product->priceV}} DA</span>
-                                                    </span>
-                                                </td>
-                                                <td data-field="Status" class="kt-datatable__cell">
-                                                    <div class="kt-user-card-v2__details"> 
-                                                        <input class="form-control" style="width: 80px; text-align: center;"  type="text" value="{{$product->qty}}" id="pQty{{$product->id}}" disabled="disabled">
-                                                    </div>
-                                                </td>
-                                                <td data-field="Type" class="kt-datatable__cell">
-                                                    <span >
-                                                        <div class="kt-user-card-v2">                           
-                                                            <div class="kt-user-card-v2__pic">                              
-                                                                <div class="kt-badge kt-badge--xl kt-badge--brand">{{($product->user->name)[0]}}</div>  
-                                                            </div>                          
-                                                            <div class="kt-user-card-v2__details">                              
-                                                                <a class="kt-user-card-v2__name" href="#">{{$product->user->name}}</a>  
-                                                                <span class="kt-user-card-v2__desc">Admin</span>        
-                                                            </div>                      
-                                                        </div>
-                                                    </span>
-                                                </td>
-                                                <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span style="overflow: visible; position: relative;  " >
-                                                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="flaticon-more-1"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-md dropdown-menu-fit">
-                                                            <!--begin::Nav--><!--
-                                                            <ul class="kt-nav">
-                                                                <li class="kt-nav__head">
-                                                                    Export Options
-                                                                    <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
-                                                                </li>
-                                                                <li class="kt-nav__separator"></li>
-                                                                <li class="kt-nav__item">
-                                                                    <a id="add{{$product->id}}" onclick="add_Product({{$product->id}},{{$product->qty}})"  class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_5">
-                                                                        <i class="kt-nav__link-icon flaticon2-add-1"></i>
-                                                                        <span class="kt-nav__link-text">Ajouter Au Stock</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="#"  onclick="delete_Product({{$product->id}})"   class="kt-nav__link" >
-                                                                        <i class="kt-nav__link-icon flaticon2-delete"></i>
-                                                                        <span class="kt-nav__link-text">Supprimé</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="{{ url('/AddProduct/'.$product->id) }}"  class="kt-nav__link">
-                                                                        <i class="kt-nav__link-icon  flaticon-visible"></i>
-                                                                        <span class="kt-nav__link-text">Modifier</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="kt-nav__item">
-                                                                    <a href="{{ url('/details/'.$product->id) }}"  class="kt-nav__link">
-                                                                        <i class="kt-nav__link-icon  flaticon-visible"></i>
-                                                                        <span class="kt-nav__link-text">Plus de détails</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                                        </div>
-                                        <div class="ps__rail-y" style="top: 0px; height: 446px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 155px;"></div>
-                                        </div>
-                                    </tbody>
-                                </table>
-                                <div class="kt-datatable__pager kt-datatable--paging-loaded kt-align-right">
-                                    <div class="kt-datatable__pager-info">
-                                        <div class="col-lg-6 kt-align-right">
-                                            <button type="submit" class="btn btn-brand">Submit</button>
-                                            <span class="kt-margin-left-10">or <a href="#" class="kt-link kt-font-bold">Cancel</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <!--end: Datatable -->
-                       <!-- </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--End::Section-->
 
     </div>
-
-
+@if(Auth::user()->type = 'su')
     <!--begin::Modal-->
     <div class="modal fade" id="kt_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ajouter Au stock</h5>
@@ -409,21 +256,44 @@
                 <div class="modal-body">
                     <form>
                         <input type="hidden" class="form-control" id="idp">
-                        <div class="form-group" style="width: 80px;">
-                            <label for="recipient-name" class="form-control-label">Qty:</label>
+                        <div class="form-check form-check-inline" >
                             <input type="number" class="form-control" id="Qty"  disabled="disabled">
                         </div>
-                        +
-                        <div class="form-group" style="width: 80px;">
-                            <label for="recipient-name" class="form-control-label">Ajouter au stock:</label>
-                            <input type="number" class="form-control" id="addQty" min="1" >
+                        + 
+                        <div class="form-check form-check-inline" >
+                            <input type="number" class="form-control" id="addQty"  min="1" >
                         </div>
-                        <div class="form-group" style="width: 80px;">
-                            <label for="recipient-name" class="form-control-label">Qty:</label>
+                        =
+                        <div class="form-check form-check-inline" >
                             <input type="number" class="form-control" id="newQty"  disabled="disabled">
                         </div>
-
-                        
+                        <div class="form-group col-sm-5" >
+                            <label for="recipient-name" class="form-control-label">Qty:</label>
+                            <select class="form-control" id="idProvider">
+                                    <option value="0" selected="selected">aucun fournisseur</option>
+                                @foreach($providers as $provider)
+                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-5" >
+                                <label for="recipient-name" class="form-control-label">Prix d'achat:</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="prixA" id="prixA"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">DA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-5" >
+                                <label for="recipient-name" class="form-control-label">Prix d'vent:</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="prixV" id="prixV"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">DA</span>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -433,9 +303,77 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+     function add_Product(id,qty,priceA,priceV) {
+        $('#Qty').val("")
+        $('#idp').val("")
+        $('#prixA').val("")
+        $('#prixV').val("")
+        $('#addQty').val(1)
+        $('#newQty').val("")
+        $('#Qty').val(qty)
+        $('#prixA').val(priceA)
+        $('#prixV').val(priceV)
+        $('#Qty').attr({"min" : qty });
+        $('#idp').val(id)
+    }
 
+    $('#addStock').on( "click",function () {
+        var id         = $('#idp').val()
+        var qty        = $('#addQty').val()
+        var idProvider = $('#idProvider').val()
+        var prixA      = $('#prixA').val()
+        var prixV      = $('#prixV').val()
+        if(qty !="" && (prixA != '' && prixA != 0)){
+        $.ajax({
+              type: "POST",
+              url: "{{URL::to('/AddStock') }}",
+              dataType: "json",
+              data:{'id':id,
+                    'qty':qty,
+                    'idProvider':idProvider,
+                    'prixA':prixA,
+                    'prixV':prixV},
+              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+              success:function(data){
+                if(data){
+                    swal.fire(
+                        'Eroor',
+                        "une erreur s'est produite veuillez réessayer svp.",
+                        'error'
+                    )
+                }else{
+                    $('#pQty'+id).val($('#newQty').val())
+                    $('#closeModal').click();
+                    swal.fire(
+                        'Ajouter Stock',
+                        'le produit a éte bien mis a joure.',
+                        'success'
+                    )
+                }
+              }
+        })
+        }else{
+            swal.fire(
+                        'Eroor',
+                        "une erreur s'est produite veuillez réessayer svp.",
+                        'error'
+                    )
+        }
+    })
+
+    $("#addQty").on("change",function(){
+        var qty = $('#Qty').val();
+        $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
+    })
+
+    $("#addQty").on("mouseut, keyup ",function(){
+        var qty = $('#Qty').val();
+        $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
+    })
+</script>
     <!--end::Modal-->
-
+@endif
 <script type="text/javascript">
     $(document).ready(function() {
         $('#productTable').DataTable();
@@ -491,63 +429,7 @@
             });
     }
 
-    function add_Product(id,qty) {
-        $('#Qty').val("")
-        $('#idp').val("")
-        $('#addQty').val(1)
-        $('#newQty').val("")
-        $('#Qty').val(qty)
-        $('#Qty').attr({"min" : qty });
-        $('#idp').val(id)
-    }
-
-    $('#addStock').on( "click",function () {
-        if($('#addQty').val() !=""){
-        var id = $('#idp').val()
-        var qty = $('#addQty').val()
-        $.ajax({
-              type: "POST",
-              url: "{{URL::to('/AddStock') }}",
-              dataType: "json",
-              data:{'id':id,
-                    'qty':qty},
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success:function(data){
-                if(data){
-                    swal.fire(
-                        'Eroor',
-                        "une erreur s'est produite veuillez réessayer svp.",
-                        'error'
-                    )
-                }else{
-                    $('#pQty'+id).val($('#newQty').val())
-                    $('#closeModal').click();
-                    swal.fire(
-                        'Ajouter Stock',
-                        'le produit a éte bien mis a joure.',
-                        'success'
-                    )
-                }
-              }
-        })
-        }else{
-            swal.fire(
-                        'Eroor',
-                        "une erreur s'est produite veuillez réessayer svp.",
-                        'error'
-                    )
-        }
-    })
-
-    $("#addQty").on("change",function(){
-        var qty = $('#Qty').val();
-        $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
-    })
-
-    $("#addQty").on("mouseut, keyup ",function(){
-        var qty = $('#Qty').val();
-        $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
-    })
+   
     
 </script>
 @endsection

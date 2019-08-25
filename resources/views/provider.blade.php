@@ -120,27 +120,17 @@
                         <div class="kt-widget3__header">
 
                             <div class="kt-widget3__user-img">
-                                <form class="kt-form" method="POST" action="{{ url('/editproviderImg') }}" id="kt_apps_user_add_user_form" enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="id" id="id" value="{{$provider->id}}">
                                     <div class="form-group row">
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
                                                 <div class="kt-avatar__holder" style="background-image: url({{ asset('image/provider/'.$provider->img) }})"></div>
-                                                <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
-                                                    <i class="fa fa-pen"></i>
-                                                    <input type="file" name="photo" alt="Submit Form" required="required">
-                                                </label>
+                                            
                                                 <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
                                                     <i class="fa fa-times"></i>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group  text-center">
-                                        <input type="submit" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u center" value="Update">
-                                    </div>
-                                </form>
                             </div>
 
 

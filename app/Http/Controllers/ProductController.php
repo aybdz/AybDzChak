@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\provider;
 use App\Stock;
 use App\productUpdate;
 use Illuminate\Http\Request;
@@ -26,8 +27,9 @@ class ProductController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $products = Product::orderBy('created_at', 'desc')->get();
-            return view('products')->with('products',$products);
+            $products  = Product::orderBy('created_at', 'desc')->get();
+            $providers = Provider::all();
+            return view('products')->with('products',$products)->with('providers',$providers);
         }else{
             return view('login');
         }
@@ -158,7 +160,7 @@ class ProductController extends Controller
     public function removeProduct(Request $request)
     {
         $err = true;
-        $product = Product::findOrFail($request->id);
+        $product = Product::findOrFail($request->idp);
         if($product != null){
             if( $product->img != "noImg.png" ) {
                 $image_path = 'image/'.$product->img;  // Value is not URL but directory file path
@@ -177,26 +179,48 @@ class ProductController extends Controller
         $err = true;
         $product = Product::findOrFail($request->id);
         if($product != null){
-            $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id);
-            $product->qty = (int)$product->qty+(int)$request->qty;
-            $save         = $product->save();
-            if ($save) {
-                $err     = false;
-                $message = "le produit a éte bien mis a joure";
+            if ($product->priceA == (int)$request->prixA && $product->priceV == (int)$request->prixV) {
+                $product->qty = (int)$product->qty+(int)$request->qty;
+                $save         = $product->save();
+                $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
+                if ($save) {
+                    $err     = false;
+                    $message = "le produit a éte bien mis a joure";
+                }
+                $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
+            }else{
+                $newProduct           = new Product;
+                $newProduct->bareCode = $product->bareCode;
+                $newProduct->qty      = (int)$request->qty;
+                $newProduct->name     = $product->name ;
+                $newProduct->priceA   = $request->prixA ;
+                $newProduct->priceV   = $request->prixV ;
+                $newProduct->descp    = $product->descp ;
+                $newProduct->idUser   = Auth::user()->id;
+                $newProduct->img      = $product->img ;
+                $save                 = $newProduct->save();
+                if ($save) {
+                    $err     = false;
+                    $message = "le stock a été ajouté en tant que nouveau produit";
+                }
+                $this->stockStory(0,(int)$request->qty,$request->qty,$newProduct->id,$request->idProvider,"Ajouter tant que nouveau produit");
             }
+            
+            
         }
         return response()->json($err);
     }
 
-    public function stockStory($oldStock,$newStock,$stk,$idProduct)
+    public function stockStory($oldStock,$newStock,$stk,$idProduct,$IdProvider,$type="Ajouter au Stock")
     {
-        $stock            = new Stock();
-        $stock->type      = "Ajouter au Stock" ;
-        $stock->idUser    = Auth::user()->id ;
-        $stock->idProduct = $idProduct ;
-        $stock->oldQty    = $oldStock ;
-        $stock->newQty    = $newStock ;
-        $stock->Qty       = $stk;
+        $stock             = new Stock();
+        $stock->type       = $type ;
+        $stock->idUser     = Auth::user()->id ;
+        $stock->idProduct  = $idProduct ;
+        $stock->oldQty     = $oldStock ;
+        $stock->newQty     = $newStock ;
+        $stock->Qty        = $stk;
+        $stock->idProvider = $IdProvider;
         $stock->save();
     }
 

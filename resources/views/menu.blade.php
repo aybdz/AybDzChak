@@ -46,7 +46,7 @@
 				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/clients') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">Clients</span></a></li>
 
 				@if(Auth::user()->type == "su")
-				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/providers') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">Fournisseurs</span></a></li>
+				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/providers') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-shopping-cart-1"></i><span class="kt-menu__link-text">Fournisseurs</span></a></li>
 				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/statistics') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Statistiques</span></a></li>
 				@endif
 				

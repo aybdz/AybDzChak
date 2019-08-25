@@ -143,7 +143,7 @@
                                         <tbody>
                                             @foreach($providers as $provider)
                                                 <tr id="tr'.{{$provider->id}}.'">
-                                                    <td>
+                                                    <td ><a href="{{ url('/provider/'.$provider->id) }}">
                                                         <div class="kt-user-card-v2"> 
                                                             <div class="kt-user-card-v2__pic">                                
                                                                 <img alt="photo" src=" {{ asset('image/provider/'.$provider->img) }}">                            
@@ -152,7 +152,7 @@
                                                                 <div class="kt-user-card-v2__name">{{$provider->name}}
                                                                 </div>                                
                                                             </div>                        
-                                                        </div>
+                                                        </div></a>
                                                     </td>  
                                                     <td>
                                                         <div class="kt-user-card-v2__details">    
@@ -214,7 +214,7 @@
                                                                 </li>
                                                                 <li class="kt-nav__item">
                                                                     <a href="{{ url('/provider/'.$provider->id) }}"  class="kt-nav__link">
-                                                                        <i class="kt-nav__link-icon  flaticon-visible"></i>
+                                                                        <i class="kt-nav__link-icon  flaticon-plus"></i>
                                                                         <span class="kt-nav__link-text">Plus de détails</span>
                                                                     </a>
                                                                 </li>
