@@ -120,7 +120,7 @@
                                         <tr class="kt-datatable__row" style="left: 0px;">
                                             <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">UserName</span></th>
+                                                <label class="">UserName</span></th>
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >Nom & Prénom</span>
                                             </th>
@@ -132,12 +132,12 @@
                                     <tbody class="kt-datatable__body ps ps--active-y" >
                                         @foreach($users as $user)
                                             <tr data-row="0" id="tr'.{{$user->id}}.'" class="kt-datatable__row" style="left: 0px;">
-                                                <td class="kt-datatable__cell" data-field="RecordID">
+                                                <td class="kt-datatable__cell" data-field="RecordID" style="padding-left:20px;">
                                                     <span >
-                                                        <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><strong>{{$user->userName}}</strong></label>
+                                                        <label class=""><strong>{{$user->userName}}</strong></label>
                                                     </span>
                                                 </td>
-                                                <td data-field="ShipName" data-autohide-disabled="false" style="text-align: center;" class="kt-datatable__cell">
+                                                <td data-field="ShipName" data-autohide-disabled="false" style="padding-left:20px;" class="kt-datatable__cell">
                                                     <span >                        
                                                         <div class="kt-user-card-v2"> 
                                                                                  
@@ -148,10 +148,10 @@
                                                         </div>
                                                     </span>
                                                 </td>
-                                                <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span >
+                                                <td data-field="ShipDate" class="kt-datatable__cell" style="padding-left:20px;">
+                                                
                                                         <span class="kt-font-bold">{{$user->telephone}} </span>
-                                                    </span>
+                                                    
                                                 </td>
                                                 <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
                                                     <span style="overflow: visible; position: relative;  " >

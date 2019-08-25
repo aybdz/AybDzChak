@@ -33785,3 +33785,22 @@ font-size: 16px;
 .kt-portlet__head-label {
   color: #cfd7ff;
 }
+/* spacer style  */
+.spacer {
+height: 20px;
+display: block;
+width: 100%;
+}
+/* modal input */
+span.input-group-text.btn.btn-primary {
+  border-radius: 5px;
+}
+/*botton wide */
+.btn.btn-wide-2 {
+  padding-left: 4.25rem;
+  padding-right: 4.25rem;
+}
+/*modal footer style*/
+.modal-footer {
+  justify-content: center;
+}

@@ -246,37 +246,33 @@
 @if(Auth::user()->type = 'su')
     <!--begin::Modal-->
     <div class="modal fade" id="kt_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ajouter Au stock</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ajout de produits au stock</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <input type="hidden" class="form-control" id="idp">
-                        <div class="form-check form-check-inline" >
+                        <div class="row">
+                        <div class="form-check col-4" >
+                            <label for="recipient-name" class="form-control-label">Stock actuel</label>
                             <input type="number" class="form-control" id="Qty"  disabled="disabled">
                         </div>
-                        + 
-                        <div class="form-check form-check-inline" >
+                        <div class="form-check col-4" >
+                            <label for="recipient-name" class="form-control-label">Ajout au stock</label>
                             <input type="number" class="form-control" id="addQty"  min="1" >
                         </div>
-                        =
-                        <div class="form-check form-check-inline" >
+                        <div class="form-check col-4" >
+                            <label for="recipient-name" class="form-control-label">Stock total</label>
                             <input type="number" class="form-control" id="newQty"  disabled="disabled">
                         </div>
-                        <div class="form-group col-sm-5" >
-                            <label for="recipient-name" class="form-control-label">Qty:</label>
-                            <select class="form-control" id="idProvider">
-                                    <option value="0" selected="selected">aucun fournisseur</option>
-                                @foreach($providers as $provider)
-                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-5" >
+
+                        <div class="spacer"></div>
+
+                        <div class="form-check col-6" >
                                 <label for="recipient-name" class="form-control-label">Prix d'achat:</label>
                             <div class="input-group">
                                 <input type="number" class="form-control" name="prixA" id="prixA"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
@@ -285,7 +281,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-5" >
+
+                        <div class="form-check col-6" >
                                 <label for="recipient-name" class="form-control-label">Prix d'vent:</label>
                             <div class="input-group">
                                 <input type="number" class="form-control" name="prixV" id="prixV"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
@@ -294,11 +291,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="spacer"></div>
+
+
+                        <div class="form-check col-12" >
+                            <label for="recipient-name" class="form-control-label">Choisir un fournisseur:</label>
+                            <select class="form-control" id="idProvider">
+                                    <option value="0" selected="selected">aucun fournisseur</option>
+                                @foreach($providers as $provider)
+                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Close</button>
-                    <button type="button" id="addStock" class="btn btn-primary">Ajouter</button>
+                    <button type="button" class="btn btn-secondary btn-wide-2" id="closeModal" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="addStock" class="btn btn-primary btn-wide-2">Ajouter</button>
                 </div>
             </div>
         </div>
