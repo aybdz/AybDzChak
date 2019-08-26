@@ -60,6 +60,7 @@ Route::middleware('web')->group(function () {
 	Route::post('/confirmerCommande', 'OrderController@store');
 	Route::post('/ClientCommande', 'OrderController@storeForClient');
 	Route::post('/addCart', 'OrderController@addCart')->name('addCart');
+	Route::post('/addCartPlus', 'OrderController@addCartPlus')->name('addCartPlus');
 	Route::post('/addCartStock', 'OrderController@addCartStock')->name('addCartStock');
 	Route::post('/deleteItem', 'OrderController@deleteItem')->name('deleteItem');
 

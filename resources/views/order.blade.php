@@ -118,7 +118,10 @@
                     <div class="container kt-widget3__item">
                         <div class="kt-widget3__header">
                             <div class="kt-avatar kt-avatar--outline kt-avatar--circle">
+                                @if($orders[0]->Order->Client != null)
                                 <img class="kt-avatar__holder" src="{{ asset('image/client/'.$orders[0]->Order->Client->img) }}" alt="">
+                                @endif
+
                             </div>
 
                             <div class="kt-user-card__name">
@@ -131,7 +134,9 @@
                                 </strong></p>
 
                                 <p><strong class="commande-header-profil">
+                                    @if($orders[0]->Order->Client != null)
                                     {{$orders[0]->Order->Client->telephonne}}
+                                    @endif
                                 </strong></p>
 					        </div>
 
@@ -152,7 +157,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  
         <!-- begin table -->
         <div class="row">
             <div class="col">

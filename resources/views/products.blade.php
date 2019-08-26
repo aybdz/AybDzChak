@@ -304,6 +304,38 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="spacer"></div>
+
+                        <div class="form-check col-4" >
+                                <label for="recipient-name" class="form-control-label">Total :</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="totalProvider" id="totalProvider"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" disabled="disabled">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">DA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check col-4" >
+                                <label for="recipient-name" class="form-control-label">Verse :</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="verseProvider" id="verseProvider"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">DA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check col-4" >
+                                <label for="recipient-name" class="form-control-label">Reste :</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="resteProvider" id="resteProvider"aria-label="Amount (to the nearest dollar)" placeholder="00 DA" disabled="disabled">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">DA</span>
+                                </div>
+                            </div>
+                        </div>
+
                         
                         </div>
                     </form>
@@ -323,11 +355,18 @@
         $('#prixV').val("")
         $('#addQty').val(1)
         $('#newQty').val("")
+        $('#totalProvider').val("")
+        $('#verseProvider').val("")
+        $('#resteProvider').val("")
         $('#Qty').val(qty)
         $('#prixA').val(priceA)
         $('#prixV').val(priceV)
         $('#Qty').attr({"min" : qty });
         $('#idp').val(id)
+        $('#totalProvider').val(parseInt(priceA))
+        $('#verseProvider').val(0)
+        $('#resteProvider').val(parseInt(priceA))
+        $('#verseProvider').attr({"max" : parseInt(priceA) });
     }
 
     $('#addStock').on( "click",function () {
@@ -336,6 +375,8 @@
         var idProvider = $('#idProvider').val()
         var prixA      = $('#prixA').val()
         var prixV      = $('#prixV').val()
+        var total      = $('#totalProvider').val()
+        var verse      = $('#verseProvider').val()
         if(qty !="" && (prixA != '' && prixA != 0)){
         $.ajax({
               type: "POST",
@@ -345,7 +386,9 @@
                     'qty':qty,
                     'idProvider':idProvider,
                     'prixA':prixA,
-                    'prixV':prixV},
+                    'prixV':prixV,
+                    'total':total,
+                    'verse':verse},
               headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
               success:function(data){
                 if(data){
@@ -374,14 +417,33 @@
         }
     })
 
-    $("#addQty").on("change",function(){
-        var qty = $('#Qty').val();
+    $("#addQty").on("mouseout, keyup ,change",function(){
+        var qty     = $('#Qty').val();
+        var addqty  = $('#addQty').val();
+        var prixA   = $('#prixA').val();
+        var verse   = $('#verseProvider').val();
         $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
+        $('#totalProvider').val(parseInt(prixA) * parseInt(addqty))
+        $('#resteProvider').val((parseInt(prixA) * parseInt(addqty))- verse)
     })
 
-    $("#addQty").on("mouseut, keyup ",function(){
-        var qty = $('#Qty').val();
-        $('#newQty').val(parseInt(qty)+parseInt($('#addQty').val()))
+    $("#verseProvider").on("mouseout, keyup ,change",function(){
+        var addqty  = $('#addQty').val();
+        var prixA   = $('#prixA').val();
+        var verse   = $('#verseProvider').val();
+        var total   = parseInt(prixA) * parseInt(addqty);
+        if ( parseInt(verse) > total) {
+            $('#verseProvider').val('')
+            $('#verseProvider').val(total)
+            verse = total;
+            swal.fire(
+                    'Eroor',
+                    "attention le montant insert est supérieur de la commande ! ",
+                    'error'
+                )
+        }
+        $('#totalProvider').val(total)
+        $('#resteProvider').val(total- parseInt(verse))
     })
 </script>
     <!--end::Modal-->

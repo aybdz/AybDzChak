@@ -200,7 +200,7 @@
 											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
 												<td class="kt-datatable__cell" data-field="RecordID">
 													<span style="width: 150px;">
-														<label class="">{{$product->id}}</label>
+														<label class="">{{$product->options->bareCode}}</label>
 													</span>
 												</td>
 												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">
@@ -414,6 +414,40 @@
         </div>
     </div>
 
+     <!--begin::Modal-->
+    <div class="modal fade" id="modalMoreProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Liste des Produits</h5>
+                    <button type="button" class="close" id="closeModalMoreProduct" data-dismiss="modal" id="closeAddItemClient" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                	<!--begin: Datatable -->
+                    <div class=" kt-portlet__body kt-portlet__body--fit">
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
+		                    <table class=" kt-datatable__table" id="addClientTable" >
+		                        <thead class="kt-datatable__head coll">
+		                            <tr class="kt-datatable__row" >
+		                                <th >#</th>
+		                                <th >Produit</th>
+		                                <th >Prix</th>
+		                                <th >Qty</th>
+		                                <th >Actions</th>
+		                            </tr>
+		                        </thead>
+		                        <tbody class="kt-datatable__body ps ps--active-y" id="tabMoreProduct" >
+		                           
+		                        </tbody>
+		                    </table>
+		                </div>
+		            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<button type="button" id="moreBtn" data-toggle="modal" data-target="#modalMoreProduct" class="kt-nav__link" hidden>more</button>
     <!--end::Modal-->
  <script type="text/javascript">
  	
@@ -544,7 +578,16 @@
  		$('#verse').on('mouseout, keyup ,change',function () {
  			var tc = $('#totalCartVal').val();
  			var t = tc.replace(",", "");
- 			$('#reste').val(parseFloat(t)-parseFloat($('#verse').val()));
+ 			$('#reste').val();
+ 			 if ( parseInt(parseFloat(t)-parseFloat($('#verse').val())) < 0) {
+	            $('#verse').val('')
+	            $('#verse').val(t)
+	            swal.fire(
+                    'Eroor',
+                    "attention le montant insert est supérieur de la commande ! ",
+                    'error'
+                )
+	        }
  		})
 
  		$('.addToModel').on('click', function () {
@@ -569,7 +612,7 @@
               data:{'id':id},
               headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
               success:function(data){
-                if(!data.err){
+                if(!data.err ){
                 	var cart = $.map(data.product, function(value, index) {
 					    return [value];
 					});
@@ -602,8 +645,36 @@
 					$('#tabProduct').append(op);
 					//$('#tabProduct').load(' #tabProduct');
 					$('#totalCart').load(' #totalCart');   
+                }else if (data.err == 'more') {
+                	$('#tabMoreProduct').empty();
+                	var cart = $.map(data.product, function(value, index) {
+					    return [value];
+					});
+					var opm = '';
+                	var source = "{!! asset('image/') !!}";
+                	console.log(data.product)
+                	for(var i =0;i<cart.length;i++)
+                	{
+                		opm += '<tr  class="kt-datatable__row" style="left: 0px;">'
+						
+						opm += '<td >'+cart[i].bareCode+'</td>'
+						
+						opm += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+						opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'
+						opm += '<div class="kt-user-card-v2__details">'                                
+						opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+						
+						opm += '<td  ><span class="kt-font-bold">'+cart[i].priceV+'.00 DA</span></td>'
+						
+						opm += '<td ><input class="form-control pQty" style="width: 100px;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
+						
+						opm += '<td ><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'>'
+						opm += '<i class="kt-nav__link-icon flaticon2-add-1"></i></a></td></tr>';
+                	}
+					$('#tabMoreProduct').append(opm);
+					$('#moreBtn').click()
                 }else{
-                	if (data.message=='stock')
+                	if (data.message == 'stock')
                 	{
                 		swal.fire(
 	                        'Eroor',
@@ -620,6 +691,65 @@
 	 	},500)
 	  )
 	});
+	$('body').on('click','.addMorePrduct',function () {
+		var id = $(this).data('id');
+		$.ajax({
+              type: "POST",
+              url: "{{URL::to('/addCartPlus') }}",
+              dataType: "json",
+              data:{'id':id},
+              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+              success:function(data){
+                if(!data.err ){
+                	var cart = $.map(data.product, function(value, index) {
+					    return [value];
+					});
+                	$('#tabProduct').empty();
+                	var op = '';
+                	var source = "{!! asset('image/') !!}";
+                	for(var i =0;i<cart.length;i++)
+                	{
+                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+						op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+						op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+						op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+						op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+						op += '<div class="kt-user-card-v2__details">'                                
+						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+						op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
+						op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+						op += '<td data-field="Type" class="kt-datatable__cell"><span style="width: 200px;">'
+						op += '<div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'							
+						op += '<div class="kt-badge kt-badge--xl kt-badge--brand">{{(Auth::user()->name)[0]}}           </div></div>'				
+						op += '<div class="kt-user-card-v2__details">'			
+						op += '<a class="kt-user-card-v2__name" href="#">{{Auth::user()->name}}</a>'	
+						op += '<span class="kt-user-card-v2__desc">Admin</span></div></div></span></td>'
+						op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+						op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+						op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+						op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+                	}
+					$('#tabProduct').append(op);
+					//$('#tabProduct').load(' #tabProduct');
+					$('#totalCart').load(' #totalCart'); 
+					$('#closeModalMoreProduct').click();
+                }else{
+                	if (data.message == 'stock')
+                	{
+                		swal.fire(
+	                        'Eroor',
+	                        "le produit ñ est plus dans le stock",
+	                        'error'
+	                    )
+                	}
+                	
+                	
+                }
+                $('#bareCode').val("");
+              }
+        	})
+	})
 
 	function delay(callback, ms) {
 	  var timer = 0;

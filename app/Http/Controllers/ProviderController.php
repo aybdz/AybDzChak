@@ -79,7 +79,7 @@ class ProviderController extends Controller
         }
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         if (!(Auth::check())) {
             return view('login');
@@ -124,6 +124,33 @@ class ProviderController extends Controller
         return view('AddProvider')->with('id',$request->idp)->with("err",$err)->with("message",$message)->with("data",$data);
     }
 
-
+    public function editCredit($id , $amount , $op = '+' )
+    {
+        $err      = true;
+        $provider = Provider::findOrFail($id);
+        if ($provider != null) {
+            switch ($op) {
+                case '+':
+                    $provider->credit = $provider->credit + (int)$amount;
+                    $save             = $provider->save();
+                    if ($save) {
+                        $err          = false;
+                    }
+                    break;
+                case '-':
+                    $provider->credit = $provider->credit - (int)$amount;
+                    $save             = $provider->save();
+                    if ($save) {
+                        $err          = false;
+                    }
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+        return $err;
+        
+    }
 
 }

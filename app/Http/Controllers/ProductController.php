@@ -176,18 +176,29 @@ class ProductController extends Controller
 
     public function AddStock(Request $request)
     {
-        $err = true;
-        $product = Product::findOrFail($request->id);
+        $err      = true;
+        $product  = Product::findOrFail($request->id);
         if($product != null){
+            if ($request->idProvider != 0) {
+                if ((int)$request->total - (int)$request->verse < 0) {
+                    return response()->json($err);
+                }else{
+                    $provider = new ProviderController();
+                    $p        = $provider->editCredit( $request->idProvider , (int)$request->total - (int)$request->verse );
+                    if ($p) {
+                       return response()->json($err);
+                    }
+                }            
+            }
+            
             if ($product->priceA == (int)$request->prixA && $product->priceV == (int)$request->prixV) {
                 $product->qty = (int)$product->qty+(int)$request->qty;
                 $save         = $product->save();
-                $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
                 if ($save) {
                     $err     = false;
                     $message = "le produit a éte bien mis a joure";
+                    $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
                 }
-                $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
             }else{
                 $newProduct           = new Product;
                 $newProduct->bareCode = $product->bareCode;

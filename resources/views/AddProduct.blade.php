@@ -19,8 +19,6 @@ if(isset($id))
 
 $codeBarre = "";
 $name      = "";
-$priceA    = "";
-$priceV    = "";
 $qty       = "";
 $descp     = "";
 
@@ -28,8 +26,6 @@ if($data != null && !empty($data))
 {
 	$codeBarre = $data["codeBarre"];
 	$name      = $data["name"];
-	$priceA    = $data["priceA"];
-	$priceV    = $data["priceV"];
 	$qty       = $data["qty"];
 	$descp     = $data["descp"];
 }
@@ -178,28 +174,8 @@ if($data != null && !empty($data))
 								<label class="custom-file-label" for="customFile">Choisir le fichier</label>
 							</div>
 						</div>
-						<div class="form-group ">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text  btn btn-primary">Prix d'Achat</span>
-								</div>
-								<input type="number" class="form-control" name="priceA" value="{{$priceA}}" aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
-								<div class="input-group-prepend">
-									<span class="input-group-text  btn btn-primary">DA</span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group ">
-							<div class="input-group ">
-								<div class="input-group-prepend">
-									<span class="input-group-text  btn btn-primary">Prix de Vente</span>
-								</div>
-								<input type="number" class="form-control" name="priceV" value="{{$priceV}}" aria-label="Amount (to the nearest dollar)" placeholder="00 DA" required>
-								<div class="input-group-prepend">
-									<span class="input-group-text   btn btn-primary">DA</span>
-								</div>
-							</div>
-						</div>
+						
+						
 						<div class="form-group ">
 							<div class="input-group ">
 								<div class="input-group-prepend">
