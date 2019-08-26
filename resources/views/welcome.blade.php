@@ -107,7 +107,7 @@
 					<div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
 						<div class="kt-portlet__head-label">
 							<h3 class="kt-portlet__head-title">
-								Exclusive Datatable Plugin
+								<br>
 							</h3>
 						</div>
 						<div class="kt-portlet__head-toolbar">
@@ -171,12 +171,22 @@
 							</H1>
 						</div>
 						<div class="col-lg-6">
-							<input type="text" class="form-control" placeholder="Code Barre"  name="bareCode" id="bareCode">
+								<div class="input-group">
+									<input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="Code Barre"  name="bareCode" id="bareCode">
+										<div class="input-group-append">
+											<span class="input-group-text">
+													<label class="kt-checkbox kt-checkbox--single kt-checkbox--primary">
+															<input type="checkbox" checked="">
+																	<span></span>
+													</label>
+											</span>
+										</div>
+								</div>
 							<span class="form-text text-muted">S'il vous plaît entrez votre le code barre ici</span>
 						</div>
 						
 					</div>
-					<div class="kt-portlet__body kt-portlet__body--fit">
+					<div class="kt-portlet__body kt-portlet__body--fit" style=" padding-top: 20px;">
 
 						<!--begin: Datatable -->
 
@@ -425,24 +435,24 @@
                 </div>
                 <div class="modal-body">
                 	<!--begin: Datatable -->
-                    <div class=" kt-portlet__body kt-portlet__body--fit">
+                    
                         <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
 		                    <table class=" kt-datatable__table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
-		                                <th >#</th>
-		                                <th >Produit</th>
-		                                <th >Prix</th>
-		                                <th >Qty</th>
-		                                <th >Actions</th>
+		                                <th style="width:15%;" class="first-table-item">#</th>
+		                                <th style="width:40%;">Produit</th>
+		                                <th style="width:15%;">Prix</th>
+		                                <th style="width:15%;">Qty</th>
+		                                <th style="width:15%;">Actions</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody class="kt-datatable__body ps ps--active-y" id="tabMoreProduct" >
 		                           
 		                        </tbody>
 		                    </table>
-		                </div>
-		            </div>
+						</div>
+						
                 </div>
             </div>
         </div>
@@ -655,21 +665,21 @@
                 	console.log(data.product)
                 	for(var i =0;i<cart.length;i++)
                 	{
-                		opm += '<tr  class="kt-datatable__row" style="left: 0px;">'
+                		opm += '<tr  class="kt-datatable__row">'
 						
-						opm += '<td >'+cart[i].bareCode+'</td>'
+						opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
 						
-						opm += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-						opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'
-						opm += '<div class="kt-user-card-v2__details">'                                
-						opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+						opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
+						opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
+						opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
 						
-						opm += '<td  ><span class="kt-font-bold">'+cart[i].priceV+'.00 DA</span></td>'
+						opm += '<td  style="width:15%; padding-right: 10px;"><span class="kt-font-bold">'+cart[i].priceV+'.00 DA</span></td>'
 						
-						opm += '<td ><input class="form-control pQty" style="width: 100px;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
+						opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
 						
-						opm += '<td ><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'>'
-						opm += '<i class="kt-nav__link-icon flaticon2-add-1"></i></a></td></tr>';
+						opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
+						
+						opm += '</tr>';
                 	}
 					$('#tabMoreProduct').append(opm);
 					$('#moreBtn').click()

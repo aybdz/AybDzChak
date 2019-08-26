@@ -33804,3 +33804,9 @@ span.input-group-text.btn.btn-primary {
 .modal-footer {
   justify-content: center;
 }
+/*hide first tible item on mobile*/
+@media screen and (max-width: 768px) {
+.first-table-item{
+  display:none;
+}
+}
