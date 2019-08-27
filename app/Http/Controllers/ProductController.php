@@ -160,7 +160,7 @@ class ProductController extends Controller
     public function removeProduct(Request $request)
     {
         $err = true;
-        $product = Product::findOrFail($request->idp);
+        $product = Product::findOrFail($request->id);
         if($product != null){
             if( $product->img != "noImg.png" ) {
                 $image_path = 'image/'.$product->img;  // Value is not URL but directory file path

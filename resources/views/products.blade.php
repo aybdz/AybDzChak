@@ -204,7 +204,7 @@
                                                                 </li>
                                                                 @endif
                                                                 <li class="kt-nav__item">
-                                                                    <a href="#"  onclick="delete_Product({{$product->id}})"   class="kt-nav__link" >
+                                                                    <a href="#"  onclick="delete_Product('{{$product->id}}')"   class="kt-nav__link" >
                                                                         <i class="kt-nav__link-icon flaticon2-delete"></i>
                                                                         <span class="kt-nav__link-text">Supprimé</span>
                                                                     </a>
@@ -465,7 +465,7 @@
                 reverseButtons: true
             }).then(function(result){
                 if (result.value) {
-                    $.ajax({
+                   $.ajax({
                       type: "POST",
                       url: "{{URL::to('/deleteProduct') }}",
                       dataType: "json",
@@ -487,7 +487,6 @@
                             )
                         }
                       }
-
                     })
                     
                     // result.dismiss can be 'cancel', 'overlay',
