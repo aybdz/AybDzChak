@@ -377,37 +377,45 @@
         var prixV      = $('#prixV').val()
         var total      = $('#totalProvider').val()
         var verse      = $('#verseProvider').val()
-        if(qty !="" && (prixA != '' && prixA != 0)){
-        $.ajax({
-              type: "POST",
-              url: "{{URL::to('/AddStock') }}",
-              dataType: "json",
-              data:{'id':id,
-                    'qty':qty,
-                    'idProvider':idProvider,
-                    'prixA':prixA,
-                    'prixV':prixV,
-                    'total':total,
-                    'verse':verse},
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success:function(data){
-                if(data){
-                    swal.fire(
+        if(qty !="" && (prixA != '' && prixA != 0) ){
+            if (idProvider == '0' && parseInt(total) > parseInt(verse)) {
+                swal.fire(
                         'Eroor',
-                        "une erreur s'est produite veuillez réessayer svp.",
+                        "vous n'avez choisi aucun fournisseur et le montant est inférieur au total!",
                         'error'
                     )
-                }else{
-                    $('#pQty'+id).val($('#newQty').val())
-                    $('#closeModal').click();
-                    swal.fire(
-                        'Ajouter Stock',
-                        'le produit a éte bien mis a joure.',
-                        'success'
-                    )
-                }
-              }
-        })
+            }else{
+                $.ajax({
+                      type: "POST",
+                      url: "{{URL::to('/AddStock') }}",
+                      dataType: "json",
+                      data:{'id':id,
+                            'qty':qty,
+                            'idProvider':idProvider,
+                            'prixA':prixA,
+                            'prixV':prixV,
+                            'total':total,
+                            'verse':verse},
+                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                      success:function(data){
+                        if(data){
+                            swal.fire(
+                                'Eroor',
+                                "une erreur s'est produite veuillez réessayer svp.",
+                                'error'
+                            )
+                        }else{
+                            $('#pQty'+id).val($('#newQty').val())
+                            $('#closeModal').click();
+                            swal.fire(
+                                'Ajouter Stock',
+                                'le produit a éte bien mis a joure.',
+                                'success'
+                            )
+                        }
+                      }
+                })
+            }
         }else{
             swal.fire(
                         'Eroor',
