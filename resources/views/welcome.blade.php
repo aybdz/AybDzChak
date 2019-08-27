@@ -198,8 +198,7 @@
 									<thead class="kt-datatable__head">
 										<tr class="kt-datatable__row" >
 											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-												<span style="width: 150px; padding-left: 0px;">
-												<label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Code à barres</span></th>
+												<span style="width: 150px; padding-left: 0px;"><label>Code à barres</span></th>
 											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 200px;">Produit</span></th>
 											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix</span></th>
 											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Qty</span></th>
@@ -212,7 +211,7 @@
 											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
 												<td class="kt-datatable__cell" data-field="RecordID">
 													<span style="width: 150px;">
-														<label class="">{{$product->options->bareCode}}</label>
+														<label >{{$product->options->bareCode}}</label>
 													</span>
 												</td>
 												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">
@@ -467,15 +466,15 @@
  		$('#BCauto').change(function () {
  			if(this.checked) {
 			   	swal.fire(
-                    'Info!',
-                    "Vous êtes en mode automatique ()",
-                    'info'
+                    'Mode Automatique',
+                    "Scanner le Code à barres des produits",
+                    'success'
                 )
 			}else{
 				swal.fire(
-                    'Info!',
-                    "Vous êtes en mode manuel ()",
-                    'info'
+                    'Mode Manuel!',
+                    "Vueillez saisir manuellement le code des produits",
+                    'warning'
                 )
 			}
  		})

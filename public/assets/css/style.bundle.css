@@ -33804,6 +33804,10 @@ span.input-group-text.btn.btn-primary {
 .modal-footer {
   justify-content: center;
 }
+/*vent de produits */
+.container .table-footer {
+  margin-top: 30px !important;
+}
 /*hide first tible item on mobile*/
 @media screen and (max-width: 768px) {
 .first-table-item{
