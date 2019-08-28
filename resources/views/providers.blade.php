@@ -19,8 +19,8 @@
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url('/providers') }}" class="kt-subheader__breadcrumbs-link">
-                    Fournisseurs </a>
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
+                    Fournisseur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
@@ -115,7 +115,15 @@
                                         </h3>
                                     </div>
                                     <div class="kt-portlet__head-toolbar">
-                                        <div class="kt-portlet__head-wrapper">
+                                        <div class="kt-portlet__head-wrapper ">
+                                            <div class="kt-portlet__head-actions">
+                                                <a href="{{ url('/provider/0') }}" class="btn btn-secondary">
+                                                    <i class="fa fa-undo"></i>
+                                                    details d'achat <br>( aucun fournisseurs)
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__head-wrapper ">
                                             <div class="kt-portlet__head-actions">
                                                 <a href="#" rel="nofollow" data-toggle="modal" data-target="#addProvider" class="btn btn-small btn-brand">
                                                     <i class="la la-plus"></i>
@@ -124,6 +132,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="kt-portlet__body">
 

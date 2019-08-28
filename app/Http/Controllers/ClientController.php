@@ -32,6 +32,48 @@ class ClientController extends Controller
         return view('clients')->with('clients',$clients);
     }
 
+    public function showIndex($id)
+    {
+        $data = null;
+        if (Auth::check()) {
+            if ($id != 0) {
+                $client             = Client::findOrFail($id);
+                $data["name"]       = $client->name;
+                $data["telephonne"] = $client->telephonne;
+                $data["adress"]     = $client->adress;
+                $data["img"]        = $client->img;
+            }
+            return view('AddClient')->with('id',$id)->with('data',$data);
+        }else{
+            return view('login');
+        }
+    }
+
+    public function updateClient(Request $request)
+    {
+        $client = Client::findOrFail($request->idp);
+        if($client != null){
+            $client->name       = $request->name;
+            $client->telephonne = $request->telephonne;
+            $client->adress     = $request->adress;
+            if($request->file('photo')!= null){
+                $imageName   = $client->id . '.' . $request->file('photo')->getClientOriginalExtension();
+                $request->file('photo')->move(base_path() . '/public/image/client/', $imageName);
+                $client->img = $imageName ;
+                $save        = $client->save();
+                if ($save) {
+                    $err     = false;
+                }
+            }else{
+                $save        = $client->save();
+                if ($save) {
+                    $err     = false;
+                }
+            }
+        }
+        return redirect()->back()->with('err', $err);
+    }
+
     public function showClient($id)
     {
 
@@ -160,10 +202,6 @@ class ClientController extends Controller
         return response()->json($err);
     }
 
-    public function updateImgClient(Request $request)
-    {
-        
-    }
 
     public function removeClient(Request $request)
     {

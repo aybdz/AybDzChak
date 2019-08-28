@@ -54,9 +54,10 @@ class ProductController extends Controller
         }
     }
 
-    public function decreaQty($idProduct,$qty,$type = 'order')
+    public function decreaQty($idProduct,$qty,$idOrder,$type = 'Commande')
     {
         $product      = Product::findOrFail($idProduct);
+        $this->stockStory($product->qty,(int)$product->qty-(int)$qty,$qty,$idProduct,'0',$idOrder,$type);
         $product->qty = $product->qty-$qty;
         $res          = $product->save();
         return $res;
@@ -197,7 +198,7 @@ class ProductController extends Controller
                 if ($save) {
                     $err     = false;
                     $message = "le produit a éte bien mis a joure";
-                    $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider);
+                    $this->stockStory($product->qty,(int)$product->qty+(int)$request->qty,$request->qty,$request->id,$request->idProvider,null);
                 }
             }else{
                 $newProduct           = new Product;
@@ -214,7 +215,7 @@ class ProductController extends Controller
                     $err     = false;
                     $message = "le stock a été ajouté en tant que nouveau produit";
                 }
-                $this->stockStory(0,(int)$request->qty,$request->qty,$newProduct->id,$request->idProvider,"Ajouter tant que nouveau produit");
+                $this->stockStory(0,(int)$request->qty,$request->qty,$newProduct->id,$request->idProvider,null,"Ajouter tant que nouveau produit");
             }
             
             
@@ -222,12 +223,13 @@ class ProductController extends Controller
         return response()->json($err);
     }
 
-    public function stockStory($oldStock,$newStock,$stk,$idProduct,$IdProvider,$type="Ajouter au Stock")
+    public function stockStory($oldStock,$newStock,$stk,$idProduct,$IdProvider,$idOrder,$type="Ajouter au Stock")
     {
         $stock             = new Stock();
         $stock->type       = $type ;
         $stock->idUser     = Auth::user()->id ;
         $stock->idProduct  = $idProduct ;
+        $stock->idOrder    = $idOrder ;
         $stock->oldQty     = $oldStock ;
         $stock->newQty     = $newStock ;
         $stock->Qty        = $stk;

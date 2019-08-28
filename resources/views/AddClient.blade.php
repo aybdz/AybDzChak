@@ -20,12 +20,14 @@ if(isset($id))
 $name       = "";
 $telephonne = "";
 $adress     = "";
+$img        = "";
 
 if($data != null && !empty($data))
 {
-	$name       = $data["name"];
-	$telephonne = $data["telephonne"];
-	$adress     = $data["adress"];
+    $name       = $data["name"];
+    $telephonne = $data["telephonne"];
+    $adress     = $data["adress"];
+    $img        = $data["img"];
 }
 ?>
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
@@ -33,16 +35,16 @@ if($data != null && !empty($data))
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Fournisseurs </h3>
+                Clients </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{ url('/providers') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{ url('/clients') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
-                    Foursnisseur </a>
+                <a href="{{  url()->previous() }}" class="kt-subheader__breadcrumbs-link">
+                    Client </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
@@ -143,8 +145,19 @@ if($data != null && !empty($data))
 						</div>
 					@endif
 				@endif
+                @if (\Session::has('err'))
+                    @if(\Session::get('err'))
+                        <div class="alert alert-danger">
+                            Une erreur est survenu veuillez réessayer svp!
+                        </div>
+                    @else
+                        <div class="alert alert-success">
+                            Le crédit a été bien enregistré
+                        </div>
+                    @endif
+                @endif
 				<!--begin::Form-->
-				<form class="kt-form" method="POST" action="{{ url('/StoreProvider') }}" enctype="multipart/form-data">
+				<form class="kt-form" method="POST" action="{{ url('/updateClient') }}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="kt-portlet__body">
 						<input type="hidden" name="idp" id="idp" value="{{$id}}">
@@ -192,7 +205,7 @@ if($data != null && !empty($data))
 					<div class="kt-portlet__foot">
 						<div class="kt-form__actions">
 							<button type="Submit" class="btn btn-primary">Submit</button>
-							<a href="{{ url('/providers') }}" class="btn btn-secondary">Cancel</a>
+							<a href="{{ url('/clients') }}" class="btn btn-secondary">Cancel</a>
 						</div>
 					</div>
 				</form>

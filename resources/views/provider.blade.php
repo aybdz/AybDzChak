@@ -1,5 +1,9 @@
 @extends('layout')
-@section('title', "Fournisseur { ".$provider->name." }")
+@if (is_array($provider))
+@section('title', "Fournisseur { ".$provider['name']." }")
+@else
+@section('title', "Fournisseur { ".$provider->name)." }")
+@endif
 @section('styles')
 @endsection
 @section('scripts')
@@ -18,7 +22,7 @@
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="#" class="kt-subheader__breadcrumbs-link">
+                <a href="{{ url('/providers') }}" class="kt-subheader__breadcrumbs-link">
                     Fournisseur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
@@ -102,82 +106,224 @@
 
  <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
-          <div class="row ">
-            <div class="col ">
-                @if(isset($err) && $err)
-                    <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
-                @endif
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
+        @if(!is_array($provider)) }})
+              <div class="row ">
+                <div class="col ">
+                    @if(isset($err) && $err)
+                        <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
+                    @endif
+                    <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
+                        <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                           
                         </div>
-                        <div class="kt-portlet__head-label ">
-                        Utilisateur : {{$provider->name}}
-                        </div>
-                    </div>
 
-                    <div class="container kt-widget3__item">
-                        <div class="kt-widget3__header">
+                        <div class="container kt-widget3__item">
+                            <div class="kt-widget3__header">
 
-                            <div class="kt-widget3__user-img">
-                                    <div class="form-group row">
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
-                                                <div class="kt-avatar__holder" style="background-image: url({{ asset('image/provider/'.$provider->img) }})"></div>
-                                            
-                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                                    <i class="fa fa-times"></i>
-                                                </span>
+                                <div class="kt-widget3__user-img">
+                                        <div class="form-group row">
+                                            <div class="col-lg-9 col-xl-6">
+                                                <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
+                                                    <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
+                                                        <a href="{{ url('/AddProvider/'.$provider->id) }}"><i class="fa fa-pen"></i></a>
+                                                    </label>
+                                                    <div class="kt-avatar__holder" style="background-image: url({{ asset('image/provider/'.$provider->img) }})"></div>
+                                                
+                                                    <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+                                                        <i class="fa fa-times"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                </div>
+
+
+                                <div class="kt-user-card__name">
+
+                                 <p><strong  class="commande-header-profil name-st">
+                                     {{$provider->name}}
+                                    </strong></p>
+
+                                    <p><strong  class="commande-header-profil">
+                                    {{$provider->telephonne}}
+                                    </strong></p>
+
+                                    <p><strong class="commande-header-profil">
+                                    {{$provider->adress}}
+                                    </strong></p>
+
+    					        </div>
+
+                                <div class="kt-widget3__status kt-font-info pull-right">
+                                <div class="client-btn-st">
+                                    <?php $disabled = ""; ?>
+                                    @if(0 == (int)$provider->credit )
+                                        <?php $disabled = "disabled"; ?>
+                                    @endif
+                                    <button type="button" data-toggle="modal" data-target="#versModal" data-credit="{{$provider->credit}}" data-id="{{$provider->id}}" id="btnVerse" class="btn btn-brand" {{$disabled}}>
+                                        <i class="flaticon-coins"></i> Verser
+                                    </button>
+                                </div>
+                                <div class="client-st">
+                                    <p class="command-prix total">
+                                     Crédit : <strong>  {{$provider->credit}} ,00  DA </strong>
+                                    </p></div>
+                                </div>
+
                             </div>
-
-
-                            <div class="kt-user-card__name">
-
-                             <p><strong  class="commande-header-profil name-st">
-                                 {{$provider->name}}
-                                </strong></p>
-
-                                <p><strong  class="commande-header-profil">
-                                {{$provider->telephonne}}
-                                </strong></p>
-
-                                <p><strong class="commande-header-profil">
-                                {{$provider->adress}}
-                                </strong></p>
-
-					        </div>
-
-                            <div class="kt-widget3__status kt-font-info pull-right">
-                            <div class="client-btn-st">
-                                <?php $disabled = ""; ?>
-                                @if(0 == (int)$provider->credit )
-                                    <?php $disabled = "disabled"; ?>
-                                @endif
-                                <button type="button" data-toggle="modal" data-target="#versModal" data-credit="{{$provider->credit}}" data-id="{{$provider->id}}" id="btnVerse" class="btn btn-brand" {{$disabled}}>
-                                    <i class="flaticon-coins"></i> Verser
-                                </button>
-                            </div>
-                            <div class="client-st">
-                                <p class="command-prix total">
-                                 Crédit : <strong>  {{$provider->credit}} ,00  DA </strong>
-                                </p></div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    Une erreur est survenu veuillez réessayer svp!
+                </div>
+            @endif
+            @if (\Session::has('err'))
+                @if(\Session::get('err'))
+                    <div class="alert alert-danger">
+                        Une erreur est survenu veuillez réessayer svp!
+                    </div>
+                @else
+                    <div class="alert alert-success">
+                        Le crédit a été bien enregistré
+                    </div>
+                @endif
+            @endif
 
+        @endif
 
+     <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Details
+                        </h3>
+                    </div>
+                </div>
+                <div class="container kt-portlet__body kt-portlet__body--fit">
+                    <!--begin: Datatable -->
+                        <div class="table-responsive">
+                            <table class="table " id="stockTable" >
+                                <thead >
+                                    <tr >
+                                        <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
+                                            <span >
+                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Produits</span></th>
+                                        
+                                        <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                            <span >Ancien quantité</span>
+                                        </th>
+                                        <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Nouvelle quantité</span></th>
+                                        <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span >Quantité acheté</span></th>
+                                        <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                            <span >Prix d'achat</span>
+                                        </th>
+                                        <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span >Total</span></th>
+                                        <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Servir par</span></th>
+                                        <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Date et heur</span></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody  >
+                                    @foreach($stocks as $stock)
+                                        <tr data-row="{{$stock->id}}" id="tr'.{{$stock->id}}.'" >
+                                            <td class="text-center">
+                                                @if($stock->Product!= null)
+                                                <div class="kt-user-card-v2">
 
-
+                                                    <div class="kt-user-card-v2__pic">                                
+                                                       <img alt="photo" src=" {{ asset('image/'.$stock->Product->img) }}">  </a>                          
+                                                    </div>                            
+                                                    <div class="kt-user-card-v2__details">                                
+                                                        <div class="kt-user-card-v2__name"><a href="{{ url('/details/'.$stock->Product->id) }}">  {{$stock->Product->name}}</a>
+                                                        </div>                                
+                                                    </div></a>                        
+                                                </div>
+                                                @else
+                                                <div class="kt-user-card-v2"> 
+                                                    <div class="kt-user-card-v2__details">                                
+                                                        <div class="kt-user-card-v2__name">
+                                                            le produit a été supprimé
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                @endif
+                                            </td>
+                                            
+                                            <td >
+                                                <div class="kt-user-card-v2__details"> 
+                                                    <input class="form-control"   type="text" value="{{$stock->oldQty}}"  disabled="disabled">
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="kt-user-card-v2__details"> 
+                                                    <input class="form-control"   type="text" value="{{$stock->newQty}}"  disabled="disabled">
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="kt-user-card-v2__details"> 
+                                                    <input class="form-control"  type="text" value="{{$stock->Qty}}"  disabled="disabled">
+                                                </div>
+                                            </td>
+                                            <td >
+                                                @if($stock->Product!= null)
+                                                <div class="kt-user-card-v2__details"> 
+                                                   {{$stock->Product->priceA.'.00 DA'}}
+                                                </div>
+                                                @else
+                                                <div class="kt-user-card-v2__details"> 
+                                                    le produit a été supprimé 
+                                                </div>
+                                                @endif
+                                            </td>
+                                            <td >
+                                                @if($stock->Product!= null)
+                                                <div class="kt-user-card-v2__details"> 
+                                                   {{(int)$stock->Qty*(int)$stock->Product->priceA.'.00 DA'}}
+                                                </div>
+                                                @else
+                                                <div class="kt-user-card-v2__details"> 
+                                                    le produit a été supprimé 
+                                                </div>
+                                                @endif
+                                            </td>
+                                            <td >
+                                                <span >
+                                                    <div class="kt-user-card-v2">                           
+                                                        <div class="kt-user-card-v2__pic">                              
+                                                            <div class="kt-badge kt-badge--xl kt-badge--brand">{{($stock->user->name)[0]}}</div>  
+                                                        </div>                          
+                                                        <div class="kt-user-card-v2__details">                              
+                                                            <a class="kt-user-card-v2__name" href="#">{{$stock->user->name}}</a>  
+                                                            <span class="kt-user-card-v2__desc">Admin</span>        
+                                                        </div>                      
+                                                    </div>
+                                                </span>
+                                            </td>
+                                            <td class="kt-datatable__cell" data-field="RecordID">
+                                                <strong >
+                                                    {{$stock->created_at}}
+                                                </strong>
+                                            </td>
+                                            
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    <!--end: Datatable -->
+                </div>
+            </div>
+        </div>
+    </div>
         <!--End::Section-->
     </div>
     <!--begin::Modal-->
+    @if(!is_array($provider))
     <div class="modal fade" id="versModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -186,40 +332,42 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                    <form method="POST" action="{{ url('addCreditProvider') }}" >
-                <div class="modal-body">
-                        @csrf
-                        <input type="hidden" id="idUser" name="idUser">
-                        <div class="form-group" >
-                            <label for="recipient-name" class="form-control-label">Credit:</label>
-                            <input type="text" class="form-control" id="credit" name="credit"  disabled="disabled">
-                        </div>
-                        <div class="form-group" >
-                            <label for="recipient-name" class="form-control-label">Versement :</label>
-                            <input type="number" class="form-control" min="0" max="{{$provider->credit}}" id="verse" name="verse"  required="required">
-                        </div>
-                        <div class="form-group" >
-                            <label for="recipient-name" class="form-control-label">Reste :</label>
-                            <input type="text" class="form-control" id="rest"  name="rest"  disabled="disabled">
-                        </div>
+                <form method="POST" action="{{ url('/addCreditProvider') }}" id="addCreditProviderForm">
+                    <div class="modal-body">
+
+
+
+                            @csrf
+                            <input type="hidden" id="idUser" name="idUser">
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Credit:</label>
+                                <input type="text" class="form-control" id="credit" name="credit"  disabled="disabled">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Versement :</label>
+                                <input type="number" class="form-control" min="0" max="{{$provider->credit}}" id="verse" name="verse"  required="required">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Reste :</label>
+                                <input type="text" class="form-control" id="rest"  name="rest"  disabled="disabled">
+                            </div>
+                            
                         
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="closeUserUpdateModal" data-dismiss="modal">Close</button>
-                    <input type="submit"  class="btn btn-primary" value="Ajouter"> 
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="closeUserUpdateModal" data-dismiss="modal">Close</button>
+                        <input type="submit"  class="btn btn-primary" value="Ajouter"> 
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
+    @endif
     <!--end::Modal-->
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tranTable').DataTable();
-        $('#cmdTable').DataTable();
+        $('#stockTable').DataTable();
     });
 </script>
 <script type="text/javascript">

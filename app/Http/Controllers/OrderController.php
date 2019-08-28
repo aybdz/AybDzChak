@@ -206,7 +206,7 @@ class OrderController extends Controller
                         $err = true;
                         DB::rollBack();
                     }
-                    $e = $pc->decreaQty($p->id,$product->qty);
+                    $e = $pc->decreaQty($p->id,$product->qty,$order->id);
                     if (!$e) {
                         $err = true;
                         DB::rollBack();

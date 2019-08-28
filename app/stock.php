@@ -11,7 +11,7 @@ class stock extends Model
 	}
 
 	public function Product(){
-	    return $this->belongsTo('App\Product', 'idProduct', 'id');
+	    return $this->belongsTo('App\Product', 'IdProduct', 'id');
 	}
 
 	public function Order(){

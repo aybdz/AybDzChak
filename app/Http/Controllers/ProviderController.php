@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Provider;
 use Auth;
+use App\Stock;
 
 class ProviderController extends Controller
 {
@@ -55,15 +56,22 @@ class ProviderController extends Controller
 
     public function showProvider($id)
     {
-
         if (!Auth::check()) {
             return view('login');
         }
-        $provider = Provider::findOrFail($id);
-        return view('provider')->with('provider',$provider);
+        if ($id != 0) {
+            $provider = Provider::findOrFail($id);
+            $stocks   = Stock::where('idProvider',$provider->id)->get();
+        }else
+        {
+            $provider['name'] = 'Aucun fournisseu';
+            $provider['id'] = '0';
+            $stocks   = Stock::where('idProvider','0')->get();
+        }
+        return view('provider')->with('provider',$provider)->with('stocks',$stocks);
     }
 
-     public function showIndex($id)
+    public function showIndex($id)
     {
         $data = null;
         if (Auth::check()) {
@@ -78,6 +86,8 @@ class ProviderController extends Controller
             return view('login');
         }
     }
+
+
 
     public function store(Request $request)
     {
@@ -99,13 +109,13 @@ class ProviderController extends Controller
 			$provider->telephonne = $request->telephonne ;
 			$provider->adress     = $request->adress ;
 			$provider->idUser     = Auth::user()->id;
-			$save                = $provider->save();
+			$save                 = $provider->save();
             if ($save) {
                 if($request->file('photo')!= null){
-                    $imageName    = $provider->id . '.' . $request->file('photo')->getClientOriginalExtension();
+                    $imageName     = $provider->id . '.' . $request->file('photo')->getClientOriginalExtension();
                     $request->file('photo')->move(base_path() . '/public/image/provider/', $imageName);
                     $provider->img = $imageName ;
-                    $save         = $provider->save();
+                    $save          = $provider->save();
                     if ($save) {
                         $err     = false;
                         $message = "le produit a éte bien ajouter";
@@ -122,6 +132,19 @@ class ProviderController extends Controller
 			$data["adress"]     = $request->adress;
         }
         return view('AddProvider')->with('id',$request->idp)->with("err",$err)->with("message",$message)->with("data",$data);
+    }
+
+    public function addCreditProvider(Request $request)
+    {
+        $request->validate([
+            'idUser' => 'required|integer',
+            'verse'  => 'required|integer',
+        ]);
+       
+        $id    = $request->idUser;
+        $verse = $request->verse;
+        $err   = $this->editCredit($id , $verse , '-' );
+        return  redirect()->back()->with('err', $err);
     }
 
     public function editCredit($id , $amount , $op = '+' )

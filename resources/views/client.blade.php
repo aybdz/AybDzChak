@@ -10,16 +10,16 @@
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Utilisateurs </h3>
+                Clients </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{ url('/clients') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-link">
-                    Utilisateur </a>
+                <a href="{{ url('/clients') }}" class="kt-subheader__breadcrumbs-link">
+                    Client </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
@@ -120,27 +120,19 @@
                         <div class="kt-widget3__header">
 
                             <div class="kt-widget3__user-img">
-                                <form class="kt-form" method="POST" action="{{ url('/editClientImg') }}" id="kt_apps_user_add_user_form" enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="id" id="id" value="{{$Client->id}}">
-                                    <div class="form-group row">
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
-                                                <div class="kt-avatar__holder" style="background-image: url({{ asset('image/client/'.$Client->img) }})"></div>
-                                                <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
-                                                    <i class="fa fa-pen"></i>
-                                                    <input type="file" name="photo" alt="Submit Form" required="required">
-                                                </label>
-                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                                                    <i class="fa fa-times"></i>
-                                                </span>
-                                            </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
+                                            <div class="kt-avatar__holder" style="background-image: url({{ asset('image/client/'.$Client->img) }})"></div>
+                                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
+                                                <a href="{{ url('/updateClient/'.$Client->id) }}"><i class="fa fa-pen"></i></a>
+                                            </label>
+                                            <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+                                                <i class="fa fa-times"></i>
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="form-group  text-center">
-                                        <input type="submit" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u center" value="Update">
-                                    </div>
-                                </form>
+                                </div>
                             </div>
 
 

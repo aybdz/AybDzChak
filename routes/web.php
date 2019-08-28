@@ -47,9 +47,10 @@ Route::middleware('web')->group(function () {
 
 	// clients route
 	Route::get('/clients', 'ClientController@index')->name('clients');
-	Route::post('/addClient', 'ClientController@addClient')->name('addClient');
+	Route::post('/addClient', 'ClientController@addClient');
 	Route::post('/editClient', 'ClientController@editClient')->name('editClient');
-	Route::post('/editClientImg', 'ClientController@editClientImg')->name('editClientImg');
+	Route::get('/updateClient/{id}', 'ClientController@showIndex')->name('updateClient');
+	Route::post('/updateClient', 'ClientController@updateClient');
 	Route::post('/deleteClient', 'ClientController@removeClient')->name('deleteClient');
 	Route::get('/client/{id}', 'ClientController@showClient')->name('Client');
 
@@ -78,6 +79,7 @@ Route::middleware('web')->group(function () {
 	Route::get('/provider/{id}', 'ProviderController@showProvider')->name('provider');
 	Route::get('/AddProvider/{id}', 'ProviderController@showIndex')->name('AddProvider');
 	Route::post('/StoreProvider', 'ProviderController@store')->name('StoreProvider');
+	Route::post('/addCreditProvider', 'ProviderController@addCreditProvider')->name('addCreditProvider');
 
 
 
