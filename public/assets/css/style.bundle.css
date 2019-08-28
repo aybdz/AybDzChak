@@ -33808,6 +33808,39 @@ span.input-group-text.btn.btn-primary {
 .container .table-footer {
   margin-top: 30px !important;
 }
+/* fournisseur table*/
+th.sorting, th.sorting_asc, th.sorting_desc {
+    font-weight: 500 !important;
+    font-size: 13px;
+}
+td.fournisseur-table {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+td.fournisseur-table.forn-total{
+  color: #3fc7d1;
+  font-weight: 600;
+}
+.kt-portlet__head.kt-portlet__head--lg.kt-portlet__head--noborder.kt-portlet__head--break-sm.tabels-heades- {
+  justify-content: center;
+  background-image: url(http://localhost/project/public/assets/media/bg/bg-6.jpg);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 20px;
+
+}
+.kt-portlet__head.kt-portlet__head--lg.kt-portlet__head--noborder.kt-portlet__head--break-sm.tabels-heades- h3 {
+color:#fff;
+}
+/*arow filters */
+table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before {
+  display: none !important;
+}
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+  display: none !important;
+}
 /*hide first tible item on mobile*/
 @media screen and (max-width: 768px) {
 .first-table-item{

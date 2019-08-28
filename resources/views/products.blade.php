@@ -155,13 +155,16 @@
                                                     <td class="text-center">{{$product->bareCode}}</td>
                                                     <td class="text-center">
                                                         <div class="kt-user-card-v2"> 
+
                                                             <div class="kt-user-card-v2__pic">                                
                                                                 <img alt="photo" src=" {{ asset('image/'.$product->img) }}">                            
-                                                            </div>                            
+                                                            </div>      
+
                                                             <div class="kt-user-card-v2__details">                                
                                                                 <div class="kt-user-card-v2__name">{{$product->name}}
                                                                 </div>                                
-                                                            </div>                        
+                                                            </div>  
+                                                                                  
                                                         </div>
                                                     </td>
                                                     @if(Auth::user()->type == "su")

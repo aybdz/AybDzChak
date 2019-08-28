@@ -197,51 +197,45 @@
      <div class="row">
         <div class="col-xl-12">
             <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm tabels-heades-">
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
-                            Details
+                            Details des commandes du fournnisseur <strong>{{$provider->name}}</strong> 
                         </h3>
                     </div>
                 </div>
                 <div class="container kt-portlet__body kt-portlet__body--fit">
                     <!--begin: Datatable -->
                         <div class="table-responsive">
-                            <table class="table " id="stockTable" >
+                            <table class="table table-striped- table-bordered table-hover table-checkable " id="stockTable" >
                                 <thead >
                                     <tr >
-                                        <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-                                            <span >
-                                            <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Produits</span></th>
-                                        
-                                        <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                            <span >Ancien quantité</span>
-                                        </th>
-                                        <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Nouvelle quantité</span></th>
-                                        <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span >Quantité acheté</span></th>
-                                        <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                            <span >Prix d'achat</span>
-                                        </th>
-                                        <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span >Total</span></th>
-                                        <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Servir par</span></th>
-                                        <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Date et heur</span></th>
+                                        <th data-field="RecordID" class="sorting">Produits</th>
+                                        <th data-field="Status" class="sorting">Quantité acheté</th>
+                                        <th data-field="ShipName" class="sorting">Prix d'achat </th>
+                                        <th data-field="Status" class="sorting">Total</th>
+                                        <th data-field="Status" class="sorting">Verser</th>
+                                        <th data-field="Status" class="sorting">Restant</th>
+                                        <th data-field="Type"  class="sorting">Servir par</th>
+                                        <th data-field="Type" class="sorting_desc">Date et heur</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody  >
                                     @foreach($stocks as $stock)
                                         <tr data-row="{{$stock->id}}" id="tr'.{{$stock->id}}.'" >
-                                            <td class="text-center">
+                                            <td class="fournisseur-table">
                                                 @if($stock->Product!= null)
                                                 <div class="kt-user-card-v2">
 
                                                     <div class="kt-user-card-v2__pic">                                
-                                                       <img alt="photo" src=" {{ asset('image/'.$stock->Product->img) }}">  </a>                          
-                                                    </div>                            
+                                                       <img alt="photo" src=" {{ asset('image/'.$stock->Product->img) }}">                         
+                                                    </div>                 
+
                                                     <div class="kt-user-card-v2__details">                                
                                                         <div class="kt-user-card-v2__name"><a href="{{ url('/details/'.$stock->Product->id) }}">  {{$stock->Product->name}}</a>
                                                         </div>                                
-                                                    </div></a>                        
+                                                    </div>                       
                                                 </div>
                                                 @else
                                                 <div class="kt-user-card-v2"> 
@@ -253,44 +247,44 @@
                                                 </div>
                                                 @endif
                                             </td>
-                                            
-                                            <td >
-                                                <div class="kt-user-card-v2__details"> 
-                                                    <input class="form-control"   type="text" value="{{$stock->oldQty}}"  disabled="disabled">
-                                                </div>
+
+                                            <td class="fournisseur-table">
+                                                
+                                                   
+                                                    {{$stock->Qty}}
+                                                
                                             </td>
-                                            <td >
-                                                <div class="kt-user-card-v2__details"> 
-                                                    <input class="form-control"   type="text" value="{{$stock->newQty}}"  disabled="disabled">
-                                                </div>
-                                            </td>
-                                            <td >
-                                                <div class="kt-user-card-v2__details"> 
-                                                    <input class="form-control"  type="text" value="{{$stock->Qty}}"  disabled="disabled">
-                                                </div>
-                                            </td>
-                                            <td >
+ 
+                                            <td class="fournisseur-table ">
                                                 @if($stock->Product!= null)
-                                                <div class="kt-user-card-v2__details"> 
+                                                
                                                    {{$stock->Product->priceA.'.00 DA'}}
-                                                </div>
+                                                
                                                 @else
-                                                <div class="kt-user-card-v2__details"> 
+                                                
                                                     le produit a été supprimé 
-                                                </div>
+                                                
                                                 @endif
                                             </td>
-                                            <td >
+                                            <td class="fournisseur-table forn-total">
                                                 @if($stock->Product!= null)
-                                                <div class="kt-user-card-v2__details"> 
+                                                
                                                    {{(int)$stock->Qty*(int)$stock->Product->priceA.'.00 DA'}}
-                                                </div>
+                                                
                                                 @else
-                                                <div class="kt-user-card-v2__details"> 
+                                                
                                                     le produit a été supprimé 
-                                                </div>
+                                                
                                                 @endif
                                             </td>
+                                            
+                                            <td class="fournisseur-table forn-total">
+
+                                            </td>
+                                            <td class="fournisseur-table forn-total">
+
+                                            </td>
+
                                             <td >
                                                 <span >
                                                     <div class="kt-user-card-v2">                           
@@ -304,10 +298,10 @@
                                                     </div>
                                                 </span>
                                             </td>
-                                            <td class="kt-datatable__cell" data-field="RecordID">
-                                                <strong >
+                                            <td class="fournisseur-table" data-field="RecordID">
+                                               
                                                     {{$stock->created_at}}
-                                                </strong>
+                                                
                                             </td>
                                             
                                         </tr>
