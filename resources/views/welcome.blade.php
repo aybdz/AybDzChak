@@ -603,11 +603,11 @@
             });
  		})
 
- 		$('#verse').on('mouseout, keyup ,change',function () {
- 			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(",", "");
- 			$('#reste').val();
- 			 if ( parseInt(parseFloat(t)-parseFloat($('#verse').val())) < 0) {
+ 		$('body').on('mouseout, keyup ,change','#verse',function () {
+			var tc    = $('#totalCartVal').val();
+			var t     = tc.replace(",", "");
+			var reste = parseInt(parseFloat(t)-parseFloat($('#verse').val()));
+ 			if ( reste < 0) {
 	            $('#verse').val('')
 	            $('#verse').val(t)
 	            swal.fire(
@@ -615,6 +615,8 @@
                     "attention le montant insert est supérieur de la commande ! ",
                     'error'
                 )
+	        }else{
+	        	$('#reste').val(reste)
 	        }
  		})
 
@@ -683,7 +685,6 @@
 						});
 						var opm = '';
 	                	var source = "{!! asset('image/') !!}";
-	                	console.log(data.product)
 	                	for(var i =0;i<cart.length;i++)
 	                	{
 	                		opm += '<tr  class="kt-datatable__row">'
@@ -774,7 +775,6 @@
 						});
 						var opm = '';
 	                	var source = "{!! asset('image/') !!}";
-	                	console.log(data.product)
 	                	for(var i =0;i<cart.length;i++)
 	                	{
 	                		opm += '<tr  class="kt-datatable__row">'
@@ -895,7 +895,6 @@
 		          data:{'id':id, 'qty':qty},
 		          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 		          success:function(data){
-		          	console.log(data)
 		            if(data.err){
 		            	if (data.message=='stock')
 		            	{

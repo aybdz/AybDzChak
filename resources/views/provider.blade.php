@@ -1,9 +1,12 @@
 @extends('layout')
-@if (is_array($provider))
-@section('title', "Fournisseur { ".$provider['name']." }")
-@else
-@section('title', "Fournisseur { ".$provider->name)." }")
-@endif
+<?php 
+if (is_array($provider)){
+    $title = $provider['name'];
+}else{
+    $title = $provider->name;
+}
+?>
+@section('title', "Fournisseur : ".$title)
 @section('styles')
 @endsection
 @section('scripts')
@@ -106,6 +109,7 @@
 
  <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
+
         @if(!is_array($provider)) }})
               <div class="row ">
                 <div class="col ">
@@ -200,7 +204,7 @@
                 <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm tabels-heades-">
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
-                            Details des commandes du fournnisseur <strong>{{$provider->name}}</strong> 
+                            Details des commandes du fournnisseur <strong>{{$title}}</strong> 
                         </h3>
                     </div>
                 </div>
@@ -279,10 +283,26 @@
                                             </td>
                                             
                                             <td class="fournisseur-table forn-total">
-
+                                                @if($stock->Product!= null)
+                                                
+                                                   {{$stock->Product->priceA.'.00 DA'}}
+                                                
+                                                @else
+                                                
+                                                    le produit a été supprimé 
+                                                
+                                                @endif
                                             </td>
                                             <td class="fournisseur-table forn-total">
-
+                                                @if($stock->Product!= null)
+                                                
+                                                   {{$stock->Product->priceA.'.00 DA'}}
+                                                
+                                                @else
+                                                
+                                                    le produit a été supprimé 
+                                                
+                                                @endif
                                             </td>
 
                                             <td >
@@ -300,7 +320,7 @@
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
                                                
-                                                    {{$stock->created_at}}
+                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y')}}
                                                 
                                             </td>
                                             
@@ -361,7 +381,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#stockTable').DataTable();
+        $('#stockTable').DataTable().order( [ 7, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">

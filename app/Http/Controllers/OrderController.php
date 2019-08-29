@@ -174,19 +174,20 @@ class OrderController extends Controller
     {
         $err             = false;
         DB::transaction(function () use($err , $verse , $idClient ){
+            $total            = (int)str_replace(',','',Cart::subTotal());
             $credit           = new Credit;
             $credit->idOrder  = '0';
             $credit->idClient = $idClient;
-            $credit->total    = (float)str_replace(',','',Cart::subTotal());
+            $credit->total    = $total;
             $credit->paid     = $verse;
-            $credit->staid    = (float)str_replace(',','',Cart::subTotal())-$verse;
+            $credit->staid    = $total-$verse;
             $credit->save();
             $order            = new Order;
             $order->hash      = $this->get_hashOrder();
             $order->idClient  = $idClient;
             $order->idCredit  = $credit->id;
             $order->idUser    = Auth::user()->id;
-            $order->total     = $verse;
+            $order->total     = $total;
             $order->qty       = Cart::count();
             $save             = $order->save();
             $credit->idOrder  = $order->id;

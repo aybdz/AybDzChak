@@ -151,7 +151,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach($products as $product)
-                                                <tr id="tr'.{{$product->id}}.'">
+                                                <tr data-row="{{$product->id}}" id="tr{{$product->id}}">
                                                     <td class="text-center">{{$product->bareCode}}</td>
                                                     <td class="text-center">
                                                         <div class="kt-user-card-v2"> 
@@ -462,6 +462,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#productTable').DataTable();
+        
     });
 </script>
 <script type="text/javascript">

@@ -182,9 +182,7 @@
                                                 <span >
                                                 <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Prix total</span></th>
                                             
-                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Date de transaction</span>
-                                            </th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody  >
@@ -228,11 +226,7 @@
                                                        <strong>{{$order->priceV*$order->qty.',00  DA'}} </strong>
                                                     </span>
                                                 </td>
-                                                <td class="kt-datatable__cell" >
-                                                    <span >
-                                                        <strong>{{$order->created_at}} </strong>
-                                                    </span>
-                                                </td>
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>

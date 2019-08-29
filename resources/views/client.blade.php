@@ -257,7 +257,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{$tran->created_at}}
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('d/m/Y')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -338,7 +338,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{$Order->created_at}}
+                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('d/m/Y')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -397,8 +397,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tranTable').DataTable();
-        $('#cmdTable').DataTable();
+        $('#tranTable').DataTable().DataTable().order( [ 4, 'desc' ] ).draw();
+        $('#cmdTable').DataTable().DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">

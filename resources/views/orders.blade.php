@@ -162,7 +162,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label><strong>{{$order->created_at}} </strong></label>
+                                                        <label><strong>{{\Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}} </strong></label>
                                                     </span>
                                                 </td>
                                                 <td >
@@ -222,7 +222,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#userTable').DataTable();
+        $('#userTable').DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">
