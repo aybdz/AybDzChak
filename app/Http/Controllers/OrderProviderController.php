@@ -12,6 +12,12 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class OrderProviderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +41,7 @@ class OrderProviderController extends Controller
         if($product != null && $product->count() > 0){
             if ($product->count() == 1) {
                     $product = $product->first();
-                    Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+                    Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode,'prixA' => $product->priceA]);
                         $err             = false;
                         $data['product'] = Cart::content();
             }else{ // with have more then one product with the same bare-code and with deffrane price
@@ -55,7 +61,7 @@ class OrderProviderController extends Controller
         $err     = true;
         $product = Product::find($request->id);
         if($product != null){
-            Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+            Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode,'prixA' => $product->priceA]);
             $err             = false;
             $data['product'] = Cart::content();
         }

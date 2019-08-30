@@ -200,7 +200,8 @@
 											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
 												<span style="width: 150px; padding-left: 0px;"><label>Code à barres</span></th>
 											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 200px;">Produit</span></th>
-											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix</span></th>
+											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix d'achat</span></th>
+											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix de vent</span></th>
 											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Qty</span></th>
 											
 											<th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 80px;">Actions</span></th>
@@ -227,11 +228,17 @@
 													    </div>
 												    </span>
 												</td>
-												<td data-field="ShipDate" class="kt-datatable__cell">
-													<span style="width: 100px;">
-														<span class="kt-font-bold">{{$product->price}} DA</span>
-													</span>
+												<td data-field="Status" class="kt-datatable__cell">
+													<div class="kt-user-card-v2__details" > 
+														<input class="form-control prixA" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->options->prixA}}" id="{{'prixA'.$product->rowId}}">
+													</div>
 												</td>
+												<td data-field="Status" class="kt-datatable__cell">
+													<div class="kt-user-card-v2__details" > 
+														<input class="form-control prixV" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->price}}" id="{{'prixV'.$product->rowId}}">
+													</div>
+												</td>
+												
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
 														<input class="form-control pQty" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->qty}}" id="{{'pQty'.$product->rowId}}">
@@ -255,7 +262,7 @@
 
 									<a href="{{ url('cancelOrder') }}" class="kt-link btn-lg kt-font-bold float-left"><i class="kt-nav__link-icon flaticon2-cancel-music"></i> Annuler la commande</a>
 									<center>
-									<button class="btn btn-dark btn-lg " id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé la commande de Client</button></center>
+									<button class="btn btn-dark btn-lg " id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé par Fournisseur</button></center>
 								</div>
 							</div>
 						<!--end: Datatable -->
@@ -432,7 +439,8 @@
 		                            <tr class="kt-datatable__row" >
 		                                <th style="width:15%;" class="first-table-item">#</th>
 		                                <th style="width:40%;">Produit</th>
-		                                <th style="width:15%;">Prix</th>
+		                                <th style="width:15%;">Prix d'Achat</th>
+		                                <th style="width:15%;">Prix de Vent</th>
 		                                <th style="width:15%;">Qty</th>
 		                                <th style="width:15%;">Actions</th>
 		                            </tr>
@@ -646,13 +654,15 @@
 	                	{
 	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
 							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].id+'</label></span></td>'
+							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
 							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
 							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
 							op += '<div class="kt-user-card-v2__details">'                                
 							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
-							op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
-							op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
+
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							
 							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 							
 							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
@@ -679,8 +689,10 @@
 							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
 							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
 							opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
+
+							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
+							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
 							
-							opm += '<td  style="width:15%; padding-right: 10px;"><span class="kt-font-bold">'+cart[i].priceV+'.00 DA</span></td>'
 							
 							opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
 							
@@ -727,7 +739,9 @@
 							op += '<div class="kt-user-card-v2__details">'                                
 							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 							op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
-							op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							
 							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 							
 							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
@@ -754,9 +768,10 @@
 							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
 							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
 							opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
-							
-							opm += '<td  style="width:15%; padding-right: 10px;"><span class="kt-font-bold">'+cart[i].priceV+'.00 DA</span></td>'
-							
+
+							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
+							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
+
 							opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
 							
 							opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
@@ -799,8 +814,10 @@
 						op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
 						op += '<div class="kt-user-card-v2__details">'                                
 						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
-						op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
-						op += '<span class="kt-font-bold">'+cart[i].price+'.00 DA</span></span></td>'
+						
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+						
 						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" style="width: 100px;" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 						
 						op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
