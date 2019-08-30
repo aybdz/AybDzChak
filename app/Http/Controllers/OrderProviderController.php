@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\OrderProvider;
+use App\Provider;
+use App\Product;
 use Illuminate\Http\Request;
+use Auth;
+
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class OrderProviderController extends Controller
 {
@@ -14,7 +19,71 @@ class OrderProviderController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::check()) {
+            $clients = Provider::all();
+            return view('orderProvider')->with('clients',$clients);
+        }else{
+            return view('login');
+        }
+    }
+
+    public function addCart(Request $request)
+    {
+        $message = "";
+        $err     = true;
+        $product = Product::where('bareCode',$request->id);
+        if($product != null && $product->count() > 0){
+            if ($product->count() == 1) {
+                    $product = $product->first();
+                    Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+                        $err             = false;
+                        $data['product'] = Cart::content();
+            }else{ // with have more then one product with the same bare-code and with deffrane price
+                $data['product'] = $product->get();
+                $err             = 'more';
+            }
+        }
+        $data['err']     = $err;
+        $data['message'] = $message;
+        
+        return response()->json($data);
+    }
+
+    public function addCartPlus(Request $request)
+    {
+        $message = "";
+        $err     = true;
+        $product = Product::find($request->id);
+        if($product != null){
+            Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+            $err             = false;
+            $data['product'] = Cart::content();
+        }
+        $data['err']     = $err;
+        $data['message'] = $message;
+        $data['product'] = Cart::content();
+        return response()->json($data);
+    }
+
+    public function addCartStock(Request $request)
+    {
+        $err     = true;
+        $message = "";
+        $cart    = Cart::get($request->id);
+        $product = Product::find($cart->id);
+        $qty     = $product->qty ;
+        $cQty    = $cart->qty;
+        if ($qty >= (int)$request->qty) {
+            Cart::update($request->id, $request->qty);
+            $err     = false;
+        }else{
+            $message = 'stock';
+        }
+        $data['err']     = $err;
+        $data['message'] = $message;
+        $data['qty']     = $qty;
+        $data['cQty']    = $cQty;
+        return response()->json($data);
     }
 
     /**
