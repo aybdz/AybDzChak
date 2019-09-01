@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Stock;
+use App\Client;
 use App\productUpdate;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+       if (Auth::check()) {
+            $clients = Client::all();
+            return view('welcome')->with('clients',$clients);
+        }else{
+            return view('login');
+        }
     }
 
     

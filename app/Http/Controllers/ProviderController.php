@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Provider;
 use Auth;
 use App\Stock;
+use App\ProviderDetail;
+use App\OrderProvider;
 
 class ProviderController extends Controller
 {
@@ -61,14 +63,35 @@ class ProviderController extends Controller
         }
         if ($id != 0) {
             $provider = Provider::findOrFail($id);
-            $stocks   = Stock::where('idProvider',$provider->id)->get();
+            $stocks   = OrderProvider::where('idProvider',$provider->id)->get();
         }else
         {
             $provider['name'] = 'Aucun fournisseu';
             $provider['id'] = '0';
-            $stocks   = Stock::where('idProvider','0')->get();
+            $stocks   = OrderProvider::where('idProvider','0')->get();
         }
         return view('provider')->with('provider',$provider)->with('stocks',$stocks);
+    }
+
+    public function showProviderDetails($id)
+    {
+        if (!Auth::check()) {
+            return view('login');
+        }
+        $op = OrderProvider::findOrFail($id);
+        if ($op != null) {        
+            if ($op->id != 0) {
+            $provider = Provider::findOrFail($op->idProvider);
+            $stocks   = ProviderDetail::where('idOrder',$op->id)->get();
+            }else {
+                $provider['name'] = 'Aucun fournisseu';
+                $provider['id']   = '0';
+                $stocks           = ProviderDetail::where('idOrder','0')->get();
+            }       
+            return view('providerDetails')->with('provider',$provider)->with('stocks',$stocks);
+        }else{
+            return view('login');
+        }
     }
 
     public function showIndex($id)

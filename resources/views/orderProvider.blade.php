@@ -166,8 +166,8 @@
 						<div class="col-lg-6 pull-right">
 							
 							<H1 class="form-text text-muted pull-right" id="totalCart">
-								Total : {{Cart::subTotal()}} DA 
-								<input type="hidden" id="totalCartVal" value="{{Cart::subTotal()}}">
+								Total : {{Cart::instance('Provider')->subTotal()}} DA 
+								<input type="hidden" id="totalCartVal" value="{{Cart::instance('Provider')->subTotal()}}">
 							</H1>
 						</div>
 						<div class="col-lg-6">
@@ -208,7 +208,7 @@
 										</tr>
 									</thead>
 									<tbody class="kt-datatable__body ps ps--active-y" id="tabProduct" style="max-height: 446px;">
-										@foreach(Cart::content() as $product)
+										@foreach(Cart::instance('Provider')->content() as $product)
 											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
 												<td class="kt-datatable__cell" data-field="RecordID">
 													<span style="width: 150px;">
@@ -230,12 +230,12 @@
 												</td>
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control prixA" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->options->prixA}}" id="{{'prixA'.$product->rowId}}">
+														<input class="form-control prixA" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->price}}" id="{{'prixA'.$product->rowId}}">
 													</div>
 												</td>
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control prixV" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->price}}" id="{{'prixV'.$product->rowId}}">
+														<input class="form-control prixV" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->options->prixV}}" id="{{'prixV'.$product->rowId}}">
 													</div>
 												</td>
 												
@@ -260,7 +260,7 @@
 								<div class="container">
 									<button  class="btn btn-brand btn-lg pull-right" id="ConfirmCmd"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</button>
 
-									<a href="{{ url('cancelOrder') }}" class="kt-link btn-lg kt-font-bold float-left"><i class="kt-nav__link-icon flaticon2-cancel-music"></i> Annuler la commande</a>
+									<a href="{{ url('cancelOrderProvider') }}" class="kt-link btn-lg kt-font-bold float-left"><i class="kt-nav__link-icon flaticon2-cancel-music"></i> Annuler la commande</a>
 									<center>
 									<button class="btn btn-dark btn-lg " id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé par Fournisseur</button></center>
 								</div>
@@ -292,9 +292,7 @@
 		                    <table class=" kt-datatable__table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
-		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-		                                    <span >#</span>
-		                                </th>
+		                                
 		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
 		                                    <span >Nom & Prénom</span>
 		                                </th>
@@ -308,11 +306,6 @@
 		                        <tbody class="kt-datatable__body ps ps--active-y" >
 		                            @foreach($clients as $client)
 		                                <tr data-row="0" id="tr'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
-		                                    <td class="kt-datatable__cell" data-field="RecordID">
-		                                        <span >
-		                                            <label class=""><strong>{{$client->hash}}</strong></label>
-		                                        </span>
-		                                    </td>
 		                                    <td class="kt-datatable__cell" data-field="RecordID">
 		                                        <span >
 		                                            <label class=""><strong>{{$client->name}}</strong></label>
@@ -500,7 +493,7 @@
 	                if (result.value) {
 	                    $.ajax({
 	                      type: "POST",
-	                      url: "{{URL::to('/confirmerCommande') }}",
+	                      url: "{{URL::to('/confirmerCommandeAchat') }}",
 	                      dataType: "json",
 	                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 	                      success:function(data){
@@ -567,7 +560,7 @@
 					var reste    =	$('#reste').val();
                     $.ajax({
                       type: "POST",
-                      url: "{{URL::to('/ClientCommande') }}",
+                      url: "{{URL::to('/ClientCommandeProvider') }}",
                       dataType: "json",
 					  data:{    
 					  		'idClient':idClient,
@@ -617,6 +610,117 @@
 	        }
  		})
 
+ 		$('body').on('mouseout, keyup ,change','.prixA',delay(function(){
+			var prixA   = $(this).val();
+ 			var rowid   = $(this).data('id');
+ 			$.ajax({
+	              type: "POST",
+	              url: "{{URL::to('/updatePriceA') }}",
+	              dataType: "json",
+				  data:{    
+				  		'rowid':rowid,
+						'prixA':prixA
+	                   },
+	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+	              success:function(data){
+	                if(data.err){
+	                    swal.fire(
+	                        'Eroor',
+	                        "une erreur s'est produite veuillez réessayer svp.",
+	                        'error'
+	                    )
+	                }else{
+
+	                   $('#tabProduct').empty();
+	                   	var cart = $.map(data.product, function(value, index) {
+						    return [value];
+						});
+	                	var op = '';
+	                	var source = "{!! asset('image/') !!}";
+	                	for(var i =0;i<cart.length;i++)
+	                	{
+	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+							op += '<div class="kt-user-card-v2__details">'                                
+							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+							
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+							
+							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+	                	}
+						$('#tabProduct').append(op);
+						//$('#tabProduct').load(' #tabProduct');
+						$('#totalCart').load(' #totalCart');   
+	                }
+	              }
+
+            })
+ 		},700)
+ 		)
+
+ 		$('body').on('mouseout, keyup ,change','.prixV',delay(function(){
+			var prixV   = $(this).val();
+ 			var rowid   = $(this).data('id');
+ 			$.ajax({
+	              type: "POST",
+	              url: "{{URL::to('/updatePriceV') }}",
+	              dataType: "json",
+				  data:{'rowid':rowid,
+						'prixV':prixV
+	                   },
+	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+	              success:function(data){
+	                if(data.err){
+	                    swal.fire(
+	                        'Eroor',
+	                        "une erreur s'est produite veuillez réessayer svp.",
+	                        'error'
+	                    )
+	                }else{
+	                    $('#tabProduct').empty();
+	                    var cart = $.map(data.product, function(value, index) {
+						    return [value];
+						});
+	                	var op = '';
+	                	var source = "{!! asset('image/') !!}";
+	                	for(var i =0;i<cart.length;i++)
+	                	{
+	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+							op += '<div class="kt-user-card-v2__details">'                                
+							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+							
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+							
+							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+	                	}
+						$('#tabProduct').append(op);
+						//$('#tabProduct').load(' #tabProduct');
+						$('#totalCart').load(' #totalCart');    
+	                }
+	              }
+
+            })},700)
+ 		)
+
  		$('.addToModel').on('click', function () {
  			$('#ClientName').empty();
  			$('#ClientName').append(' <i class="la la-user"></i>'+$(this).data('name'));
@@ -660,8 +764,8 @@
 							op += '<div class="kt-user-card-v2__details">'                                
 							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
 							
 							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 							
@@ -721,7 +825,6 @@
 	              data:{'id':id},
 	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 	              success:function(data){
-	              	console.log(data)
 	                if((!data.err)){
 	                	var cart = $.map(data.product, function(value, index) {
 						    return [value];
@@ -739,8 +842,8 @@
 							op += '<div class="kt-user-card-v2__details">'                                
 							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 							op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixAice+'" ></div></td>'
 							
 							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 							
@@ -815,8 +918,8 @@
 						op += '<div class="kt-user-card-v2__details">'                                
 						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 						
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixA+'" ></div></td>'
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
 						
 						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" style="width: 100px;" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
 						
@@ -858,24 +961,42 @@
 		          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 		          success:function(data){
 		            if(data.err){
-		            	if (data.message=='stock')
-		            	{
-		            		swal.fire(
-		                        'Eroor',
-		                        "le produit ñ est plus dans le stock (max = "+data.qty+" )",
-		                        'error'
-		                    )
-		                    $("#pQty"+id).val(data.cQty);
-		            	}else{
-		            		swal.fire(
-			                    'Eroor',
-			                    "une erreur s'est produite veuillez réessayer svp.",
-			                    'error'
-			                )
-		            	}
+	            		swal.fire(
+		                    'Eroor',
+		                    "une erreur s'est produite veuillez réessayer svp.",
+		                    'error'
+		                )
 		            }else{
-
-							$('#totalCart').load(' #totalCart');   
+		            	var cart = $.map(data.product, function(value, index) {
+					    return [value];
+						});
+	                	$('#tabProduct').empty();
+	                	var op = '';
+	                	var source = "{!! asset('image/') !!}";
+	                	for(var i =0;i<cart.length;i++)
+	                	{
+	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+							op += '<div class="kt-user-card-v2__details">'                                
+							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+							
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+							
+							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" style="width: 100px;" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+							
+							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+	                	}
+						$('#tabProduct').append(op);
+						//$('#tabProduct').load(' #tabProduct');
+						$('#totalCart').load(' #totalCart'); 
+						$('#totalCart').load(' #totalCart');   
 		            }
 		          }
 		    	})

@@ -175,15 +175,6 @@ if($data != null && !empty($data))
 							</div>
 						</div>
 						
-						
-						<div class="form-group ">
-							<div class="input-group ">
-								<div class="input-group-prepend">
-									<span class="input-group-text btn btn-primary">Quantité</span>
-								</div>
-								<input type="number" class="form-control" name="qty" value="{{$qty}}" aria-label="Amount (to the nearest dollar)" placeholder="0" {{$disabled}} required>
-							</div>
-						</div>
 						<div class="form-group form-group-last">
 							<label for="descp " class="input-group-text btn btn-primary">Description</label>
 							<textarea class="form-control" id="descp" name="descp" rows="3" placeholder="Description .... ">{{$descp}}</textarea>

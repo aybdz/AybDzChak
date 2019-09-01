@@ -77,6 +77,7 @@ Route::middleware('web')->group(function () {
 	Route::post('/addProvider', 'ProviderController@addProvider')->name('addProvider');
 	Route::post('/editProviderStatus', 'ProviderController@editProviderStatus')->name('editProviderStatus');
 	Route::get('/provider/{id}', 'ProviderController@showProvider')->name('provider');
+	Route::get('/providerDetails/{id}', 'ProviderController@showProviderDetails')->name('providerDetails');
 	Route::get('/AddProvider/{id}', 'ProviderController@showIndex')->name('AddProvider');
 	Route::post('/StoreProvider', 'ProviderController@store')->name('StoreProvider');
 	Route::post('/addCreditProvider', 'ProviderController@addCreditProvider')->name('addCreditProvider');
@@ -85,8 +86,14 @@ Route::middleware('web')->group(function () {
 	Route::get('/orderProvider', 'OrderProviderController@index')->name('orderProvider');
 	Route::post('/addCartProvider', 'OrderProviderController@addCart')->name('addCartProvider');
 	Route::post('/addCartPlusProvider', 'OrderProviderController@addCartPlus')->name('addCartPlusProvider');
+	Route::get('/cancelOrderProvider', 'OrderProviderController@cancelOrder')->name('cancelOrder');
+	Route::post('/deleteItemProvider', 'OrderProviderController@deleteItem')->name('deleteItem');
 	Route::post('/addCartStockProvider', 'OrderProviderController@addCartStock')->name('addCartStockProvider');
 	Route::post('/deleteItemProvider', 'OrderProviderController@deleteItem')->name('deleteItemProvider');
+	Route::post('/confirmerCommandeAchat', 'OrderProviderController@store');
+	Route::post('/ClientCommandeProvider', 'OrderProviderController@storeForProvider');
+	Route::post('/updatePriceA', 'OrderProviderController@updatePriceA')->name('updatePriceA');
+	Route::post('/updatePriceV', 'OrderProviderController@updatePriceV')->name('updatePriceV');
 
 
 

@@ -100,13 +100,13 @@ class ProductController extends Controller
             }else{
                 $product           = new Product;
                 $product->bareCode = $request->codeBarre ;
-                $product->qty      = $request->qty ;
+                $product->qty      = 0 ;
                 $type              = "add";  
             }
 
             $product->name      = $request->name ;
-            $product->priceA    = $request->priceA ;
-            $product->priceV    = $request->priceV ;
+            $product->priceA    = 0 ;
+            $product->priceV    = 0 ;
             $product->descp     = $request->descp ;
             $product->idUser    = Auth::user()->id;
             $save               = $product->save();
