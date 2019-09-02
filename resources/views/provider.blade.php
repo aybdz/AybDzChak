@@ -20,12 +20,12 @@ if (is_array($provider)){
                 Fournisseurs </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{ url('/providers') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url('/providers') }}" class="kt-subheader__breadcrumbs-link">
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
                     Fournisseur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->

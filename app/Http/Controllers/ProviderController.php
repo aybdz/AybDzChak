@@ -79,14 +79,14 @@ class ProviderController extends Controller
             return view('login');
         }
         $op = OrderProvider::findOrFail($id);
-        if ($op != null) {        
-            if ($op->id != 0) {
-            $provider = Provider::findOrFail($op->idProvider);
-            $stocks   = ProviderDetail::where('idOrder',$op->id)->get();
+        if ($op != null) { 
+            if ($op->idProvider != '0') {
+                $provider = Provider::findOrFail($op->idProvider);
+                $stocks   = ProviderDetail::where('idOrder',$op->id)->get();
             }else {
                 $provider['name'] = 'Aucun fournisseu';
                 $provider['id']   = '0';
-                $stocks           = ProviderDetail::where('idOrder','0')->get();
+                $stocks           = ProviderDetail::where('idOrder',$op->id )->get();
             }       
             return view('providerDetails')->with('provider',$provider)->with('stocks',$stocks);
         }else{
