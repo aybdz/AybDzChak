@@ -12,8 +12,16 @@ class Transaction extends Model
 	    return $this->belongsTo('App\Client', 'idClient', 'id');
 	}
 
+	public function Provider(){
+	    return $this->belongsTo('App\Provider', 'idClient', 'id');
+	}
+
 	public function Credit(){
 	    return $this->belongsTo('App\Credit', 'idCredit', 'id');
+	}
+
+	public function CreditProvider(){
+	    return $this->belongsTo('App\CreditProvider', 'idCredit', 'id');
 	}
 
 	public function Order(){

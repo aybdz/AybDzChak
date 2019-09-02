@@ -175,10 +175,7 @@
         </div> 
 
 
-
-
-
-
+        @if($Client->Transaction != null)
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -223,7 +220,7 @@
                                                 <td >
                                                     <div class="kt-user-card-v2__details"> 
                                                        <strong >
-                                                        @if($tran->type == "Commande")
+                                                        @if($tran->order != null && $tran->type == "Commande")
                                                             <a href="{{ url('order/'.$tran->order->id) }}">{{$tran->type}}</a>
                                                         @else
                                                             {{$tran->type}}
@@ -271,6 +268,9 @@
                 </div>
             </div>
         </div>
+        @endif
+
+        @if($Client->Order != null)
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -353,7 +353,7 @@
 
             </div>
         </div>
-
+        @endif
         <!--End::Section-->
     </div>
     <!--begin::Modal-->

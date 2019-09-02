@@ -217,6 +217,8 @@ if (is_array($provider)){
                                         <th data-field="RecordID" class="sorting">#</th>
                                         <th data-field="Status" class="sorting">Quantité acheté</th>
                                         <th data-field="Status" class="sorting">Total</th>
+                                        <th data-field="Status" class="sorting">Verse</th>
+                                        <th data-field="Status" class="sorting">Reste</th>
                                         <th data-field="Type"  class="sorting">Servir par</th>
                                         <th data-field="Type" class="sorting_desc">Date et heur</th>
                                         
@@ -236,6 +238,12 @@ if (is_array($provider)){
                                             </td>
                                             <td class="fournisseur-table ">
                                                    {{$stock->total.'.00 DA'}}
+                                            </td>
+                                            <td class="fournisseur-table ">
+                                                   {{$stock->CreditProvider->paid.'.00 DA'}}
+                                            </td>
+                                            <td class="fournisseur-table ">
+                                                   {{$stock->CreditProvider->staid.'.00 DA'}}
                                             </td>
                                             <td >
                                                 <div class="kt-user-card-v2">              

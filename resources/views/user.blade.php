@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "User")
+@section('title', "Admin : ".$user->name)
 @section('styles')
 @endsection
 @section('scripts')
@@ -147,6 +147,7 @@
                             </h3>
                         </div>
                     </div>
+
                     <div class="container kt-portlet__body kt-portlet__body--fit">
                         <!--begin: Datatable -->
                             <div class="table-responsive">
@@ -165,25 +166,41 @@
                                     <tbody  >
                                         @foreach($Trasactions as $Trasaction)
                                             <tr >
+
                                                 <td >{{$Trasaction->hash}}</td>
                                                 <td >{{$Trasaction->type}}</td>
-                                                <td ><h4>{{$Trasaction->amount}} DA</h4></td>
-                                                @if($Trasaction->idClient != '0')
-                                                <td><a href="{{ url('client/'.$Trasaction->idClient) }}">{{$Trasaction->Client->hash}}</a></td>
+                                                <td ><h4>{{$Trasaction->amount.',00 DA'}}</h4></td>
+                                                @if($Trasaction->Client != null && $Trasaction->idClient != '0')
+                                                    @if($Trasaction->type == "Commande d'achat")
+                                                        <td><a href="{{ url('provider/'.$Trasaction->Provider->id) }}">{{$Trasaction->Provider->name}}</a></td>
+                                                    @elseif($Trasaction->type == 'Commande')
+                                                        <td><a href="{{ url('client/'.$Trasaction->Client->id) }}">{{$Trasaction->Client->name}}</a></td>
+                                                    @endif
                                                 @else
-                                                <td>Pas un client</td>
+                                                    @if($Trasaction->type == "Commande d'achat")
+                                                        <td>aucun fournisseur</td>
+                                                    @elseif($Trasaction->type == 'Commande')
+                                                        <td>Pas un client</td>
+                                                    @endif
                                                 @endif
-                                                @if($Trasaction->idCredit != '0')
-                                                <td><a href="{{ url('credit/'.$Trasaction->idCredit) }}">{{$Trasaction->idCredit}}</a></td>
+                                                @if($Trasaction->Credit != null && $Trasaction->idCredit != '0')
+                                                    @if($Trasaction->type == "Commande d'achat")
+                                                        <td>{{$Trasaction->CreditProvider->staid .',00 DA'}}</td>
+                                                    @elseif($Trasaction->type == 'Commande')
+                                                        <td><a href="{{ url('credit/'.$Trasaction->idCredit) }}">{{$Trasaction->Credit->staid .' ,00 DA'}}</a></td>
+                                                    @endif
+                                                
                                                 @else
-                                                <td>Pas un Credit</td>
+                                                <td>Pas de Credit</td>
                                                 @endif
-                                                @if($Trasaction->idOrder != '0')
+                                                @if($Trasaction->Order != null && $Trasaction->idOrder != '0')
                                                 <td><a href="{{ url('order/'.$Trasaction->idOrder) }}">{{$Trasaction->Order->hash}}</a></td>
+
                                                 @else
                                                 <td>Pas une Commande</td>
                                                 @endif
                                                 <td >{{$Trasaction->created_at}}</td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -194,6 +211,7 @@
                 </div>
             </div>
         </div>
+        @if($user->Stock != null)
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -275,6 +293,8 @@
                 </div>
             </div>
         </div>
+        @endif
+        @if($user->productUpdate != null)
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -374,6 +394,7 @@
 
             </div>
         </div>
+        @endif
 
         <!--End::Section-->
     </div>

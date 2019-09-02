@@ -577,6 +577,13 @@
                                 'error'
                             )
                         }else{
+                        	swal.fire({
+								  position: 'top-end',
+								  type: 'success',
+								  title: 'La commande a été bien enregistré !',
+								  showConfirmButton: false,
+								  timer: 1000
+								})  
                             $('#tabProduct').load(' #tabProduct');
 							$('#totalCart').load(' #totalCart');
 							$('#CloseConfirmeCommande').click();   

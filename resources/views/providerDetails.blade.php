@@ -173,9 +173,24 @@ if (is_array($provider)){
                                      Crédit : <strong>  {{$provider->credit}} ,00  DA </strong>
                                     </p></div>
                                 </div>
-
+                                <div class="client-st">
+                                    <p class="command-prix total">
+                                     Total : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->total}} ,00  DA </strong>
+                                    </p>
+                                </div>
+                                <div class="client-st">
+                                    <p class="command-prix total">
+                                     Verse : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->paid}} ,00  DA </strong>
+                                    </p>
+                                </div>
+                                <div class="client-st">
+                                    <p class="command-prix total">
+                                     Reste : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->staid}} ,00  DA </strong>
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -204,7 +219,9 @@ if (is_array($provider)){
                 <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm tabels-heades-">
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
-                            Details des commandes du fournnisseur <strong>{{$title}}</strong> 
+                            Details des commandes du fournnisseur <strong>{{$title}}</strong>
+                            {{$stocks[0]->OrderProvider->CreditProvider->paid.'.00 DA'}}
+                            {{$stocks[0]->OrderProvider->CreditProvider->staid.'.00 DA'}}
                         </h3>
                     </div>
                 </div>
@@ -297,7 +314,7 @@ if (is_array($provider)){
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#userTable').DataTable();
+        $('#stockTable').DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">
