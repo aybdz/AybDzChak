@@ -27,6 +27,10 @@ class Transaction extends Model
 	public function Order(){
 	    return $this->hasOne('App\Order', 'id', 'idOrder');
 	}
+
+	public function OrderProvider(){
+	    return $this->hasOne('App\OrderProvider', 'id', 'idOrder');
+	}
 	
 	public function User(){
 	    return $this->belongsTo('App\User', 'idUser', 'id');

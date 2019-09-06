@@ -163,17 +163,25 @@ class OrderController extends Controller
         $verse    = $request->verse;
         $total    = $request->totalCmd;
         $reste    = $request->reste;
-        $cc       = new ClientController();
-        $cc->addCredit($reste,$idClient);
-        $err      = $this->SaveOrder($verse,$idClient);
+        $type     = $request->typeClient;
+        if ($type = 'store') {
+            $cc       = new StoreController();
+            $cc->addProductToStore($idClient);
+            $cc->addCredit($reste,$idClient);
+        }elseif ($type = 'client') {
+            $cc       = new ClientController();
+            $cc->addCredit($reste,$idClient);
+        }
+        
+        $err      = $this->SaveOrder($verse,$type,$idClient);
         
         return response()->json($err);
     }
 
-    public function SaveOrder($verse , $idClient = '0' )
+    public function SaveOrder($verse,$type = 'client' , $idClient = '0' )
     {
         $err             = false;
-        DB::transaction(function () use($err , $verse , $idClient ){
+        DB::transaction(function () use($err , $verse , $idClient,$type ){
             $total            = (int)str_replace(',','',Cart::subTotal());
             $credit           = new Credit;
             $credit->idOrder  = '0';
@@ -185,6 +193,9 @@ class OrderController extends Controller
             $order            = new Order;
             $order->hash      = $this->get_hashOrder();
             $order->idClient  = $idClient;
+            if ($type == 'store') {
+                $order->type  = 'store';
+            }       
             $order->idCredit  = $credit->id;
             $order->idUser    = Auth::user()->id;
             $order->total     = $total;
@@ -218,7 +229,12 @@ class OrderController extends Controller
                 DB::rollBack();
             }
             $tc = new TransactionController();
-            $tc->saveTransaction($verse , 'Commande' , $credit->id , $order->id , $idClient );
+            if ($type == 'store') {
+                $tc->saveTransaction($verse , 'Magasin' , $credit->id , $order->id , $idClient );
+            }else{
+                $tc->saveTransaction($verse , 'Commande' , $credit->id , $order->id , $idClient );
+            }
+            
         });
 
         if (!$err) {

@@ -173,9 +173,7 @@
                 </div>
             </div>
         </div> 
-
-
-        @if($Client->Transaction != null)
+        
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -209,7 +207,7 @@
                                     <tbody  >
 
                                            
-                                        @foreach($Client->Transaction as $tran)
+                                        @foreach($transactions as $tran)
                                             <tr data-row="0" id="tr'.{{$tran->id}}.'" >
 
                                                 <td class="kt-datatable__cell" data-field="RecordID">
@@ -268,9 +266,7 @@
                 </div>
             </div>
         </div>
-        @endif
 
-        @if($Client->Order != null)
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
@@ -304,7 +300,7 @@
                                     </thead>
                                     <tbody  >
 
-                                        @foreach($Client->Order as $Order)
+                                        @foreach($orders as $Order)
                                             <tr data-row="0" id="tr'.{{$Order->id}}.'">
                                                 <td class="kt-datatable__cell center" data-field="RecordID" >
                                                     <strong >
@@ -353,7 +349,6 @@
 
             </div>
         </div>
-        @endif
         <!--End::Section-->
     </div>
     <!--begin::Modal-->

@@ -13,12 +13,12 @@
                 Utilisateurs </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-link">
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
                     Utilisateur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
@@ -133,17 +133,17 @@
                                         @foreach($users as $user)
                                             <tr data-row="0" id="tr'.{{$user->id}}.'" class="kt-datatable__row" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID" style="padding-left:20px;">
-                                                    <span >
-                                                        <label class=""><strong>{{$user->userName}}</strong></label>
+                                                    <span ><a href="{{ url('user/'.$user->id) }}"    class="kt-nav__link" >
+                                                        <label class=""><strong>{{$user->userName}}</strong></label></a>
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipName" data-autohide-disabled="false" style="padding-left:20px;" class="kt-datatable__cell">
                                                     <span >                        
                                                         <div class="kt-user-card-v2"> 
                                                                                  
-                                                            <div class="kt-user-card-v2__details">                                
+                                                            <div class="kt-user-card-v2__details">    <a href="{{ url('user/'.$user->id) }}"    class="kt-nav__link" >                            
                                                                 <div class="kt-user-card-v2__name">{{$user->name}}
-                                                                </div>                                
+                                                                </div>    </a>                            
                                                             </div>                        
                                                         </div>
                                                     </span>
@@ -246,7 +246,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#userTable').DataTable();
+        $('#userTable').DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">

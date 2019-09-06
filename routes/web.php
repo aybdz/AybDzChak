@@ -96,6 +96,15 @@ Route::middleware('web')->group(function () {
 	Route::post('/updatePriceV', 'OrderProviderController@updatePriceV')->name('updatePriceV');
 
 
+	// store 
+	Route::get('/stores', 'StoreController@index')->name('stores');
+	Route::post('/addStore', 'StoreController@addStore')->name('addStore');
+	Route::post('/editStore', 'StoreController@editStore')->name('editStore');
+	Route::get('/store/{id}', 'StoreController@showStore')->name('showStore');
+	Route::get('/storeOrder/{id}', 'StoreController@storeOrder')->name('showStore');
+	Route::post('/editPriceV', 'StoreController@editPriceV')->name('editPriceV');
+	Route::post('/addCreditStore', 'StoreController@addCreditStore')->name('addCreditStore');
+	Route::post('/paidOrderStore', 'StoreController@paidOrderStore')->name('paidOrderStore');
 
 
 });

@@ -46,6 +46,7 @@
 				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/clients') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">Clients</span></a></li>
 
 				@if(Auth::user()->type == "su")
+				<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/stores') }}" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-store-alt	"></i><span class="kt-menu__link-text">Magasin</span></a></li>
 				<li class="kt-menu__item kt-menu__item--submenu kt-menu__item" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
 				    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 				        <rect id="bound" x="0" y="0" width="24" height="24"/>

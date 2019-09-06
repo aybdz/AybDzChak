@@ -217,7 +217,7 @@ class OrderProviderController extends Controller
                 DB::rollBack();
             }
             $tc = new TransactionController();
-            $tc->saveTransaction($verse , "Commande d'achat" , $credit->id , $order->id , $idClient );
+            $tc->saveTransaction(-$verse , "Commande d'achat" , $credit->id , $order->id , $idClient );
         });
 
         if (!$err) {

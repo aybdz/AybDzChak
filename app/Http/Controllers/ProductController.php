@@ -244,7 +244,7 @@ class ProductController extends Controller
             return view('login');
         }
         
-        $product        = Product::find($id);
+        $product        = Product::findOrFail($id);
         $stocks         = Stock::where('idProduct',$id)->get();
         $productUpdates = productUpdate::where('idProduct',$id)->get();
         return view('historique')->with('product',$product)->with('stocks',$stocks)->with('productUpdates',$productUpdates);

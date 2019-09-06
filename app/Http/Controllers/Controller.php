@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Client;
+use App\Store;
 
 use Auth;
 
@@ -27,7 +28,8 @@ class Controller extends BaseController
     {
     	if (Auth::check()) {
             $clients = Client::all();
-            return view('welcome')->with('clients',$clients);
+            $stores  = Store::all();
+            return view('welcome')->with('clients',$clients)->with('stores',$stores);
         }else{
             return view('login');
         }

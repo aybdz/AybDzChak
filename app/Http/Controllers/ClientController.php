@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Order;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -80,8 +82,10 @@ class ClientController extends Controller
         if (!Auth::check()) {
             return view('login');
         }
-        $client = Client::findOrFail($id);
-        return view('client')->with('Client',$client);
+        $client       = Client::findOrFail($id);
+        $orders       = Order::where('idClient',$client->id)->where('type','client')->get();
+        $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->get();
+        return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions);
     }
 
     public function addCredit($creditAdd,$idClient)

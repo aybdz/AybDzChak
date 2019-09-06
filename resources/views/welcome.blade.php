@@ -297,9 +297,6 @@
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
 		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-		                                    <span >#</span>
-		                                </th>
-		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
 		                                    <span >Nom & Prénom</span>
 		                                </th>
 		                                <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Téléphonne</span></th>
@@ -312,11 +309,7 @@
 		                        <tbody class="kt-datatable__body ps ps--active-y" >
 		                            @foreach($clients as $client)
 		                                <tr data-row="0" id="tr'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
-		                                    <td class="kt-datatable__cell" data-field="RecordID">
-		                                        <span >
-		                                            <label class=""><strong>{{$client->hash}}</strong></label>
-		                                        </span>
-		                                    </td>
+		                                    
 		                                    <td class="kt-datatable__cell" data-field="RecordID">
 		                                        <span >
 		                                            <label class=""><strong>{{$client->name}}</strong></label>
@@ -334,7 +327,34 @@
 		                                    </td>
 		                                    <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
 		                                        <span style="overflow: visible; position: relative;  " >
-		                                            <a class="btn btn-clean btn-sm btn-icon btn-icon-md addToModel" data-id="{{$client->id}}" data-name="{{$client->name}}" data-credit="{{$client->credit}}" data-phone="{{$client->telephonne}}" data-toggle="modal" data-target="#ConfirmeCommande">
+		                                            <a class="btn btn-clean btn-sm btn-icon btn-icon-md addToModel" data-id="{{$client->id}}" data-name="{{$client->name}}" data-credit="{{$client->credit}}" data-phone="{{$client->telephonne}}" data-phone="client"  data-toggle="modal" data-target="#ConfirmeCommande">
+		                                                <i class="flaticon-user-add"></i>
+		                                            </a>
+		                                        </span>
+		                                    </td>
+		                                </tr>
+		                            @endforeach
+		                            @foreach($stores as $store)
+		                                <tr data-row="0" id="tr'.{{$store->id}}.'" class="kt-datatable__row" style="left: 0px;">
+		                                    
+		                                    <td class="kt-datatable__cell" data-field="RecordID">
+		                                        <span >
+		                                            <label class=""><strong>{{$store->name}}</strong></label>
+		                                        </span>
+		                                    </td>
+		                                    <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
+		                                        <span >
+		                                            <span class="kt-font-bold">{{$store->telephonne}} </span>
+		                                        </span>
+		                                    </td>
+		                                    <td class="kt-datatable__cell" >
+		                                        <span >
+		                                            <label class=""><strong>{{$store->credit .' DA'}} </strong></label>
+		                                        </span>
+		                                    </td>
+		                                    <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell" style="text-align: center;">
+		                                        <span style="overflow: visible; position: relative;  " >
+		                                            <a class="btn btn-clean btn-sm btn-icon btn-icon-md addToModel" data-id="{{$store->id}}" data-name="{{$store->name}}" data-credit="{{$store->credit}}" data-phone="{{$store->telephonne}}" data-type="store" data-toggle="modal" data-target="#ConfirmeCommande">
 		                                                <i class="flaticon-user-add"></i>
 		                                            </a>
 		                                        </span>
@@ -378,6 +398,7 @@
 									<br>
 									<form class="form-inline">
 										<input type="hidden" id="IdClient">
+										<input type="hidden" id="typeClient">
 
 									<div class="col-lg-4">
 									<div class="labelforcommand" for="totalCmd">Total</div>
@@ -564,19 +585,21 @@
                 reverseButtons: true
             }).then(function(result){
                 if (result.value) {
-					var idClient = 	$('#IdClient').val();
-					var verse    =  $('#verse').val();
-					var totalCmd =	$('#totalCmd').val();
-					var reste    =	$('#reste').val();
+					var idClient   = $('#IdClient').val();
+					var typeClient = $('#typeClient').val();
+					var verse      = $('#verse').val();
+					var totalCmd   = $('#totalCmd').val();
+					var reste      = $('#reste').val();
                     $.ajax({
                       type: "POST",
                       url: "{{URL::to('/ClientCommande') }}",
                       dataType: "json",
 					  data:{    
-					  		'idClient':idClient,
-							'verse'	  :verse,
-							'totalCmd':totalCmd,
-							'reste'	  :reste
+								'idClient':idClient,
+								'typeClient':typeClient,
+								'verse'	  :verse,
+								'totalCmd':totalCmd,
+								'reste'	  :reste
 		                   },
                       headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                       success:function(data){
@@ -587,6 +610,13 @@
                                 'error'
                             )
                         }else{
+                        	swal.fire({
+								  position: 'top-end',
+								  type: 'success',
+								  title: 'La commande a été bien enregistré !',
+								  showConfirmButton: false,
+								  timer: 1000
+								})
                             $('#tabProduct').load(' #tabProduct');
 							$('#totalCart').load(' #totalCart');
 							$('#CloseConfirmeCommande').click();   
@@ -630,6 +660,7 @@
  			$('#totalCmd').val($('#totalCartVal').val());
  			$('#reste').val($('#totalCartVal').val());
  			$('#IdClient').val($(this).data('id'))
+ 			$('#typeClient').val($(this).data('type'))
  			$('#closeAddItemClient').click();
  		})
         $('#addClientTable').DataTable();

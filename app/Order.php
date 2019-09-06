@@ -27,4 +27,8 @@ class Order extends Model
 	public function Transaction(){
         return $this->hasMany('App\Transaction', 'idUser', 'id');
     }
+
+    public function Store(){
+	    return $this->belongsTo('App\Store', 'idClient', 'id');
+	}
 }

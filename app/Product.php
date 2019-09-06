@@ -19,4 +19,8 @@ class Product extends Model
     public function Stock(){
         return $this->hasMany('App\Stock', 'id', 'idProduct');
     }
+
+    public function StoreProduct(){
+        return $this->hasOne('App\StoreProduct',  'idProduct');
+    }
 }

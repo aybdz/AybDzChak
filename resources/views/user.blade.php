@@ -13,12 +13,12 @@
                 Utilisateurs </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-link">
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{{ url('/products') }}" class="kt-subheader__breadcrumbs-link">
+                <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
                     Utilisateur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
@@ -154,26 +154,34 @@
                                 <table class="table " id="trasactionTable" >
                                     <thead >
                                         <tr >
-                                            <th >#</th>
                                             <th >Type</th>
                                             <th >Montant</th>
-                                            <th >Client</th>
-                                            <th >Credit</th>
-                                            <th >Commande</th>
+                                            <th >Client (Fournisseur)</th>
                                             <th >Date</th>
                                         </tr>
                                     </thead>
                                     <tbody  >
                                         @foreach($Trasactions as $Trasaction)
                                             <tr >
-
-                                                <td >{{$Trasaction->hash}}</td>
-                                                <td >{{$Trasaction->type}}</td>
-                                                <td ><h4>{{$Trasaction->amount.',00 DA'}}</h4></td>
+                                                <td>
+                                                @if($Trasaction->idOrder != '0')
+                                                    @if($Trasaction->Order != null && $Trasaction->type == "Commande")
+                                                        <a href="{{ url('order/'.$Trasaction->idOrder) }}">{{$Trasaction->type.' - '.$Trasaction->Order->hash}}</a>
+                                                    @elseif($Trasaction->OrderProvider != null && $Trasaction->type == "Commande d'achat")
+                                                        <a href="{{ url('providerDetails/'.$Trasaction->idOrder) }}">{{$Trasaction->type.' - '.$Trasaction->OrderProvider->hash}}</a>
+                                                    @else
+                                                        Commande a ete supprimé
+                                                    @endif
+                                                @else
+                                                    {{$Trasaction->type}}
+                                                @endif
+                                               
+                                                </td>
+                                                <td ><h4>{{abs($Trasaction->amount).',00 DA'}}</h4></td>
                                                 @if($Trasaction->Client != null && $Trasaction->idClient != '0')
                                                     @if($Trasaction->type == "Commande d'achat")
                                                         <td><a href="{{ url('provider/'.$Trasaction->Provider->id) }}">{{$Trasaction->Provider->name}}</a></td>
-                                                    @elseif($Trasaction->type == 'Commande')
+                                                    @elseif($Trasaction->type == 'Commande' || $Trasaction->type == 'Versement')
                                                         <td><a href="{{ url('client/'.$Trasaction->Client->id) }}">{{$Trasaction->Client->name}}</a></td>
                                                     @endif
                                                 @else
@@ -183,23 +191,9 @@
                                                         <td>Pas un client</td>
                                                     @endif
                                                 @endif
-                                                @if($Trasaction->Credit != null && $Trasaction->idCredit != '0')
-                                                    @if($Trasaction->type == "Commande d'achat")
-                                                        <td>{{$Trasaction->CreditProvider->staid .',00 DA'}}</td>
-                                                    @elseif($Trasaction->type == 'Commande')
-                                                        <td><a href="{{ url('credit/'.$Trasaction->idCredit) }}">{{$Trasaction->Credit->staid .' ,00 DA'}}</a></td>
-                                                    @endif
+                                               
                                                 
-                                                @else
-                                                <td>Pas de Credit</td>
-                                                @endif
-                                                @if($Trasaction->Order != null && $Trasaction->idOrder != '0')
-                                                <td><a href="{{ url('order/'.$Trasaction->idOrder) }}">{{$Trasaction->Order->hash}}</a></td>
-
-                                                @else
-                                                <td>Pas une Commande</td>
-                                                @endif
-                                                <td >{{$Trasaction->created_at}}</td>
+                                                <td >{{\Carbon\Carbon::parse($Trasaction->created_at)->format('d/m/Y')}}</td>
 
                                             </tr>
                                         @endforeach
@@ -279,7 +273,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{$stock->created_at}}
+                                                        {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -379,7 +373,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{$productUpdate->created_at}}
+                                                        {{\Carbon\Carbon::parse($productUpdate->created_at)->format('d/m/Y')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -441,9 +435,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#userTable').DataTable();
-        $('#trasactionTable').DataTable();
-        $('#updateTable').DataTable();
+        $('#stockTable').DataTable().order( [ 5, 'desc' ] ).draw();
+        $('#trasactionTable').DataTable().order( [ 3, 'desc' ] ).draw();
+        $('#updateTable').DataTable().order( [ 3, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">

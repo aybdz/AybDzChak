@@ -103,65 +103,109 @@
 <!--end::Nav menus-->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
-         <div class="row ">
-            <div class="col ">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                                Commande : {{$orders[0]->Order->hash}}
+        <div class="row ">
+                <div class="col ">
+                    @if(isset($err) && $err)
+                        <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
+                    @endif
+                    <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
+                        <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                           
                         </div>
-                        <div class="kt-portlet__head-label ">
-                                Le : {{$orders[0]->Order->created_at}}
-                        </div>
-                        
-                    </div>
-                    <div class="container kt-widget3__item">
-                        <div class="kt-widget3__header">
-                            <div class="kt-avatar kt-avatar--outline kt-avatar--circle">
-                                @if($orders[0]->Order->Client != null)
-                                <img class="kt-avatar__holder" src="{{ asset('image/client/'.$orders[0]->Order->Client->img) }}" alt="">
-                                @endif
 
-                            </div>
+                        <div class="container kt-widget3__item">
+                            <div class="kt-widget3__header">
 
-                            <div class="kt-user-card__name">
-                             <p><strong  class="commande-header-profil name-st">
-                                  @if($orders[0]->Order->Client != null)
-                                      {{$orders[0]->Order->Client->name}}
-                                  @else
-                                    Type : commande sample
-                                  @endif
-                                </strong></p>
+                                <div class="kt-widget3__user-img">
+                                        <div class="form-group row">
+                                            <div class="col-lg-9 col-xl-6">
+                                                <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
+                                                    <div class="kt-avatar__holder" style="background-image: url({{ asset('image/store/'.$orders[0]->Order->Store->img) }})"></div>
+                                                
+                                                    <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+                                                        <i class="fa fa-times"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
 
-                                <p><strong class="commande-header-profil">
-                                    @if($orders[0]->Order->Client != null)
-                                    {{$orders[0]->Order->Client->telephonne}}
+
+                                <div class="kt-user-card__name">
+
+                                 <p><strong  class="commande-header-profil name-st">
+                                     {{$orders[0]->Order->Store->name}}
+                                    </strong></p>
+
+                                    <p><strong  class="commande-header-profil">
+                                    {{$orders[0]->Order->Store->telephonne}}
+                                    </strong></p>
+
+                                    <p><strong class="commande-header-profil">
+                                    {{$orders[0]->Order->Store->adress}}
+                                    </strong></p>
+
+                                </div>
+
+                                <div class="kt-widget3__status kt-font-info pull-right">
+                                    <?php /* $disabled = ""; ?>
+                                <div class="client-btn-st">
+                                    
+                                    @if(0 == (int)$store->credit )
+                                        <?php $disabled = "disabled"; ?>
                                     @endif
-                                </strong></p>
-					        </div>
+                                    <button type="button" data-toggle="modal" data-target="#versModal" data-credit="{{$store->credit}}" data-id="{{$store->id}}" id="btnVerse" class="btn btn-brand" {{$disabled}}>
+                                        <i class="flaticon-coins"></i> Verser
+                                    </button>
+                                     
+                                </div>
+                                <?php */ ?>
+                                <div class="client-st">
+                                    <p class="command-prix total">
+                                     Crédit : <strong>  {{$orders[0]->Order->Store->credit}} ,00  DA </strong>
+                                    </p></div>
+                                </div>
 
-                            <div class="kt-widget3__status kt-font-info pull-right">
-                                <p class="command-prix">
-                                    Total-acheter : <strong> {{$orders[0]->Order->total}},00 DA </strong>
-                                </p>
-                                @if($orders[0]->Order->Credit != null)
-                                 <p class="command-prix">
-                                    Verser : <strong> {{$orders[0]->Order->Credit->paid}},00  DA </strong>
-                                </p> 
-                                <p class="command-prix total">
-                                    Restant  : <strong> {{$orders[0]->Order->Credit->staid}},00  DA </strong>
-                                </p>
-                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>  
+
+        </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    Une erreur est survenu veuillez réessayer svp!
+                </div>
+            @endif
+            @if (\Session::has('err'))
+                @if(\Session::get('err'))
+                    <div class="alert alert-danger">
+                        Une erreur est survenu veuillez réessayer svp!
+                    </div>
+                @else
+                    <div class="alert alert-success">
+                        La commande a été bien enregistré
+                    </div>
+                @endif
+            @endif 
         <!-- begin table -->
         <div class="row">
             <div class="col">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile">
+                    <div class="kt-widget3__header">
+                        <div class="kt-widget3__status kt-font-info pull-right">
+                            <div class="client-btn-st">
+
+                                <?php $disabled = ""; ?>
+                                @if(0 == (int)$orders[0]->Order->Credit->staid )
+                                    <?php $disabled = "disabled"; ?>
+                                @endif
+                                <button type="button" data-toggle="modal" data-target="#versOrder" data-order="{{$orders[0]->Order->id}}"  data-total="{{$orders[0]->Order->total}}" data-staid="{{$orders[0]->Order->Credit->staid}}" data-paid="{{$orders[0]->Order->Credit->paid}}"  data-id="{{$orders[0]->Order->Store->id}}" class="btn btn-brand" id="btnPaye" {{$disabled}}>
+                                    <i class="flaticon-coins"></i>Payé la commande
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                         <br>
                     <div class="container">
                         <!--begin: Datatable -->
@@ -169,7 +213,7 @@
                                     <thead >
                                         <tr >
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Commande num°</span>
+                                                <span >#</span>
                                             </th>
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >Nom de produit</span>
@@ -178,14 +222,16 @@
                                                 <span >Prix d'uniter</span>
                                             </th>
                                             <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Quantité</span></th>
-                                            <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Prix total</span></th>
-                                            
-                                           
+                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Total</span></th>
+                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                                <span >Prix de vente</span>
+                                            </th>
+                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                                <span >Total vente</span>
+                                            </th>
                                         </tr>
                                     </thead>
-                                    <tbody  >
+                                    <tbody  > <?php $totalVente = 0; ?>
                                         @foreach($orders as $order)
                                             <tr data-row="0" id="tr'.{{$order->id}}.'" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
@@ -226,11 +272,34 @@
                                                        <strong>{{$order->priceV*$order->qty.',00  DA'}} </strong>
                                                     </span>
                                                 </td>
+                                                <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
+                                                    <span >
+                                                        <span class="kt-font-bold">{{$order->Product->StoreProduct->priceV.',00  DA'}} </span>
+                                                    </span>
+                                                </td>
+                                                <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
+                                                    <span >
+                                                        <span class="kt-font-bold">{{(int)$order->Product->StoreProduct->priceV*(int)$order->qty.',00  DA'}} </span>
+                                                        <?php $totalVente = $totalVente+ (int)$order->Product->StoreProduct->priceV*(int)$order->qty; ?>
+                                                    </span>
+                                                </td>
                                                 
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="client-st pull-right">
+                                    <p class="command-prix total">
+                                        <h3>Payé :<div class="pull-right">{{$orders[0]->Order->Credit->paid}},00  DA</div> </h3>
+                                        <h3>Reste:<div class="pull-right">{{$orders[0]->Order->Credit->staid}},00  DA </div></h1>
+                                        <h3>Total commande :<div class="pull-right">{{$orders[0]->Order->total}},00  DA</div> </h3>
+                                        <h3>Total magasin :<div class="pull-right">{{$totalVente}},00  DA</div> </h3>
+                                        <h1>Bénéfice :<div class="pull-right">{{(int)$totalVente-(int)$orders[0]->Order->total}},00  DA</div> </h1>
+                                    </p>
+                                </div>
+                                
+                            </div>
+
                         <!--end: Datatable -->
                     </div>
                 </div>
@@ -270,6 +339,90 @@
                     <button type="button" class="btn btn-secondary" id="closeClientUpdateModal" data-dismiss="modal">Close</button>
                     <button type="button" id="updateClient" class="btn btn-primary">Ajouter</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="versModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Versement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <form method="POST" action="{{ url('/addCreditStore') }}" id="addCreditstoreForm">
+                    <div class="modal-body">
+
+
+
+                            @csrf
+                            <input type="hidden" id="idStore" name="idStore">
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Credit:</label>
+                                <input type="text" class="form-control" id="credit" name="credit"  disabled="disabled">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Versement :</label>
+                                <input type="number" class="form-control" min="0" max="{{$orders[0]->Order->Store->credit}}" id="verse" name="verse"  required="required">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Reste :</label>
+                                <input type="text" class="form-control" id="rest"  name="rest"  disabled="disabled">
+                            </div>
+                            
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="closeUserUpdateModal" data-dismiss="modal">Close</button>
+                        <input type="submit"  class="btn btn-primary" value="Ajouter"> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="versOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Versement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <form method="POST" action="{{ url('/paidOrderStore') }}" id="addCreditstoreForm">
+                    <div class="modal-body">
+                            @csrf
+                            <input type="hidden" id="storeID" name="storeID">
+                            <input type="hidden" id="idOrder" name="idOrder">
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Total:</label>
+                                <input type="text" class="form-control" id="totalOrder" name="totalOrder"  disabled="disabled">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Payé  :</label>
+                                <input type="text" class="form-control" id="paidOrder"  name="paidOrder"  disabled="disabled">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Reste :</label>
+                                <input type="text" class="form-control" id="restOrder"  name="restOrder"  disabled="disabled">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Versement :</label>
+                                <input type="number" class="form-control" min="0" max="{{$orders[0]->Order->total}}" id="verseOrder" name="verseOrder"  required="required">
+                            </div>
+                            <div class="form-group" >
+                                <label for="recipient-name" class="form-control-label">Total Reste :</label>
+                                <input type="text" class="form-control" id="restTotal"  name="restTotal"  disabled="disabled">
+                            </div>
+                            
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="closeUserUpdateModal" data-dismiss="modal">Close</button>
+                        <input type="submit"  class="btn btn-primary" value="Ajouter"> 
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -331,61 +484,50 @@
             });
     }
 
-    $('.editClient').on('click',function(){
-        $('#id').val("");
-        $('#name').val("");
-        $('#adress').val("");
-        $('#telephonne').val("");
-        $('#id').val($(this).data('id'));
-        $('#name').val($(this).data('name'));
-        $('#adress').val($(this).data('adress'));
-        $('#telephonne').val($(this).data('telephonne'));
+    $('#btnVerse').on('click',function () {
+        $('#credit').val($(this).data('credit'))
+        $('#rest').val($(this).data('credit'))
+        $('#idStore').val($(this).data('id'))
     })
-        
-    $('#updateClient').on('click',function () {
-        var id         = $('#id').val();
-        var name       = $('#name').val();
-        var adress     = $('#adress').val();
-        var telephonne = $('#telephonne').val();
-        if ((name.length < 4) || (adress.length == 0)||(telephonne.length == 0)) {
-            swal.fire(
-                'Eroor',
-                "une erreur s'est produite veuillez vérifier tout les champ.",
-                'error'
-            )
+
+    $('#verse').on('mouseut, keyup ,change',function () {
+        var tc = $('#credit').val();
+        var v  = parseFloat($('#verse').val());
+        var t  = parseFloat(tc);
+        if ($('#verse').val() == "") {
+            $('#verse').val("0");
+        }else
+        if(v>t){
+            $('#verse').val(t);
+            $('#rest').val(0);
         }else{
-            $.ajax({
-              type: "POST",
-              url: "{{URL::to('/editClient') }}",
-              dataType: "json",
-              data:{  
-                'id'         :id,
-                'name'       :name,
-                'adress'     :adress,
-                'telephonne' :telephonne
-                },
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success:function(data){
-                if(data){
-                    swal.fire(
-                        'Eroor',
-                        "une erreur s'est produite veuillez réessayer svp.",
-                        'error'
-                    )
-                }else{
-                    $('#closeClientUpdateModal').click();
-                    swal.fire(
-                        'Modifier!',
-                        "le Client a été Modifier.",
-                        'success'
-                    )
-
-                }
-              }
-
-            })
+            $('#rest').val(t-v);
         }
-        
+    })
+
+    $('#btnPaye').on('click',function () {
+        $('#totalOrder').val($(this).data('total'))
+        $('#restOrder').val($(this).data('staid'))
+        $('#paidOrder').val($(this).data('paid'))
+        $('#restTotal').val($(this).data('staid'))
+        $('#storeID').val($(this).data('id'))
+        $('#idOrder').val($(this).data('order'))
+        alert($('#storeID').val())
+    })
+
+    $('#verseOrder').on('mouseut, keyup ,change',function () {
+        var tc = $('#restOrder').val();
+        var v  = parseFloat($('#verseOrder').val());
+        var t  = parseFloat(tc);
+        if ($('#verseOrder').val() == "") {
+            $('#verseOrder').val("0");
+        }else
+        if(v>t){
+            $('#verseOrder').val(t);
+            $('#restTotal').val(0);
+        }else{
+            $('#restTotal').val(t-v);
+        }
     })
 
     
