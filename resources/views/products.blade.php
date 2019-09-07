@@ -198,14 +198,7 @@
                                                                     <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
                                                                 </li>
                                                                 <li class="kt-nav__separator"></li>
-                                                                @if(Auth::user()->type == "su")
-                                                                <li class="kt-nav__item">
-                                                                    <a id="add{{$product->id}}" onclick="add_Product({{$product->id}},{{$product->qty}},{{$product->priceA}},'{{$product->priceV}}')"  class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_5">
-                                                                        <i class="kt-nav__link-icon flaticon2-add-1"></i>
-                                                                        <span class="kt-nav__link-text">Ajouter Au Stock</span>
-                                                                    </a>
-                                                                </li>
-                                                                @endif
+                                                                
                                                                 <li class="kt-nav__item">
                                                                     <a href="#"  onclick="delete_Product('{{$product->id}}')"   class="kt-nav__link" >
                                                                         <i class="kt-nav__link-icon flaticon2-delete"></i>
