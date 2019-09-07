@@ -2,7 +2,7 @@
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
 				<a href="{{ url('/') }}">
-					<img alt="Logo" src="{{ asset('assets/media/logos/logo-light.png')}}" />
+					<img alt="Logo" src="{{ asset('assets/media/logos/easy-shop.png')}}" />
 				</a>
 			</div>
 			<div class="kt-header-mobile__toolbar">
@@ -23,7 +23,7 @@
 					<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 						<div class="kt-aside__brand-logo">
 							<a href="{{ url('/') }}">
-								<img alt="Logo" src="{{ asset('assets/media/logos/logo-light.png')}}" />
+								<img alt="Logo" src="{{ asset('assets/media/logos/easy-shop.png')}}" />
 							</a>
 						</div>
 						<div class="kt-aside__brand-tools">

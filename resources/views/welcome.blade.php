@@ -14,9 +14,7 @@
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
                 <a href="{{ url('/dashboard') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="" class="kt-subheader__breadcrumbs-link">
-                    General </a>
+
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="" class="kt-subheader__breadcrumbs-link">
                     Dashboard </a>
@@ -26,17 +24,6 @@
         </div>
         <div class="kt-subheader__toolbar">
             <div class="kt-subheader__wrapper">
-                <a href="#" class="btn kt-subheader__btn-primary">
-                    Actions &nbsp;
-
-                    <!--<i class="flaticon2-calendar-1"></i>-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--sm">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect id="bound" x="0" y="0" width="24" height="24" />
-                            <rect id="Rectangle-8" fill="#000000" x="4" y="5" width="16" height="3" rx="1.5" />
-                            <path d="M7.5,11 L16.5,11 C17.3284271,11 18,11.6715729 18,12.5 C18,13.3284271 17.3284271,14 16.5,14 L7.5,14 C6.67157288,14 6,13.3284271 6,12.5 C6,11.6715729 6.67157288,11 7.5,11 Z M10.5,17 L13.5,17 C14.3284271,17 15,17.6715729 15,18.5 C15,19.3284271 14.3284271,20 13.5,20 L10.5,20 C9.67157288,20 9,19.3284271 9,18.5 C9,17.6715729 9.67157288,17 10.5,17 Z" id="Combined-Shape" fill="#000000" opacity="0.3" />
-                        </g>
-                    </svg> </a>
                 <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Quick actions" data-placement="left">
                     <a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success kt-svg-icon--md">
@@ -110,67 +97,19 @@
 								<br>
 							</h3>
 						</div>
-						<div class="kt-portlet__head-toolbar">
-							<div class="dropdown dropdown-inline">
-								<button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="flaticon-more-1"></i>
-								</button>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-md dropdown-menu-fit">
 
-									<!--begin::Nav-->
-									<ul class="kt-nav">
-										<li class="kt-nav__head">
-											Export Options
-											<i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
-										</li>
-										<li class="kt-nav__separator"></li>
-										<li class="kt-nav__item">
-											<a href="#" class="kt-nav__link">
-												<i class="kt-nav__link-icon flaticon2-drop"></i>
-												<span class="kt-nav__link-text">Activity</span>
-											</a>
-										</li>
-										<li class="kt-nav__item">
-											<a href="#" class="kt-nav__link">
-												<i class="kt-nav__link-icon flaticon2-calendar-8"></i>
-												<span class="kt-nav__link-text">FAQ</span>
-											</a>
-										</li>
-										<li class="kt-nav__item">
-											<a href="#" class="kt-nav__link">
-												<i class="kt-nav__link-icon flaticon2-link"></i>
-												<span class="kt-nav__link-text">Settings</span>
-											</a>
-										</li>
-										<li class="kt-nav__item">
-											<a href="#" class="kt-nav__link">
-												<i class="kt-nav__link-icon flaticon2-new-email"></i>
-												<span class="kt-nav__link-text">Support</span>
-												<span class="kt-nav__link-badge">
-													<span class="kt-badge kt-badge--success">5</span>
-												</span>
-											</a>
-										</li>
-										<li class="kt-nav__separator"></li>
-										<li class="kt-nav__foot">
-											<a class="btn btn-label-danger btn-bold btn-sm" href="#">Upgrade plan</a>
-											<a class="btn btn-clean btn-bold btn-sm" href="#" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more...">Learn more</a>
-										</li>
-									</ul>
-									<!--end::Nav-->
-								</div>
-							</div>
-						</div>
 					</div>
+
 					<div class="container">
-						<div class="col-lg-6 pull-right">
-							
-							<H1 class="form-text text-muted pull-right" id="totalCart">
+
+						<div class="col-md-6 col-sm-12 pull-right">
+							<h1 class="form-text totalcart" id="totalCart">
 								Total : {{Cart::subTotal()}} DA 
 								<input type="hidden" id="totalCartVal" value="{{Cart::subTotal()}}">
-							</H1>
+							</h1>
 						</div>
-						<div class="col-lg-6">
+
+						<div class="col-md-6 col-sm-12">
 							<form id="bareCodeFrom">
 								<div class="input-group">
 									<input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="Code Barre"  name="bareCode" id="bareCode">
@@ -188,24 +127,28 @@
 						</div>
 						
 					</div>
+
 					<div class="kt-portlet__body kt-portlet__body--fit" style=" padding-top: 20px;">
 
 						<!--begin: Datatable -->
 
-						<div class="kt-portlet__body kt-portlet__body--fit">
-							<div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-								<table class="kt-datatable__table" style="display: block; ">
+						<div class="container kt-portlet__body kt-portlet__body--fit">
+
+						<div class="table-responsive">
+								<table class="table ">
+
 									<thead class="kt-datatable__head">
 										<tr class="kt-datatable__row" >
-											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-												<span style="width: 150px; padding-left: 0px;"><label>Code à barres</span></th>
-											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 200px;">Produit</span></th>
-											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix</span></th>
-											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Qty</span></th>
-											<th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 200px;">Servir par</span></th>
-											<th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 80px;">Actions</span></th>
+										
+											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort"><span>Code à barres</span></th>
+											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span>Produit</span></th>
+											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span>Prix</span></th>
+											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span>Qty</span></th>
+											<th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span>Servir par</span></th>
+											<th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span>Actions</span></th>
 										</tr>
 									</thead>
+
 									<tbody class="kt-datatable__body ps ps--active-y" id="tabProduct" style="max-height: 446px;">
 										@foreach(Cart::content() as $product)
 											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
@@ -260,14 +203,21 @@
 							            @endforeach
 								    </tbody>
 								</table>
-								<br>
-								<div class="container">
-									<button  class="btn btn-brand btn-lg pull-right" id="ConfirmCmd"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</button>
-
-									<a href="{{ url('cancelOrder') }}" class="kt-link btn-lg kt-font-bold float-left"><i class="kt-nav__link-icon flaticon2-cancel-music"></i> Annuler la commande</a>
-									<center>
-									<button class="btn btn-dark btn-lg " id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé la commande de Client</button></center>
 								</div>
+								<br>
+
+								<div class="btncart-firstbox">
+								
+								</div>
+
+								<div class="btncart-box">
+										<button class="btn btn-outline-brand btn-elevate btn-pill btncart-mar" id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé la commande de Client</button>
+
+										<button  class="btn btn-outline-brand btn-elevate btn-circle btn-icon btncart-mar" id="ConfirmCmd"><i class="la la-check"></i> <span class="description-text">Confirmer la commande</span></button>
+
+										<a href="{{ url('cancelOrder') }}" class="btn btn-outline-brand btn-elevate btn-circle btn-icon"><i class="la la-close"></i><span class="description-text">Annuler la commande</span></a>
+								</div>
+
 							</div>
 						<!--end: Datatable -->
 						</div>
