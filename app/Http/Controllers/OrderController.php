@@ -164,7 +164,7 @@ class OrderController extends Controller
         $total    = $request->totalCmd;
         $reste    = $request->reste;
         $type     = $request->typeClient;
-        if ($type = 'store') {
+        if ($type == 'store') {
             $cc       = new StoreController();
             $cc->addProductToStore($idClient);
             $cc->addCredit($reste,$idClient);

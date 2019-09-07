@@ -512,7 +512,6 @@
         $('#restTotal').val($(this).data('staid'))
         $('#storeID').val($(this).data('id'))
         $('#idOrder').val($(this).data('order'))
-        alert($('#storeID').val())
     })
 
     $('#verseOrder').on('mouseut, keyup ,change',function () {
