@@ -19,7 +19,7 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::middleware('web')->group(function () {
 
 	Route::get('/dashboard', 'Controller@dashboard')->name('dashboard');
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/home', 'Controller@dashboard')->name('home');
 
 	// product route 
 	Route::get('/products', 'ProductController@index')->name('products');

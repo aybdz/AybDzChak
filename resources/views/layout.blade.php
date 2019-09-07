@@ -76,10 +76,7 @@
 
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-  
-		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+		<script src="{{ asset('assets/vendors/general/jquery/dist/jquery.js') }}" type="text/javascript"></script>
 		<link rel="stylesheet" href="{{asset('css/dataTables.bootstrap.min.css')}}">
 
 		<!--begin::Page Vendors Styles(used by this page) -->
@@ -270,7 +267,7 @@
 		<script src="{{ asset('assets/vendors/general/moment/min/moment.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('assets/vendors/general/sticky-js/st/sticky.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/vendors/general/sticky-js/dist/sticky.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets/vendors/general/wnumb/wNumb.js') }}" type="text/javascript"></script>
 
 		<!--end:: Global Mandatory Vendors -->
