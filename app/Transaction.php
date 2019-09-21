@@ -12,6 +12,10 @@ class Transaction extends Model
 	    return $this->belongsTo('App\Client', 'idClient', 'id');
 	}
 
+	public function Store(){
+	    return $this->belongsTo('App\Store', 'idClient', 'id');
+	}
+
 	public function Provider(){
 	    return $this->belongsTo('App\Provider', 'idClient', 'id');
 	}

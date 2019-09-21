@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Credit;
 use App\Client;
 use App\Transaction;
+use App\Order;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -79,8 +80,10 @@ class CreditController extends Controller
                 }
             });
         }
-        $client = Client::findOrFail($request->idUser);
-        return view('client')->with('Client',$client)->with('err',$err);
+        $client       = Client::findOrFail($request->idUser);
+        $orders       = Order::where('idClient',$client->id)->where('type','client')->orderBy('created_at', 'desc')->get();
+        $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->orderBy('created_at', 'desc')->get();
+        return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions)->with('err',$err);
     }
 
     /**

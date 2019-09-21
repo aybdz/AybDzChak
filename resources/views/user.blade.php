@@ -178,22 +178,24 @@
                                                
                                                 </td>
                                                 <td ><h4>{{abs($Trasaction->amount).',00 DA'}}</h4></td>
-                                                @if($Trasaction->Client != null && $Trasaction->idClient != '0')
-                                                    @if($Trasaction->type == "Commande d'achat")
-                                                        <td><a href="{{ url('provider/'.$Trasaction->Provider->id) }}">{{$Trasaction->Provider->name}}</a></td>
-                                                    @elseif($Trasaction->type == 'Commande' || $Trasaction->type == 'Versement')
-                                                        <td><a href="{{ url('client/'.$Trasaction->Client->id) }}">{{$Trasaction->Client->name}}</a></td>
+                                                    @if($Trasaction->Client != null && $Trasaction->idClient != '0')
+                                                        @if($Trasaction->type == "Commande d'achat")
+                                                            <td><a href="{{ url('provider/'.$Trasaction->Provider->id) }}">{{$Trasaction->Provider->name}}</a></td>
+                                                        @elseif($Trasaction->type == 'Commande' || $Trasaction->type == 'Versement')
+                                                            <td><a href="{{ url('client/'.$Trasaction->Client->id) }}">{{$Trasaction->Client->name}}</a></td>
+                                                         @elseif($Trasaction->type == 'Magasin')
+                                                            <td><a href="{{ url('store/'.$Trasaction->Client->id) }}">{{$Trasaction->Store->name}}</a></td>
+                                                        @endif
+                                                    @else
+                                                        @if($Trasaction->type == "Commande d'achat")
+                                                            <td>aucun fournisseur</td>
+                                                        @elseif($Trasaction->type == 'Commande')
+                                                            <td>Pas un client</td>
+                                                        @else
+                                                            <td>well</td>
+                                                        @endif
                                                     @endif
-                                                @else
-                                                    @if($Trasaction->type == "Commande d'achat")
-                                                        <td>aucun fournisseur</td>
-                                                    @elseif($Trasaction->type == 'Commande')
-                                                        <td>Pas un client</td>
-                                                    @endif
-                                                @endif
-                                               
-                                                
-                                                <td >{{\Carbon\Carbon::parse($Trasaction->created_at)->format('d/m/Y')}}</td>
+                                                <td >{{\Carbon\Carbon::parse($Trasaction->created_at)->format('d/m/Y  H:m')}}</td>
 
                                             </tr>
                                         @endforeach
@@ -273,7 +275,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y')}}
+                                                        {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y  H:m')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -373,7 +375,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($productUpdate->created_at)->format('d/m/Y')}}
+                                                        {{\Carbon\Carbon::parse($productUpdate->created_at)->format('d/m/Y  H:m')}}
                                                     </strong>
                                                 </td>
                                                 

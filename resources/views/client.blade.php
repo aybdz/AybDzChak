@@ -104,8 +104,12 @@
         <!--Begin::Section-->
           <div class="row ">
             <div class="col ">
-                @if(isset($err) && $err)
-                    <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
+                @if(isset($err))
+                    @if($err)
+                        <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
+                    @else
+                        <div class="alert alert-success" role="alert">Le versement a été bien Inser</div>
+                    @endif
                 @endif
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
                     <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
@@ -205,12 +209,10 @@
                                         </tr>
                                     </thead>
                                     <tbody  >
-
-                                           
                                         @foreach($transactions as $tran)
-                                            <tr data-row="0" id="tr'.{{$tran->id}}.'" >
+                                            <tr id="tr'.{{$tran->id}}.'" >
 
-                                                <td class="kt-datatable__cell" data-field="RecordID">
+                                                <td >
                                                     <strong >
                                                         {{$tran->hash}}
                                                     </strong>
@@ -233,7 +235,6 @@
                                                         </strong>
                                                     </div>
                                                 </td>
-                                                
                                                 <td >
                                                     <a href="{{ url('user/'.$tran->user->id) }}">
                                                         <span >
@@ -250,9 +251,9 @@
                                                         </span>
                                                     </a>
                                                 </td>
-                                                <td class="kt-datatable__cell" data-field="RecordID">
+                                                <td >
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('d/m/Y')}}
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('d/m/Y  H:m')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -334,7 +335,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('d/m/Y')}}
+                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('d/m/Y  H:m')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -392,8 +393,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tranTable').DataTable().DataTable().order( [ 4, 'desc' ] ).draw();
-        $('#cmdTable').DataTable().DataTable().order( [ 4, 'desc' ] ).draw();
+        $('#tranTable').DataTable().order( [ 4, 'desc' ] ).draw();
+        $('#cmdTable').DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">
