@@ -211,7 +211,6 @@
                                     <tbody  >
                                         @foreach($transactions as $tran)
                                             <tr id="tr'.{{$tran->id}}.'" >
-
                                                 <td >
                                                     <strong >
                                                         {{$tran->hash}}
@@ -305,7 +304,7 @@
                                             <tr data-row="0" id="tr'.{{$Order->id}}.'">
                                                 <td class="kt-datatable__cell center" data-field="RecordID" >
                                                     <strong >
-                                                        {{$Order->hash}}
+                                                       <a href="{{ url('order/'.$Order->id) }}"> {{$Order->hash}}</a>
                                                     </strong>
                                                 </td>
                                                 <td class="kt-datatable__cell center" data-field="RecordID" >

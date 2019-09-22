@@ -84,7 +84,7 @@ class ClientController extends Controller
         }
         $client       = Client::findOrFail($id);
         $orders       = Order::where('idClient',$client->id)->where('type','client')->orderBy('created_at', 'desc')->get();
-        $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->orderBy('created_at', 'desc')->get();
+        $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->orWhere('type','Versement')->orderBy('created_at', 'desc')->get();
         return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions);
     }
 
