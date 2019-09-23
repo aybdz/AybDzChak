@@ -162,7 +162,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" >
                                                     <span >
-                                                        <label><strong>{{\Carbon\Carbon::parse($order->created_at)->format('d/m/Y  H:m')}} </strong></label>
+                                                        <label><strong>{{\Carbon\Carbon::parse($order->created_at)->format('j  F Y / h:i')}} </strong></label>
                                                     </span>
                                                 </td>
                                                 <td >

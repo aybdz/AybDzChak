@@ -53,6 +53,7 @@ Route::middleware('web')->group(function () {
 	Route::post('/updateClient', 'ClientController@updateClient');
 	Route::post('/deleteClient', 'ClientController@removeClient')->name('deleteClient');
 	Route::get('/client/{id}', 'ClientController@showClient')->name('Client');
+	Route::post('/addCreditClient', 'ClientController@addCreditClient')->name('addCreditClient');
 
 	// Orders route
 	Route::get('/orders', 'OrderController@index')->name('orders');
@@ -66,7 +67,7 @@ Route::middleware('web')->group(function () {
 	Route::post('/deleteItem', 'OrderController@deleteItem')->name('deleteItem');
 
 	// credit 
-	Route::post('/addCredit', 'CreditController@store');
+	//Route::post('/addCredit', 'CreditController@store');
 
 
 	// statistics

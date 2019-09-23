@@ -104,8 +104,8 @@
         <!--Begin::Section-->
           <div class="row ">
             <div class="col ">
-                @if(isset($err))
-                    @if($err)
+                @if (\Session::has('err'))
+                    @if(\Session::get('err'))
                         <div class="alert alert-danger" role="alert">une erreur s'est produite veuillez réessayer</div>
                     @else
                         <div class="alert alert-success" role="alert">Le versement a été bien Inser</div>
@@ -252,7 +252,7 @@
                                                 </td>
                                                 <td >
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('d/m/Y  H:m')}}
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j  F Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -334,7 +334,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('d/m/Y  H:m')}}
+                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('j  F Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -360,7 +360,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                    <form method="POST" action="{{ url('addCredit') }}" >
+                <form method="POST" action="{{ url('addCreditClient') }}" >
                 <div class="modal-body">
                         @csrf
                         <input type="hidden" id="idUser" name="idUser">

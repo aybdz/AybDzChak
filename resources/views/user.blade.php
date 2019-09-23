@@ -195,7 +195,7 @@
                                                             <td>well</td>
                                                         @endif
                                                     @endif
-                                                <td >{{\Carbon\Carbon::parse($Trasaction->created_at)->format('d/m/Y  H:m')}}</td>
+                                                <td >{{\Carbon\Carbon::parse($Trasaction->created_at)->format('j  F Y / h:i')}}</td>
 
                                             </tr>
                                         @endforeach
@@ -275,7 +275,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y  H:m')}}
+                                                        {{\Carbon\Carbon::parse($stock->created_at)->format('j  F Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -375,7 +375,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($productUpdate->created_at)->format('d/m/Y  H:m')}}
+                                                        {{\Carbon\Carbon::parse($productUpdate->created_at)->format('j  F Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 

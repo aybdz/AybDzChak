@@ -258,7 +258,7 @@ if (is_array($provider)){
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
                                                
-                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('d/m/Y')}}
+                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('j  F Y / h:i')}}
                                                 
                                             </td>
                                         </tr>

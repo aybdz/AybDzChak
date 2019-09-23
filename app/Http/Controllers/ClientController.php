@@ -76,7 +76,7 @@ class ClientController extends Controller
         return redirect()->back()->with('err', $err);
     }
 
-    public function showClient($id)
+    public function showClient($id,$err = null)
     {
 
         if (!Auth::check()) {
@@ -85,7 +85,15 @@ class ClientController extends Controller
         $client       = Client::findOrFail($id);
         $orders       = Order::where('idClient',$client->id)->where('type','client')->orderBy('created_at', 'desc')->get();
         $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->orWhere('type','Versement')->orderBy('created_at', 'desc')->get();
-        return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions);
+        return view('client')->with('err',$err)->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions);
+    }
+
+    public function addCreditClient(Request $request)
+    {
+        $Cc = new CreditController();
+        $err = $Cc->editCredit($request->idUser,$request->verse);
+        
+        return  redirect()->back()->with('err', $err);
     }
 
     public function addCredit($creditAdd,$idClient)

@@ -64,7 +64,12 @@ class CreditController extends Controller
                     $sTc = $tc->saveTransaction((int)$request->verse,"Versement",$credit->id ,"0",$request->idUser);
                     if ($sTc) {
                         $client = Client::findOrFail($request->idUser);
-                        $client->credit = $client->credit-(int)$request->verse;
+                        $newC   = $client->credit-(int)$request->verse;
+                        if ($newC < 0) {
+                            $client->credit = 0;
+                        }else{
+                            $client->credit = $newC;
+                        }
                         $sC = $client->save();
                         if (!$sC) {
                             $err = true;
@@ -80,10 +85,12 @@ class CreditController extends Controller
                 }
             });
         }
-        $client       = Client::findOrFail($request->idUser);
+        $cc = new ClientController();
+        return $cc->showClient($request->idUser);
+        /*$client       = Client::findOrFail($request->idUser);
         $orders       = Order::where('idClient',$client->id)->where('type','client')->orderBy('created_at', 'desc')->get();
         $transactions = Transaction::where('idClient',$client->id)->where('type','Commande')->orWhere('type','Versement')->orderBy('created_at', 'desc')->get();
-        return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions)->with('err',$err);
+        return view('client')->with('Client',$client)->with('orders',$orders)->with('transactions',$transactions)->with('err',$err);*/
     }
 
     /**
@@ -95,6 +102,45 @@ class CreditController extends Controller
     public function show(Credit $credit)
     {
         //
+    }
+
+    public function editCredit($idUser,$verse)
+    {   $err = true;
+        if ($verse != "0" && is_numeric($verse)) {
+            $err = false;
+            DB::transaction(function () use($idUser,$verse ,$err){
+                $credit           = new Credit;
+                $credit->idOrder  = '0';
+                $credit->idClient = $idUser;
+                $credit->total    = (int)$verse;
+                $save = $credit->save();
+                if ($save) {
+                    $tc  = new TransactionController();
+                    $sTc = $tc->saveTransaction((int)$verse,"Versement",$credit->id ,"0",$idUser);
+                    if ($sTc) {
+                        $client = Client::findOrFail($idUser);
+                        $newC   = $client->credit-(int)$verse;
+                        if ($newC < 0) {
+                            $client->credit = 0;
+                        }else{
+                            $client->credit = $newC;
+                        }
+                        $sC = $client->save();
+                        if (!$sC) {
+                            $err = true;
+                            DB::rollBack();
+                        }
+                    }else{
+                        $err = true;
+                        DB::rollBack();
+                    }
+                }else{
+                    $err = true;
+                    DB::rollBack();
+                }
+            });
+        }
+        return $err;
     }
 
     /**
