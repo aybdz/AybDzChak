@@ -159,15 +159,7 @@ if (is_array($provider)){
                                 </div>
 
                                 <div class="kt-widget3__status kt-font-info pull-right">
-                                <div class="client-btn-st">
-                                    <?php $disabled = ""; ?>
-                                    @if(0 == (int)$provider->credit )
-                                        <?php $disabled = "disabled"; ?>
-                                    @endif
-                                    <button type="button" data-toggle="modal" data-target="#versModal" data-credit="{{$provider->credit}}" data-id="{{$provider->id}}" id="btnVerse" class="btn btn-brand" {{$disabled}}>
-                                        <i class="flaticon-coins"></i> Verser
-                                    </button>
-                                </div>
+                               
                                 <div class="client-st">
                                     <p class="command-prix total">
                                      Crédit : <strong>  {{$provider->credit}} ,00  DA </strong>

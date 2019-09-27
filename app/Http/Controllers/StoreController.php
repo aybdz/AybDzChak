@@ -99,14 +99,15 @@ class StoreController extends Controller
     	foreach (Cart::content() as $product) 
     	{
             $p  = Product::find($product->id);
-            $ep = StoreProduct::where('idProduct',$product->id)->first();
-            print_r($p != null && $ep == null);
-            if ($p != null && $ep == null) {
-				$od            = new StoreProduct;
-				$od->idProduct = $p->id;
-				$od->idStore   = $idStore;
-				$od->priceA    = $p->priceV;
-				$od->save();
+            if ($p != null) {
+                $ep = StoreProduct::where('idProduct','=',$product->id)->first();
+                if ($ep == null) {
+                    $sd            = new StoreProduct;
+                    $sd->idProduct = $p->id;
+                    $sd->idStore   = $idStore;
+                    $sd->priceA    = $product->price;
+                    $sd->save();
+                }
             }
         }   
    	}

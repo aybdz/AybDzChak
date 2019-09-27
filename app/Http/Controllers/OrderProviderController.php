@@ -112,7 +112,7 @@ class OrderProviderController extends Controller
 
     public function getRowId($id)
     {
-        foreach (Cart::content()  as $cart) {
+        foreach (Cart::instance('Provider')->content()  as $cart) {
             if ($cart->id == $id) {
                 return $cart->rowId;
             }

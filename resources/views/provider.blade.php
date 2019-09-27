@@ -258,7 +258,7 @@ if (is_array($provider)){
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
                                                
-                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('j  F Y / h:i')}}
+                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('j  F Y / H:i')}}
                                                 
                                             </td>
                                         </tr>
@@ -268,9 +268,98 @@ if (is_array($provider)){
                         </div>
                     <!--end: Datatable -->
                 </div>
+
             </div>
         </div>
     </div>
+     <div class="row">
+            <div class="col-xl-12">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Transaction
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="container kt-portlet__body kt-portlet__body--fit">
+                        <!--begin: Datatable -->
+                            <div class="table-responsive">
+                                <table class="table " id="tranTable" >
+                                    <thead >
+                                        <tr >
+                                            <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
+                                                <span >
+                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">#</span></th>
+                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                                <span >Type</span>
+                                            </th>
+                                            <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                                                <span >Montante</span>
+                                            </th>
+                                            <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Servir par</span></th>
+                                            <th data-field="Type" class="kt-datatable__cell kt-datatable__cell--sort"><span >Date et heur</span></th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody  >
+                                        @foreach($trans as $tran)
+                                            <tr id="tr'.{{$tran->id}}.'" >
+                                                <td >
+                                                    <strong >
+                                                        {{$tran->hash}}
+                                                    </strong>
+                                                </td>
+                                                <td >
+                                                    <div class="kt-user-card-v2__details"> 
+                                                       <strong >
+                                                        @if($tran->order != null && $tran->type == "Commande")
+                                                            <a href="{{ url('order/'.$tran->order->id) }}">{{$tran->type}}</a>
+                                                        @else
+                                                            {{$tran->type}}
+                                                        @endif
+                                                        </strong>
+                                                    </div>
+                                                </td>
+                                                <td >
+                                                    <div class="kt-user-card-v2__details"> 
+                                                       <strong >
+                                                            {{abs($tran->amount)}} DA
+                                                        </strong>
+                                                    </div>
+                                                </td>
+                                                <td >
+                                                    <a href="{{ url('user/'.$tran->user->id) }}">
+                                                        <span >
+                                                            <div class="kt-user-card-v2">  
+
+                                                                <div class="kt-user-card-v2__pic">                
+                                                                    <div class="kt-badge kt-badge--xl kt-badge--brand">{{($tran->user->name)[0]}}</div>  
+                                                                </div>                          
+                                                                <div class="kt-user-card-v2__details">                              
+                                                                    <a class="kt-user-card-v2__name" href="#">{{$tran->user->name}}</a>  
+                                                                    <span class="kt-user-card-v2__desc">Admin</span>        
+                                                                </div>                      
+                                                            </div>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                                <td >
+                                                    <strong >
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j  F Y / H:i')}}
+                                                    </strong>
+                                                </td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        <!--end: Datatable -->
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--End::Section-->
     </div>
     <!--begin::Modal-->

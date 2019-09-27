@@ -242,7 +242,7 @@
                 <div class="modal-body">
                 	<!--begin: Datatable -->
                     <div class=" kt-portlet__body kt-portlet__body--fit">
-                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
 		                    <table class=" kt-datatable__table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
@@ -363,7 +363,7 @@
 									<div class="col-lg-4">
 									<div class="labelforcommand" for="verse">Versement</div>
 									  <div class="input-group">
-									  <input type="text" class="form-control" placeholder="Versement" id="verse" >
+									  <input type="number" value="0" class="form-control" placeholder="Versement" id="verse" >
 									    <div class="input-group-prepend">
 									      <div class="input-group-text">DA</div>
 									    </div>
@@ -453,7 +453,7 @@
 
  		$('#ConfirmCmd').on('click',function() {
  			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(",", "");
+ 			var t = tc.replace(/\,/g, '');
  			if (parseFloat(t) == 0)
 			{
 				swal.fire(
@@ -510,7 +510,7 @@
 
  		$('#addItemClientBtn').on('click', function (e) {
  			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(",", "");
+ 			var t = tc.replace(/\,/g, '');
  			if (parseFloat(t) == 0)
 			{
 				$('#closeAddItemClient').click();
@@ -583,10 +583,14 @@
             });
  		})
 
- 		$('body').on('mouseout, keyup ,change','#verse',function () {
+ 		$('body').on('mouseout, keyup ,change','#verse',delay(function(){
 			var tc    = $('#totalCartVal').val();
-			var t     = tc.replace(",", "");
-			var reste = parseInt(parseFloat(t)-parseFloat($('#verse').val()));
+			var v     = $('#verse').val();
+			if (v == '') {
+				v= 0;
+			}
+			var t     = tc.replace(/\,/g, '');
+			var reste = parseInt(parseFloat(t)-parseFloat(v));
  			if ( reste < 0) {
 	            $('#verse').val('')
 	            $('#verse').val(t)
@@ -598,7 +602,7 @@
 	        }else{
 	        	$('#reste').val(reste)
 	        }
- 		})
+ 		},500))
 
  		$('.addToModel').on('click', function () {
  			$('#ClientName').empty();
@@ -616,7 +620,7 @@
         $('#addClientTable').DataTable();
 
     
-	  	$('body').on("mouseout, keyup ",'#bareCode',delay(function(){
+	  	$('body').on("mouseout,  keyup ,change ",'#bareCode',delay(function(){
 		  	if ($('#BCauto').is(':checked')){
 		  		var id = $('#bareCode').val();
 		 		$.ajax({
@@ -637,7 +641,7 @@
 	                	{
 	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
 							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].id+'</label></span></td>'
+							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
 							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
 							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
 							op += '<div class="kt-user-card-v2__details">'                                
@@ -670,7 +674,7 @@
 	                	{
 	                		opm += '<tr  class="kt-datatable__row">'
 							
-							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
+							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].options.bareCode+'</td>'
 							
 							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
 							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
@@ -760,7 +764,7 @@
 	                	{
 	                		opm += '<tr  class="kt-datatable__row">'
 							
-							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
+							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].options.bareCode+'</td>'
 							
 							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
 							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
@@ -865,7 +869,7 @@
 	  };
 	}
  	
-	 	$('body').on('mouseout, keyup ,blur,change','.pQty',function () {
+	 	$('body').on('mouseout,  keyup ,change','.pQty',delay(function(){
 			var id  = $(this).data('id');
 			var qty = $(this).val();
 			if (qty != '') {
@@ -899,7 +903,9 @@
 		          }
 		    	})
 	    	}
-	 	})
+
+		},500)
+	 	)
 
  	
  	$('body').on('click','.deletePrduct',function () {

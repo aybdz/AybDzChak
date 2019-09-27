@@ -8,6 +8,7 @@ use Auth;
 use App\Stock;
 use App\ProviderDetail;
 use App\OrderProvider;
+use App\Transaction;
 
 class ProviderController extends Controller
 {
@@ -61,16 +62,19 @@ class ProviderController extends Controller
         if (!Auth::check()) {
             return view('login');
         }
+        $trans = null;
         if ($id != 0) {
             $provider = Provider::findOrFail($id);
             $stocks   = OrderProvider::where('idProvider',$provider->id)->get();
+            $trans    = Transaction::where('idClient',$provider->id)->where('type',"Commande d'achat")->get();
         }else
         {
             $provider['name'] = 'Aucun fournisseu';
             $provider['id'] = '0';
             $stocks   = OrderProvider::where('idProvider','0')->get();
+            $trans    = Transaction::where('idClient','0')->where('type',"Commande d'achat")->get();
         }
-        return view('provider')->with('provider',$provider)->with('stocks',$stocks);
+        return view('provider')->with('provider',$provider)->with('stocks',$stocks)->with('trans',$trans);
     }
 
     public function showProviderDetails($id)

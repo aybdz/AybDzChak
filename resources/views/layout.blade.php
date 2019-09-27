@@ -248,6 +248,7 @@
 	                    "le Client a été bien  Ajouter.",
 	                    'success'
 	                )
+	                location.reload();
 	            }
 	          }
 

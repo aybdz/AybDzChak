@@ -239,6 +239,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach($storeProduct as $product)
+                                             @if($product->Product != null)
                                                 <tr data-row="{{$product->id}}" id="tr{{$product->id}}">
                                                     <td class="text-center">{{$product->Product->bareCode}}</td>
                                                     <td class="text-center">
@@ -269,6 +270,7 @@
                                                     </td>
                                                     
                                                 </tr>
+                                             @endif
                                             @endforeach 
                                         </tbody>
                                     </table>

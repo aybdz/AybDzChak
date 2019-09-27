@@ -2,7 +2,7 @@
 <?php 
     $title = $store->name;
 ?>
-@section('title', "Fournisseur : ".$title)
+@section('title', "Magasin : ".$title)
 @section('styles')
 @endsection
 @section('scripts')
@@ -13,7 +13,7 @@
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Fournisseurs </h3>
+                Magasins </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
                 <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
@@ -22,7 +22,7 @@
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
-                    Fournisseur </a>
+                    Magasin </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
@@ -256,7 +256,7 @@ aaa
                                                 </div>
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
-                                                {{\Carbon\Carbon::parse($order->created_at)->format('j  F Y / h:i')}}
+                                                {{\Carbon\Carbon::parse($order->created_at)->format('j  m Y / H:i')}}
                                             </td>
                                         </tr>
                                     @endforeach

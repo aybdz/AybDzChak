@@ -193,7 +193,7 @@
 						<!--begin: Datatable -->
 
 						<div class="kt-portlet__body kt-portlet__body--fit">
-							<div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
+							<div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders table-responsive" style="">
 								<table class="kt-datatable__table" style="display: block; ">
 									<thead class="kt-datatable__head">
 										<tr class="kt-datatable__row" >
@@ -381,7 +381,7 @@
 									<div class="col-lg-4">
 									<div class="labelforcommand" for="verse">Versement</div>
 									  <div class="input-group">
-									  <input type="text" class="form-control" placeholder="Versement" id="verse" >
+									  <input type="number" class="form-control" value="0" placeholder="Versement" id="verse" >
 									    <div class="input-group-prepend">
 									      <div class="input-group-text">DA</div>
 									    </div>
@@ -472,7 +472,7 @@
 
  		$('#ConfirmCmd').on('click',function() {
  			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(",", "");
+ 			var t = tc.replace(/\,/g, '');
  			if (parseFloat(t) == 0)
 			{
 				swal.fire(
@@ -529,7 +529,7 @@
 
  		$('#addItemClientBtn').on('click', function (e) {
  			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(",", "");
+ 			var t = tc.replace(/\,/g, '');
  			if (parseFloat(t) == 0)
 			{
 				$('#closeAddItemClient').click();
@@ -602,8 +602,12 @@
 
  		$('body').on('mouseout, keyup ,change','#verse',function () {
 			var tc    = $('#totalCartVal').val();
-			var t     = tc.replace(",", "");
-			var reste = parseInt(parseFloat(t)-parseFloat($('#verse').val()));
+			var v     = $('#verse').val();
+			if (v == '') {
+				v= 0;
+			}
+			var t     = tc.replace(/\,/g, '')//replace(",", "");
+			var reste = parseFloat(parseFloat(t)-parseFloat(v));
  			if ( reste < 0) {
 	            $('#verse').val('')
 	            $('#verse').val(t)
@@ -617,7 +621,7 @@
 	        }
  		})
 
- 		$('body').on('mouseout, keyup ,change','.prixA',delay(function(){
+ 		$('body').on('mouseout,  keyup ,change','.prixA',delay(function(){
 			var prixA   = $(this).val();
  			var rowid   = $(this).data('id');
  			$.ajax({
@@ -674,7 +678,7 @@
  		},700)
  		)
 
- 		$('body').on('mouseout, keyup ,change','.prixV',delay(function(){
+ 		$('body').on('mouseout,  keyup ,change','.prixV',delay(function(){
 			var prixV   = $(this).val();
  			var rowid   = $(this).data('id');
  			$.ajax({
@@ -743,7 +747,7 @@
         $('#addClientTable').DataTable();
 
     
-	  	$('body').on("mouseout, keyup ",'#bareCode',delay(function(){
+	  	$('body').on("mouseout,  keyup ,change ",'#bareCode',delay(function(){
 		  	if ($('#BCauto').is(':checked')){
 		  		var id = $('#bareCode').val();
 		 		$.ajax({
@@ -956,7 +960,7 @@
 	  };
 	}
  	
-	 	$('body').on('mouseout, keyup ,blur,change','.pQty',function () {
+	 	$('body').on('mouseout,  keyup ,change','.pQty',delay(function(){
 			var id  = $(this).data('id');
 			var qty = $(this).val();
 			if (qty != '') {
@@ -1008,7 +1012,7 @@
 		          }
 		    	})
 	    	}
-	 	})
+	 	},500))
 
  	
  	$('body').on('click','.deletePrduct',function () {
