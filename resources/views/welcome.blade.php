@@ -625,7 +625,7 @@
 		  		var id = $('#bareCode').val();
 		 		$.ajax({
 	              type: "POST",
-	              url: "{{URL::to('/addCart') }}",
+	              url: "{{ URL::to('/addCart') }}",
 	              dataType: "json",
 	              data:{'id':id},
 	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -674,7 +674,7 @@
 	                	{
 	                		opm += '<tr  class="kt-datatable__row">'
 							
-							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].options.bareCode+'</td>'
+							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
 							
 							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
 							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
@@ -715,7 +715,7 @@
 		  		var id = $('#bareCode').val();
 		 		$.ajax({
 	              type: "POST",
-	              url: "{{URL::to('/addCart') }}",
+	              url: "{{ URL::to('/addCart') }}",
 	              dataType: "json",
 	              data:{'id':id},
 	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
