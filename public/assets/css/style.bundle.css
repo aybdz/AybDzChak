@@ -33861,7 +33861,7 @@ h1.form-text.totalcart{
 }
 span.description-text {
   position: absolute;
-  top: 69%;
+margin-top: -45px    ;
   border: solid 1px;
   padding: 5px 12px;
   border-radius: 5px;
@@ -33880,6 +33880,14 @@ span.description-text {
 .btn-circle.btn-icon:hover span.description-text {
   visibility: visible;
   opacity:1;
+}
+
+table {
+  white-space: nowrap;
+}
+
+.btn.btn-icon.btn-icon-md [class^="flaticon-"], .btn.btn-icon.btn-icon-md [class*=" flaticon-"], .btn.btn-icon.btn-icon-md [class^="flaticon2-"], .btn.btn-icon.btn-icon-md [class*=" flaticon2-"] {
+    font-size: 1.4rem;
 }
 /*hide first tible item on mobile*/
 @media screen and (max-width: 1024px) {
@@ -33907,18 +33915,89 @@ span.description-text {
 .btncart-box {
   justify-content: flex-end;
 }
+div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
+    text-align: left !important;
+}
+}
+
+@media screen and (max-width: 630px) {
+    .kt-portlet__head.kt-portlet__head--lg.providers-st {
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+
+.kt-portlet__head.kt-portlet__head--lg.providers-st .kt-portlet__head-label {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.kt-portlet .kt-portlet__head.kt-portlet__head--lg {
+    min-height: 20px;
+}
+.kt-avatar .kt-avatar__holder {
+    width: 60px;
+    height: 60px; 
+}
+
+.kt-user-card__name p {
+    margin-bottom: 0px;
+    font-size: 10px;
+    line-height: 10px;
+}
+
+.commande-header-profil.name-st {
+    font-size: 14px;
+}
+
+p.command-prix {
+    font-size: 10px;
+    line-height: 8px;
+}
+
+p.command-prix.total strong {
+    color: #3fc7d1;
+    font-size: 12px;
+}
+strong.commande-header-profil {
+    padding-left: 10px;
+    font-size: 10px;
+        line-height: 21px;
+}
+.kt-portlet__head.kt-portlet__head--lg.kt-portlet__head--noborder.kt-portlet__head--break-sm.data-header {
+    min-height: 40px;
+}
+.kt-portlet__head.kt-portlet__head--lg.kt-portlet__head--noborder.kt-portlet__head--break-sm.client.-head {
+    min-height: 40px;
+}
+p.command-prix strong {
+    font-size: 12px;
+    font-weight: 400;
+}
 }
 
 @media screen and (max-width: 425px) {
 .btncart-box {
   justify-content: space-between;
 }
+div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
+    text-align: left !important;
+}
+.kt-portlet .kt-portlet__head .kt-portlet__head-label {
+    margin-right: 10px;
+}
+.kt-portlet .kt-portlet__head .kt-portlet__head-label .kt-portlet__head-title {
+    padding: 10px 0;
+    font-size: .8rem;
+}
+
 }
 
 @media screen and (max-width: 395px) {
   .btn.btncart-mar{
     font-size:0.8rem !important;
   }
+
 }
 
 @media screen and (max-width: 350px) {

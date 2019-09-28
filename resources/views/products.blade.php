@@ -104,20 +104,15 @@
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!-- begin:: Content -->
                         <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="alert alert-light alert-elevate" role="alert">
-                                <div class="alert-icon"><i class="flaticon-warning kt-font-brand"></i></div>
-                                <div class="alert-text">
-                                    DataTables fully supports colspan and rowspan in the table's header, assigning the required order listeners to the TH element suitable for that column.
-                                </div>
-                            </div>
+                            
                             <div class="kt-portlet kt-portlet--mobile">
                                 <div class="kt-portlet__head kt-portlet__head--lg">
                                     <div class="kt-portlet__head-label">
                                         <span class="kt-portlet__head-icon">
-                                            <i class="kt-font-brand flaticon2-line-chart"></i>
+                                            <i class="kt-font-brand flaticon2-box"></i>
                                         </span>
                                         <h3 class="kt-portlet__head-title">
-                                            Complex Header
+                                            Liste Des Produits 
                                         </h3>
                                     </div>
                                     <div class="kt-portlet__head-toolbar">
@@ -131,10 +126,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body">
+                                <div class="kt-portlet__body table-responsive">
 
                                     <!--begin: Datatable -->
-                                    <table class="table table-striped- table-bordered table-hover table-checkable" id="productTable">
+                                    <table class="table table-striped- table-bordered table-hover " id="productTable">
                                         <thead>
 
                                             <tr>
@@ -171,11 +166,7 @@
                                                         <td class="text-center">{{$product->priceA}} DA</td>
                                                     @endif
                                                     <td class="text-center">{{$product->priceV}} DA</td>
-                                                    <td class="text-center">
-                                                        <div class="kt-user-card-v2__details"> 
-                                                        <input class="form-control " style="width: 80px; text-align: center;"  type="text" value="{{$product->qty}}" id="pQty{{$product->id}}" disabled="disabled">
-                                                        </div>
-                                                    </td>
+                                                    <td class="text-center"><strong> {{$product->qty}} </strong> </td>
                                                     <td class="text-center">  
                                                         <div class="kt-user-card-v2">                           
                                                             <div class="kt-user-card-v2__pic">                              
@@ -207,7 +198,7 @@
                                                                 </li>
                                                                 <li class="kt-nav__item">
                                                                     <a href="{{ url('/AddProduct/'.$product->id) }}"  class="kt-nav__link">
-                                                                        <i class="kt-nav__link-icon  flaticon-visible"></i>
+                                                                        <i class="kt-nav__link-icon  flaticon-edit-1"></i>
                                                                         <span class="kt-nav__link-text">Modifier</span>
                                                                     </a>
                                                                 </li>

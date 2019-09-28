@@ -235,7 +235,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Liste des clients</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Liste Des Clients</h5>
                     <button type="button" class="close" data-dismiss="modal" id="closeAddItemClient" aria-label="Close">
                     </button>
                 </div>
@@ -243,7 +243,7 @@
                 	<!--begin: Datatable -->
                     <div class=" kt-portlet__body kt-portlet__body--fit">
                         <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+		                    <table class=" table table-striped table-bordered dataTable no-footer" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
 		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
@@ -252,7 +252,7 @@
 		                                <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Téléphonne</span></th>
 		                                <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
 		                                    <span >
-		                                    <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Crédit</span></th>
+		                                    <label class="kt-datatable__cell kt-datatable__cell--sort">Crédit</span></th>
 		                                <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span >Actions</span></th>
 		                            </tr>
 		                        </thead>
@@ -408,15 +408,15 @@
                 <div class="modal-body">
                 	<!--begin: Datatable -->
                     
-                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
+		                    <table class="table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
-		                                <th style="width:15%;" class="first-table-item">#</th>
-		                                <th style="width:40%;">Produit</th>
-		                                <th style="width:15%;">Prix</th>
-		                                <th style="width:15%;">Qty</th>
-		                                <th style="width:15%;">Actions</th>
+		                                <th  class="first-table-item">#</th>
+		                                <th >Produit</th>
+		                                <th >Prix</th>
+		                                <th >Qty</th>
+		                                <th >Actions</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody class="kt-datatable__body ps ps--active-y" id="tabMoreProduct" >

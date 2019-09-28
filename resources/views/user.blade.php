@@ -139,13 +139,16 @@
         </div>
         <div class="row">
             <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Trasactions
-                            </h3>
-                        </div>
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile " style="padding-bottom:20px;">
+                    <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des transaction
+                                </h3>
+                            </div>
                     </div>
 
                     <div class="container kt-portlet__body kt-portlet__body--fit">
@@ -210,13 +213,16 @@
         @if($user->Stock != null)
         <div class="row">
             <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Stock
-                            </h3>
-                        </div>
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile " style="padding-bottom:20px;">
+                    <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des Stocks
+                                </h3>
+                            </div>
                     </div>
                     <div class="container kt-portlet__body kt-portlet__body--fit">
                         <!--begin: Datatable -->
@@ -293,13 +299,16 @@
         @if($user->productUpdate != null)
         <div class="row">
             <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Mises à jour
-                            </h3>
-                        </div>
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile " style="padding-bottom:20px;">
+                    <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des Mises a jours
+                                </h3>
+                            </div>
                     </div>
                     <div class="container kt-portlet__body kt-portlet__body--fit">
                         <!--begin: Datatable -->

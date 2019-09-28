@@ -101,28 +101,28 @@
     </div>
 </div>
 
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!-- begin:: Content -->
                         <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
                             <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head kt-portlet__head--lg">
+                                <div class="kt-portlet__head kt-portlet__head--lg providers-st">
                                     <div class="kt-portlet__head-label">
                                         <span class="kt-portlet__head-icon">
-                                            <i class="kt-font-brand flaticon2-line-chart"></i>
+                                            <i class="kt-font-brand flaticon2-shopping-cart-1"></i>
                                         </span>
                                         <h3 class="kt-portlet__head-title">
                                             Fournisseurs
                                         </h3>
                                     </div>
                                     <div class="kt-portlet__head-toolbar">
-                                        <div class="kt-portlet__head-wrapper ">
-                                            <div class="kt-portlet__head-actions">
-                                                <a href="{{ url('/provider/0') }}" class="btn btn-secondary">
-                                                    <i class="fa fa-undo"></i>
-                                                    details d'achat <br>( aucun fournisseurs)
+                                        <div class="kt-portlet__head-wrapper " style="margin-right: 10px;">
+                                            <div class="kt-portlet__head-actions" >
+                                                <a href="{{ url('/provider/0') }}" class="btn btn-secondary" >
+                                                    <i class="fa flaticon-list-1"></i>
+                                                    details d'achat ( sans fournisseurs) 
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> 
+
                                         <div class="kt-portlet__head-wrapper ">
                                             <div class="kt-portlet__head-actions">
                                                 <a href="#" rel="nofollow" data-toggle="modal" data-target="#addProvider" class="btn btn-small btn-brand">
@@ -134,7 +134,7 @@
                                     </div>
 
                                 </div>
-                                <div class="kt-portlet__body">
+                                <div class="kt-portlet__body table-responsive">
 
                                     <!--begin: Datatable -->
                                     <table class="table table-striped- table-bordered table-hover table-checkable" id="productTable">
@@ -163,32 +163,19 @@
                                                             </div>                        
                                                         </div></a>
                                                     </td>  
-                                                    <td>
-                                                        <div class="kt-user-card-v2__details">    
-                                                            <div class="btn btn-bold">
-                                                                    {{$provider->telephonne}}
-                                                            </div>                                
-                                                        </div> 
-                                                    </td>                                                  
-                                                    <td>
-                                                        <div class="kt-user-card-v2__details">    
-                                                            <div class="btn btn-bold">
-                                                                    {{$provider->adress}}
-                                                            </div>                                
-                                                        </div> 
-                                                    </td>  
+                                                    <td> {{$provider->telephonne}}</td>                                                  
+                                                    <td> {{$provider->adress}} </td>  
                                                     <td>
                                                         @if($provider->status == '1')
-                                                        <span style="width: 100px;"><span class="btn btn-bold btn-sm btn-font-sm  btn-label-success">activer</span></span>
+                                                        <span class="btn btn-bold btn-sm btn-font-sm  btn-label-success">activer</span>
                                                         @else
-                                                        <span style="width: 100px;"><span class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">désactiver</span></span>
+                                                        <span class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">désactiver</span>
                                                         @endif
                                                     </td>  
                                                    
-                                                    <td>
-                                                        <div class="kt-user-card-v2__details"> 
-                                                        <input class="form-control" style="width: 80px; text-align: center;"  type="text" value="{{$provider->credit}} DA" id="pCredit{{$provider->credit}}" disabled="disabled">
-                                                        </div>
+                                                    <td><div class="kt-user-card-v2"> <div class="kt-user-card-v2__details">    
+                                                        <div class="kt-user-card-v2__name"  id="pCredit{{$provider->credit}}">{{$provider->credit}} DA</div>
+                                                        </div> </div>
                                                     </td>
 
                                                     <td > <span style="overflow: visible; position: relative;  " >
@@ -247,10 +234,7 @@
                         <!-- end:: Content -->
                         
 
-                        
-       
 
-    </div>
 
 
     <!--begin::Modal-->
