@@ -33870,6 +33870,7 @@ h1.form-text.totalcart{
   display: flex;
   -webkit-flex-flow: row wrap;
   justify-content: flex-end;
+  flex-wrap: nowrap;
 }
 .btncart-mar{
   margin-right: 10px;
@@ -33904,6 +33905,10 @@ table {
 .btn.btn-icon.btn-icon-md [class^="flaticon-"], .btn.btn-icon.btn-icon-md [class*=" flaticon-"], .btn.btn-icon.btn-icon-md [class^="flaticon2-"], .btn.btn-icon.btn-icon-md [class*=" flaticon2-"] {
     font-size: 1.4rem;
 }
+
+.table th, .table td {
+    vertical-align: middle;
+}
 /*hide first tible item on mobile*/
 @media screen and (max-width: 1024px) {
   .kt-header-mobile {
@@ -33927,9 +33932,7 @@ table {
 .first-table-item{
   display:none;
 }
-.btncart-box {
-  justify-content: flex-end;
-}
+
 div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
     text-align: left !important;
 }
@@ -34005,9 +34008,6 @@ p.command-prix strong {
 }
 
 @media screen and (max-width: 425px) {
-.btncart-box {
-  justify-content: space-between;
-}
 div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
     text-align: left !important;
 }
@@ -34025,7 +34025,10 @@ div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTab
   .btn.btncart-mar{
     font-size:0.8rem !important;
   }
-
+.btn.btncart-mar.fourni{
+    font-size:0.56rem !important;
+    font-weight: 600;
+  }
 }
 
 @media screen and (max-width: 350px) {
@@ -34033,4 +34036,5 @@ div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTab
     font-size:0.64rem !important;
     font-weight: 600;
   }
+  
 }
