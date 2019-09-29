@@ -115,7 +115,6 @@
 
                         <div class="container kt-widget3__item">
                             <div class="kt-widget3__header">
-
                                 <div class="kt-widget3__user-img">
                                         <div class="form-group row">
                                             <div class="col-lg-9 col-xl-6">
@@ -132,7 +131,6 @@
 
 
                                 <div class="kt-user-card__name">
-
                                  <p><strong  class="commande-header-profil name-st">
                                      {{$orders[0]->Order->Store->name}}
                                     </strong></p>
@@ -192,24 +190,34 @@
         <div class="row">
             <div class="col">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile">
-                    <div class="kt-widget3__header">
-                        <div class="kt-widget3__status kt-font-info pull-right">
-                            <div class="client-btn-st">
-
-                                <?php $disabled = ""; ?>
+                    
+                    <div class="kt-portlet__head kt-portlet__head--lg providers-st">
+                                    <div class="kt-portlet__head-label">
+                                        <span class="kt-portlet__head-icon">
+                                            <i class="kt-font-brand flaticon-list-1"></i>
+                                        </span>
+                                        <h3 class="kt-portlet__head-title">
+                                            Commande Détaillé
+                                        </h3>
+                                    </div>
+                                    <div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-wrapper ">
+                                            <div class="kt-portlet__head-actions">
+                                                <?php $disabled = ""; ?>
                                 @if(0 == (int)$orders[0]->Order->Credit->staid )
                                     <?php $disabled = "disabled"; ?>
                                 @endif
                                 <button type="button" data-toggle="modal" data-target="#versOrder" data-order="{{$orders[0]->Order->id}}"  data-total="{{$orders[0]->Order->total}}" data-staid="{{$orders[0]->Order->Credit->staid}}" data-paid="{{$orders[0]->Order->Credit->paid}}"  data-id="{{$orders[0]->Order->Store->id}}" class="btn btn-brand" id="btnPaye" {{$disabled}}>
                                     <i class="flaticon-coins"></i>Payé la commande
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-                        <br>
-                    <div class="container">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                    <div class="container table-responsive" style="padding-top: 20px;">
                         <!--begin: Datatable -->
-                                <table class="table table-striped table-bordered" id="userTable"  style="width:100%">
+                                <table class="table table-striped table-bordered "  id="userTable"  style="width:100%">
                                     <thead >
                                         <tr >
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
@@ -274,13 +282,21 @@
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
                                                     <span >
+                                                        @if($order->Product->StoreProduct != null)
                                                         <span class="kt-font-bold">{{$order->Product->StoreProduct->priceV.',00  DA'}} </span>
+                                                        @else
+                                                            <span class="kt-font-bold">00  DA </span>
+                                                        @endif
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
                                                     <span >
+                                                        @if($order->Product->StoreProduct != null)
                                                         <span class="kt-font-bold">{{(int)$order->Product->StoreProduct->priceV*(int)$order->qty.',00  DA'}} </span>
                                                         <?php $totalVente = $totalVente+ (int)$order->Product->StoreProduct->priceV*(int)$order->qty; ?>
+                                                        @else
+                                                            <span class="kt-font-bold">00  DA </span>
+                                                        @endif
                                                     </span>
                                                 </td>
                                                 
@@ -288,20 +304,65 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="client-st pull-right">
-                                    <p class="command-prix total">
-                                        <h3>Payé :<div class="pull-right">{{$orders[0]->Order->Credit->paid}},00  DA</div> </h3>
-                                        <h3>Reste:<div class="pull-right">{{$orders[0]->Order->Credit->staid}},00  DA </div></h1>
-                                        <h3>Total commande :<div class="pull-right">{{$orders[0]->Order->total}},00  DA</div> </h3>
-                                        <h3>Total magasin :<div class="pull-right">{{$totalVente}},00  DA</div> </h3>
-                                        <h1>Bénéfice :<div class="pull-right">{{(int)$totalVente-(int)$orders[0]->Order->total}},00  DA</div> </h1>
-                                    </p>
+</div>
+                                <!--begin:: Widgets/Applications/User/Profile3-->
+                                <div class="container">
+										<div class="kt-portlet__body">
+											<div class="kt-widget kt-widget--user-profile-3">
+												<div class="kt-widget__bottom">
+													<div class="kt-widget__item">
+														<div class="kt-widget__icon">
+															<i class="la la-money"></i>
+														</div>
+														<div class="kt-widget__details">
+															<span class="kt-widget__title">Payé</span>
+															<span class="kt-widget__value">{{$orders[0]->Order->Credit->paid}},00<span> DA</span> </span>
+														</div>
+													</div>
+													<div class="kt-widget__item">
+														<div class="kt-widget__icon">
+															<i class="la la-dollar"></i>
+														</div>
+														<div class="kt-widget__details">
+															<span class="kt-widget__title">Restant</span>
+                                                            <span class="kt-widget__value">{{$orders[0]->Order->Credit->staid}},00<span> DA</span></span>
+														</div>
+													</div>
+													<div class="kt-widget__item">
+														<div class="kt-widget__icon">
+															<i class="flaticon-list"></i>
+														</div>
+														<div class="kt-widget__details">
+															<span class="kt-widget__title">Total de la commande </span>
+                                                            <span class="kt-widget__value">{{$orders[0]->Order->total}},00<span>  DA</span></span>
+														</div>
+                                                    </div>
+                                                    <div class="kt-widget__item">
+														<div class="kt-widget__icon">
+															<i class="flaticon-business"></i>
+														</div>
+														<div class="kt-widget__details">
+															<span class="kt-widget__title">Total du magasin</span>
+                                                            <span class="kt-widget__value">{{$totalVente}},00<span>  DA</span></span>
+														</div>
+                                                    </div>
+                                                    <div class="kt-widget__item">
+														<div class="kt-widget__icon">
+															<i class="flaticon-confetti"></i>
+														</div>
+														<div class="kt-widget__details">
+															<span class="kt-widget__title">Bénéfice</span>
+															<span class="kt-widget__value">{{(int)$totalVente-(int)$orders[0]->Order->total}},00<span>  DA</span></span>
+														</div>
+													</div>
+													
+												</div>
+											</div>
+										</div>
                                 </div>
-                                
-                            </div>
 
                         <!--end: Datatable -->
-                    </div>
+                    
                 </div>
             </div>
         </div>

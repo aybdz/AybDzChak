@@ -334,13 +334,10 @@
 							<div class="kt-widget kt-widget--user-profile-3">
 								<div class="kt-widget__top">
 									<div class="kt-widget__content">
-										<div class="kt-widget__head">
-											
-										</div>
 										<div class="row kt-widget__subhead">
-										    <h3 class="col-4" href="#"  id="ClientName" ></h3>
-											<h3 class="col-4" href="#" id="ClientPhone"></h3>
-											<h3 class="col-4 credit-c" href="#"  id="ClientCredit"></h3>
+										    <div class="pop-header" id="ClientName" ></div>
+											<div class="pop-header" href="#" id="ClientPhone"></div>
+											<div class="pop-header credit-c" href="#"  id="ClientCredit"></div>
 										</div>
 									</div>
 								</div>

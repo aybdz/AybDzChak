@@ -33686,17 +33686,32 @@ body {
 
 
 /** Style added **/
-
-.kt-widget__subhead h3 {
-  font-size: 20px;
-  color: #6c7293;
-  line-height:24px;
+.row.kt-widget__subhead {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
 }
-.kt-widget__subhead>h3.col-4.credit-c {
-  color: #fd397a;
-      font-size: 22px;
+
+.row.kt-widget__subhead > * {
+    flex: 1 100%;
+}
+
+
+.row.kt-widget__subhead .pop-header {
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    flex: 2 auto;
+}
+
+.row.kt-widget__subhead .pop-header.credit-c {
+   flex: 2 auto;
+   color: #fd397a;
+      font-size: 18px;
       font-weight: 600;
-    }
+}
+
 .kt-widget__subhead i {
   padding-right: 5px;
   font-size: 22px;
@@ -33973,6 +33988,19 @@ strong.commande-header-profil {
 p.command-prix strong {
     font-size: 12px;
     font-weight: 400;
+}
+.row.kt-widget__subhead h3 {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: space-around;
+    margin:10px 20px;
+}
+.kt-widget__subhead>h3.col-4.credit-c {
+    font-size: 18px;
+}
+.kt-widget__subhead h3 {
+    font-size: 14px;
 }
 }
 
