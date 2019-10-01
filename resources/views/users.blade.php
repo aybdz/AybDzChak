@@ -104,18 +104,21 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Produits
-                            </h3>
-                        </div>
+                     <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                                    <div class="kt-portlet__head-label">
+                                        <span class="kt-portlet__head-icon">
+                                            <i class="kt-font-brand flaticon-users"></i>
+                                        </span>
+                                        <h3 class="kt-portlet__head-title">
+                                            Liste Des Utilisateurs
+                                        </h3>
+                                    </div>
                     </div>
                    <div class="kt-portlet__body">
                         <!--begin: Datatable -->
                         <div class=" kt-portlet__body kt-portlet__body--fit">
-                            <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-                                <table class="table table-striped- table-bordered table-hover table-checkable" id="userTable" >
+                            <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
+                                <table class="table table-striped- table-bordered table-hover table-checkable " id="userTable" >
                                     <thead class="kt-datatable__head coll">
                                         <tr class="kt-datatable__row" style="left: 0px;">
                                             <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">

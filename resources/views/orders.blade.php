@@ -104,16 +104,19 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Commandes
-                            </h3>
-                        </div>
+                     <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des Commandes
+                                </h3>
+                            </div>
                     </div>
-                    <div class="container">
+                    <div class="container table-responsive" style="margin-bottom: 20px;">
                         <!--begin: Datatable -->
-                                <table class="table table-striped table-bordered" id="userTable"  style="width:100%">
+                                <table class="table table-striped table-bordered " id="userTable"  style="width:100%">
                                     <thead >
                                         <tr >
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
@@ -122,12 +125,10 @@
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >Type</span>
                                             </th>
-                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Qty</span></th>
-                                            <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Total</span></th>
+                                            <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort">Quantité</th>
+                                            <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort"> Total </th>
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
-                                                <span >Date & Heure</span>
+                                                Date & Heure</span>
                                             </th>
                                             <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span >Actions</span></th>
                                         </tr>
@@ -137,38 +138,30 @@
                                         @foreach($orders as $order)
                                             <tr data-row="0" id="tr'.{{$order->id}}.'" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
-                                                    <span >
-                                                        <label ><strong>{{$order->hash}}</strong></label>
-                                                    </span>
+                                                    {{$order->hash}}
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                         @if($order->client == null)
-                                                            <label><strong>Commande sample</strong></label>
+                                                            Commande Simple
                                                         @else
-                                                            <label><strong>{{$order->client->name}}</strong></label>
+                                                            {{$order->client->name}}
                                                         @endif
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
-                                                    <span >
-                                                        <span class="kt-font-bold">{{$order->qty}} </span>
-                                                    </span>
+                                                    {{$order->qty}}
                                                 </td>
                                                 <td class="kt-datatable__cell" >
-                                                    <span >
-                                                        <label><strong>{{$order->total.' DA'}} </strong></label>
-                                                    </span>
+                                                    <strong>{{$order->total.' DA'}}</strong>
                                                 </td>
                                                 <td class="kt-datatable__cell" >
-                                                    <span >
-                                                        <label><strong>{{\Carbon\Carbon::parse($order->created_at)->format('j  F Y / h:i')}} </strong></label>
-                                                    </span>
+                                                        {{\Carbon\Carbon::parse($order->created_at)->format('j  F Y / h:i')}}
                                                 </td>
                                                 <td >
                                                     <a href="{{ url('order/'.$order->id) }}"    class="kt-nav__link" >
-                                                        <i class="kt-nav__link-icon flaticon2-add-1"></i>
-                                                        <span class="kt-nav__link-text">More Details</span>
+                                                        <span class="kt-nav__link-text">Plus de détails </span>
+                                                        <i class="kt-nav__link-icon flaticon-more-v6"></i>
                                                     </a>
                                                 </td>
                                             </tr>

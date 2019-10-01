@@ -10,7 +10,7 @@
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Commandes </h3>
+                Achat des produits  </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
                 <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
@@ -163,13 +163,15 @@
 						</div>
 					</div>
 					<div class="container">
-						<div class="col-lg-6 pull-right">
-							
-							<H1 class="form-text text-muted pull-right" id="totalCart">
+
+						<div class="col-md-6 col-sm-12 pull-right">
+							<h1 class="form-text totalcart" id="totalCart">
 								Total : {{Cart::instance('Provider')->subTotal()}} DA 
 								<input type="hidden" id="totalCartVal" value="{{Cart::instance('Provider')->subTotal()}}">
-							</H1>
+							</h1>
 						</div>
+
+						
 						<div class="col-lg-6">
 							<form id="bareCodeFrom">
 								<div class="input-group">
@@ -192,79 +194,74 @@
 
 						<!--begin: Datatable -->
 
-						<div class="kt-portlet__body kt-portlet__body--fit">
-							<div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders table-responsive" style="">
-								<table class="kt-datatable__table" style="display: block; ">
+						<div class="container kt-portlet__body kt-portlet__body--fit">
+							<div class="table-responsive" id="kt_datatable_latest_orders table-responsive" style="">
+								<table class="table" >
 									<thead class="kt-datatable__head">
 										<tr class="kt-datatable__row" >
-											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
-												<span style="width: 150px; padding-left: 0px;"><label>Code à barres</span></th>
-											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 200px;">Produit</span></th>
-											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix d'achat</span></th>
-											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Prix de vent</span></th>
-											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 100px;">Qty</span></th>
+											<th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">Code à barres</th>
+											<th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">Produit</th>
+											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort">Prix d'achat</th>
+											<th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort">Prix de vent</th>
+											<th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">Qty</th>
 											
-											<th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 80px;">Actions</span></th>
+											<th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">Actions</th>
 										</tr>
 									</thead>
 									<tbody class="kt-datatable__body ps ps--active-y" id="tabProduct" style="max-height: 446px;">
 										@foreach(Cart::instance('Provider')->content() as $product)
-											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
+											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row">
 												<td class="kt-datatable__cell" data-field="RecordID">
-													<span style="width: 150px;">
-														<label >{{$product->options->bareCode}}</label>
-													</span>
+													{{$product->options->bareCode}}
 												</td>
-												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">
-													<span style="width: 200px;">                        
+												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">       
 														<div class="kt-user-card-v2">                            
 															<div class="kt-user-card-v2__pic">                                
-																<img alt="photo" src="{{ asset('image/'.$product->options->img) }}">                            
+																<img alt="photo" src="{{ asset('image/'.$product->options->img) }}">       
 															</div>                            
 															<div class="kt-user-card-v2__details">                                
 																<div class="kt-user-card-v2__name">{{$product->name}}
 																</div>                                
 										                    </div>                        
 													    </div>
-												    </span>
 												</td>
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control prixA" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->price}}" id="{{'prixA'.$product->rowId}}">
+														<input class="form-control prixA" data-id="{{$product->rowId}}" type="number" value="{{$product->price}}" id="{{'prixA'.$product->rowId}}">
 													</div>
 												</td>
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control prixV" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->options->prixV}}" id="{{'prixV'.$product->rowId}}">
+														<input class="form-control prixV" data-id="{{$product->rowId}}" type="number"  value="{{$product->options->prixV}}" id="{{'prixV'.$product->rowId}}">
 													</div>
 												</td>
 												
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control pQty" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->qty}}" id="{{'pQty'.$product->rowId}}">
+														<input class="form-control pQty" data-id="{{$product->rowId}}" type="number"  style="min-width:50px;" value="{{$product->qty}}" id="{{'pQty'.$product->rowId}}">
 													</div>
 												</td>
 												
 												<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">
-													<span style="overflow: visible; position: relative; width: 80px; " >
 														<a href="#"     class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" data-rowid="{{$product->rowId}}" >
 															<i class="kt-nav__link-icon flaticon-delete"></i>
 														</a>
-								                    </span>
 								                </td>
 								            </tr>
 							            @endforeach
 								    </tbody>
 								</table>
 								<br>
-								<div class="container">
-									<button  class="btn btn-brand btn-lg pull-right" id="ConfirmCmd"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</button>
+									</div>	
+								
+							<div class="btncart-box">
+										<button class="btn btn-outline-brand btn-elevate btn-pill btncart-mar fourni" id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé la commande (Fournisseur)</button>
 
-									<a href="{{ url('cancelOrderProvider') }}" class="kt-link btn-lg kt-font-bold float-left"><i class="kt-nav__link-icon flaticon2-cancel-music"></i> Annuler la commande</a>
-									<center>
-									<button class="btn btn-dark btn-lg " id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé par Fournisseur</button></center>
+										<button  class="btn btn-outline-brand btn-elevate btn-circle btn-icon btncart-mar" id="ConfirmCmd"><i class="la la-check"></i> <span class="description-text">Confirmer la commande</span></button>
+
+										<a href="{{ url('cancelOrderProvider') }}" class="btn btn-outline-brand btn-elevate btn-circle btn-icon"><i class="la la-close"></i><span class="description-text">Annuler la commande</span></a>
 								</div>
-							</div>
+
 						<!--end: Datatable -->
 						</div>
 					</div>
@@ -274,6 +271,7 @@
 
 		<!--End::Section-->
 	</div>
+		
 	
 
      <!--begin::Modal-->
@@ -281,15 +279,15 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Liste des clients</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Liste Des Frounisseurs</h5>
                     <button type="button" class="close" data-dismiss="modal" id="closeAddItemClient" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
                 	<!--begin: Datatable -->
                     <div class=" kt-portlet__body kt-portlet__body--fit">
-                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
+		                    <table class="table table-striped table-bordered dataTable no-footer" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
 		                                
@@ -353,13 +351,10 @@
 							<div class="kt-widget kt-widget--user-profile-3">
 								<div class="kt-widget__top">
 									<div class="kt-widget__content">
-										<div class="kt-widget__head">
-											
-										</div>
 										<div class="row kt-widget__subhead">
-										    <h3 class="col-4" href="#"  id="ClientName" ></h3>
-											<h3 class="col-4" href="#" id="ClientPhone"></h3>
-											<h3 class="col-4 credit-c" href="#"  id="ClientCredit"></h3>
+										    <div class="pop-header" id="ClientName" ></div>
+											<div class="pop-header" href="#" id="ClientPhone"></div>
+											<div class="pop-header credit-c" href="#"  id="ClientCredit"></div>
 										</div>
 									</div>
 								</div>
@@ -404,7 +399,7 @@
 								</div>
 							</div>
 							<div class=" text-center btn-pop-footer">
-						<a rel="nofollow"  id="cmdConfirmation" class="btn btn-small btn-brand col-6"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a></div>
+						<a rel="nofollow"  id="cmdConfirmation" class="btn btn-small btn-brand"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a></div>
 						</div>
 						
 						
@@ -426,16 +421,16 @@
                 <div class="modal-body">
                 	<!--begin: Datatable -->
                     
-                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
+		                    <table class="table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
-		                                <th style="width:15%;" class="first-table-item">#</th>
-		                                <th style="width:40%;">Produit</th>
-		                                <th style="width:15%;">Prix d'Achat</th>
-		                                <th style="width:15%;">Prix de Vent</th>
-		                                <th style="width:15%;">Qty</th>
-		                                <th style="width:15%;">Actions</th>
+		                                <th class="first-table-item">#</th>
+		                                <th >Produit</th>
+		                                <th >Prix d'Achat</th>
+		                                <th >Prix de Vent</th>
+		                                <th >Qty</th>
+		                                <th >Actions</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody class="kt-datatable__body ps ps--active-y" id="tabMoreProduct" >

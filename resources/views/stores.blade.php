@@ -101,14 +101,14 @@
     </div>
 </div>
 
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+
         <!-- begin:: Content -->
                         <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
                             <div class="kt-portlet kt-portlet--mobile">
                                 <div class="kt-portlet__head kt-portlet__head--lg">
                                     <div class="kt-portlet__head-label">
                                         <span class="kt-portlet__head-icon">
-                                            <i class="kt-font-brand flaticon2-line-chart"></i>
+                                            <i class="kt-font-brand fa fa-store-alt"></i>
                                         </span>
                                         <h3 class="kt-portlet__head-title">
                                             Magasin
@@ -127,7 +127,7 @@
                                     </div>
 
                                 </div>
-                                <div class="kt-portlet__body">
+                                <div class="kt-portlet__body table-responsive">
 
                                     <!--begin: Datatable -->
                                     <table class="table table-striped- table-bordered table-hover table-checkable" id="storeTable">
@@ -222,8 +222,11 @@
 
                                     <!--end: Datatable -->
                                 </div>
+</div></div>
 
-                                <div class="kt-portlet__body">
+                 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="margin-top :-30px;">
+                         <div class="kt-portlet kt-portlet--mobile">
+                                <div class="kt-portlet__body table-responsive">
 
                                     <!--begin: Datatable -->
                                     <table class="table table-striped- table-bordered table-hover table-checkable" id="productTable">
@@ -289,7 +292,7 @@
                         
        
 
-    </div>
+
 
 
     <!--begin::Modal-->
@@ -319,7 +322,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Annuler</button>
                     <button type="button" id="newstore" class="btn btn-primary">Ajouter</button>
                 </div>
             </div>

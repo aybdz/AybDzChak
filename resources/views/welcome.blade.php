@@ -151,11 +151,8 @@
 
 									<tbody class="kt-datatable__body ps ps--active-y" id="tabProduct" style="max-height: 446px;">
 										@foreach(Cart::content() as $product)
-											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row" style="left: 0px;">
-												<td class="kt-datatable__cell" data-field="RecordID">
-													<span style="width: 150px;">
-														<label >{{$product->options->bareCode}}</label>
-													</span>
+											<tr  id="row{{$product->rowId}}" data-row="0" class="kt-datatable__row">
+												<td class="kt-datatable__cell" data-field="RecordID">{{$product->options->bareCode}}
 												</td>
 												<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell">
 													<span style="width: 200px;">                        
@@ -171,16 +168,16 @@
 												    </span>
 												</td>
 												<td data-field="ShipDate" class="kt-datatable__cell">
-													<span style="width: 100px;">
+													
 														<span class="kt-font-bold">{{$product->price}} DA</span>
-													</span>
+													
 												</td>
 												<td data-field="Status" class="kt-datatable__cell">
 													<div class="kt-user-card-v2__details" > 
-														<input class="form-control pQty" data-id="{{$product->rowId}}" type="number" style="width: 100px;" value="{{$product->qty}}" id="{{'pQty'.$product->rowId}}">
+														<input class="form-control pQty" data-id="{{$product->rowId}}" type="number"  style="min-width:50px;" value="{{$product->qty}}" id="{{'pQty'.$product->rowId}}">
 													</div>
 												</td>
-												<td data-field="Type" class="kt-datatable__cell"><span style="width: 200px;">
+												<td data-field="Type" class="kt-datatable__cell">
 														<div class="kt-user-card-v2">							
 															<div class="kt-user-card-v2__pic">								
 																<div class="kt-badge kt-badge--xl kt-badge--brand">{{(Auth::user()->name)[0]}}</div>	
@@ -190,14 +187,11 @@
 																<span class="kt-user-card-v2__desc">Admin</span>		
 															</div>						
 														</div>
-													</span>
 												</td>
 												<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">
-													<span style="overflow: visible; position: relative; width: 80px; " >
 														<a href="#"     class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" data-rowid="{{$product->rowId}}" >
 															<i class="kt-nav__link-icon flaticon-delete"></i>
 														</a>
-								                    </span>
 								                </td>
 								            </tr>
 							            @endforeach
@@ -206,9 +200,6 @@
 								</div>
 								<br>
 
-								<div class="btncart-firstbox">
-								
-								</div>
 
 								<div class="btncart-box">
 										<button class="btn btn-outline-brand btn-elevate btn-pill btncart-mar" id="addItemClientBtn"><i class="kt-nav__link-icon flaticon-user-ok"></i> Confirmé la commande de Client</button>
@@ -235,7 +226,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Liste des clients</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Liste Des Clients</h5>
                     <button type="button" class="close" data-dismiss="modal" id="closeAddItemClient" aria-label="Close">
                     </button>
                 </div>
@@ -243,7 +234,7 @@
                 	<!--begin: Datatable -->
                     <div class=" kt-portlet__body kt-portlet__body--fit">
                         <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+		                    <table class=" table table-striped table-bordered dataTable no-footer" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
 		                                <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
@@ -252,7 +243,7 @@
 		                                <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Téléphonne</span></th>
 		                                <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
 		                                    <span >
-		                                    <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Crédit</span></th>
+		                                    <label class="kt-datatable__cell kt-datatable__cell--sort">Crédit</span></th>
 		                                <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort"><span >Actions</span></th>
 		                            </tr>
 		                        </thead>
@@ -334,13 +325,10 @@
 							<div class="kt-widget kt-widget--user-profile-3">
 								<div class="kt-widget__top">
 									<div class="kt-widget__content">
-										<div class="kt-widget__head">
-											
-										</div>
 										<div class="row kt-widget__subhead">
-										    <h3 class="col-4" href="#"  id="ClientName" ></h3>
-											<h3 class="col-4" href="#" id="ClientPhone"></h3>
-											<h3 class="col-4 credit-c" href="#"  id="ClientCredit"></h3>
+										    <div class="pop-header" id="ClientName" ></div>
+											<div class="pop-header" href="#" id="ClientPhone"></div>
+											<div class="pop-header credit-c" href="#"  id="ClientCredit"></div>
 										</div>
 									</div>
 								</div>
@@ -386,7 +374,7 @@
 								</div>
 							</div>
 							<div class=" text-center btn-pop-footer">
-						<a rel="nofollow"  id="cmdConfirmation" class="btn btn-small btn-brand col-6"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a></div>
+						<a rel="nofollow"  id="cmdConfirmation" class="btn btn-small btn-brand"><i class="kt-nav__link-icon flaticon2-check-mark"></i> Confirmé la Commande</a></div>
 						</div>
 						
 						
@@ -408,15 +396,15 @@
                 <div class="modal-body">
                 	<!--begin: Datatable -->
                     
-                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded" id="kt_datatable_latest_orders" style="">
-		                    <table class=" kt-datatable__table" id="addClientTable" >
+                        <div class="kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded table-responsive" id="kt_datatable_latest_orders" style="">
+		                    <table class="table" id="addClientTable" >
 		                        <thead class="kt-datatable__head coll">
 		                            <tr class="kt-datatable__row" >
-		                                <th style="width:15%;" class="first-table-item">#</th>
-		                                <th style="width:40%;">Produit</th>
-		                                <th style="width:15%;">Prix</th>
-		                                <th style="width:15%;">Qty</th>
-		                                <th style="width:15%;">Actions</th>
+		                                <th  class="first-table-item">#</th>
+		                                <th >Produit</th>
+		                                <th >Prix</th>
+		                                <th >Qty</th>
+		                                <th >Actions</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody class="kt-datatable__body ps ps--active-y" id="tabMoreProduct" >

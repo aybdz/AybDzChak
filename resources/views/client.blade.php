@@ -112,7 +112,7 @@
                     @endif
                 @endif
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm client -head">
                         <div class="kt-portlet__head-label">
                         </div>
                         <div class="kt-portlet__head-label ">
@@ -180,15 +180,18 @@
         
         <div class="row">
             <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Transaction
-                            </h3>
-                        </div>
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile " style="padding-bottom: 20px;">
+                    <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des Transactions
+                                </h3>
+                            </div>
                     </div>
-                    <div class="container kt-portlet__body kt-portlet__body--fit">
+                    <div class="container kt-portlet__body kt-portlet__body--fit" >
                         <!--begin: Datatable -->
                             <div class="table-responsive">
                                 <table class="table " id="tranTable" >
@@ -269,13 +272,16 @@
 
         <div class="row">
             <div class="col-xl-12">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Commandes
-                            </h3>
-                        </div>
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile " style="padding-bottom: 20px;">
+                    <div class="kt-portlet__head kt-portlet__head--lg" style="margin-bottom: 20px;">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon-list-1"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Liste Des Commandes
+                                </h3>
+                            </div>
                     </div>
                     <div class="container kt-portlet__body kt-portlet__body--fit">
                         <!--begin: Datatable -->

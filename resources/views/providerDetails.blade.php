@@ -17,7 +17,7 @@ if (is_array($provider)){
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Commandes </h3>
+                Commandes De Fournisseur </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
                 <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
@@ -26,7 +26,7 @@ if (is_array($provider)){
                     General </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
                 <a href="{{ url()->previous() }}" class="kt-subheader__breadcrumbs-link">
-                    Commandes </a>
+                    Commandes De Fournisseur </a>
 
                 <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
             </div>
@@ -163,23 +163,19 @@ if (is_array($provider)){
                                 <div class="client-st">
                                     <p class="command-prix total">
                                      Crédit : <strong>  {{$provider->credit}} ,00  DA </strong>
-                                    </p></div>
-                                </div>
-                                <div class="client-st">
+                                    </p><hr style="color: #fff; border-color: rgba(243, 242, 247, .3);">
                                     <p class="command-prix total">
                                      Total : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->total}} ,00  DA </strong>
                                     </p>
-                                </div>
-                                <div class="client-st">
                                     <p class="command-prix total">
                                      Verse : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->paid}} ,00  DA </strong>
                                     </p>
-                                </div>
-                                <div class="client-st">
                                     <p class="command-prix total">
                                      Reste : <strong>  {{$stocks[0]->OrderProvider->CreditProvider->staid}} ,00  DA </strong>
                                     </p>
                                 </div>
+                                </div>
+                                
                             </div>
                         </div>
                         
@@ -212,8 +208,6 @@ if (is_array($provider)){
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                             Details des commandes du fournnisseur <strong>{{$title}}</strong>
-                            {{$stocks[0]->OrderProvider->CreditProvider->paid.'.00 DA'}}
-                            {{$stocks[0]->OrderProvider->CreditProvider->staid.'.00 DA'}}
                         </h3>
                     </div>
                 </div>

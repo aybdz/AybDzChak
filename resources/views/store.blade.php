@@ -105,7 +105,6 @@
 
  <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         <!--Begin::Section-->
-aaa
         @if(!is_array($store))
             <div class="row ">
                 <div class="col ">

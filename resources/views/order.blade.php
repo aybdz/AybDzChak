@@ -106,7 +106,7 @@
          <div class="row ">
             <div class="col ">
                 <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile header-command" style="background-image: url({{ asset('assets/media/bg/bg-6.jpg') }}); background-position: center center; background-repeat:no-repeat; background-size:cover;">
-                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm data-header">
                         <div class="kt-portlet__head-label">
                                 Commande : {{$orders[0]->Order->hash}}
                         </div>
@@ -115,6 +115,7 @@
                         </div>
                         
                     </div>
+                     <br>
                     <div class="container kt-widget3__item">
                         <div class="kt-widget3__header">
                             <div class="kt-avatar kt-avatar--outline kt-avatar--circle">
@@ -161,11 +162,11 @@
         <!-- begin table -->
         <div class="row">
             <div class="col">
-                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile table-responsive" style="padding-bottom:20px;">
                         <br>
                     <div class="container">
                         <!--begin: Datatable -->
-                                <table class="table table-striped table-bordered" id="userTable"  style="width:100%">
+                                <table class="table table-striped table-bordered" id="userTable">
                                     <thead >
                                         <tr >
                                             <th data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
@@ -180,10 +181,8 @@
                                             <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span >Quantité</span></th>
                                             <th data-field="RecordID" class="kt-datatable__cell kt-datatable__cell--sort">
                                                 <span >
-                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">Prix total</span></th>
-                                            
-                                           
-                                        </tr>
+                                                <label class="kt-datatable__cell kt-datatable__cell--sort">Prix total</span></th>
+                                             </tr>
                                     </thead>
                                     <tbody  >
                                         @foreach($orders as $order)
