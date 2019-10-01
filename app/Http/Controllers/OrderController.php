@@ -161,16 +161,16 @@ class OrderController extends Controller
     {
         $idClient = $request->idClient;
         $verse    = $request->verse;
-        $total    = $request->totalCmd;
+        $total    = (float)str_replace(',','',Cart::subTotal());
         $reste    = $request->reste;
         $type     = $request->typeClient;
         if ($type == 'store') {
             $cc       = new StoreController();
             $cc->addProductToStore($idClient);
-            $cc->addCredit($reste,$idClient);
+            $cc->addCredit((int)$total - (int)$verse,$idClient);
         }elseif ($type = 'client') {
             $cc       = new ClientController();
-            $cc->addCredit($reste,$idClient);
+            $cc->addCredit((int)$total - (int)$verse,$idClient);
         }
         
         $err      = $this->SaveOrder($verse,$type,$idClient);

@@ -115,7 +115,6 @@
 
                         <div class="container kt-widget3__item">
                             <div class="kt-widget3__header">
-
                                 <div class="kt-widget3__user-img">
                                         <div class="form-group row">
                                             <div class="col-lg-9 col-xl-6">
@@ -132,7 +131,6 @@
 
 
                                 <div class="kt-user-card__name">
-
                                  <p><strong  class="commande-header-profil name-st">
                                      {{$orders[0]->Order->Store->name}}
                                     </strong></p>
@@ -274,13 +272,21 @@
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
                                                     <span >
+                                                        @if($order->Product->StoreProduct != null)
                                                         <span class="kt-font-bold">{{$order->Product->StoreProduct->priceV.',00  DA'}} </span>
+                                                        @else
+                                                            <span class="kt-font-bold">00  DA </span>
+                                                        @endif
                                                     </span>
                                                 </td>
                                                 <td data-field="ShipDate" class="kt-datatable__cell" style="text-align: center;">
                                                     <span >
+                                                        @if($order->Product->StoreProduct != null)
                                                         <span class="kt-font-bold">{{(int)$order->Product->StoreProduct->priceV*(int)$order->qty.',00  DA'}} </span>
                                                         <?php $totalVente = $totalVente+ (int)$order->Product->StoreProduct->priceV*(int)$order->qty; ?>
+                                                        @else
+                                                            <span class="kt-font-bold">00  DA </span>
+                                                        @endif
                                                     </span>
                                                 </td>
                                                 

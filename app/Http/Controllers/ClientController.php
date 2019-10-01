@@ -99,7 +99,7 @@ class ClientController extends Controller
     public function addCredit($creditAdd,$idClient)
     {
         $client = Client::findOrFail($idClient);
-        $client->credit = $client->credit + (int)$creditAdd;
+        $client->credit = (int)$client->credit + (int)$creditAdd;
         $client->save();
     }
 
