@@ -168,95 +168,104 @@
         </div>
     </div>
 <script type="text/javascript">
-	$('#addUser').on('click',function () {
-		var username  = $('#addUsername').val();
-		var password  = $('#addPassword').val();
-		var name      = $('#addName').val();
-		var telephone = $('#addPhone').val();
-		if ((username.length < 4) || (password.length < 4) || (name.length == 0)||(telephone.length == 0)) {
-			swal.fire(
-                'Eroor',
-                "une erreur s'est produite veuillez vérifier tout les champ.",
-                'error'
-            )
-		}else{
-			$.ajax({
-	          type: "POST",
-	          url: "{{URL::to('/addUser') }}",
-	          dataType: "json",
-	          data:{  
-	          	'username':username,
-			    'password':password,
-			    'name':name,
-			    'telephone':telephone
-	      		},
-	          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	          success:function(data){
-	            if(data){
-	                swal.fire(
-	                    'Eroor',
-	                    "une erreur s'est produite veuillez réessayer svp.",
-	                    'error'
-	                )
-	            }else{
-	            	$('#closeUserModal').click();
-	                swal.fire(
-	                    'Ajouter!',
-	                    "l'Utilisateur a été Ajouter.",
-	                    'success'
-	                )
-	            }
-	          }
+	$(document).ready(function() {
+	 	var isWorking = false;
+    
+		$('#addUser').on('click',function () {
+			if (!isWorking) {
+				isWorking = true;
+				var username  = $('#addUsername').val();
+				var password  = $('#addPassword').val();
+				var name      = $('#addName').val();
+				var telephone = $('#addPhone').val();
+				if ((username.length < 4) || (password.length < 4) || (name.length == 0)||(telephone.length == 0)) {
+					swal.fire(
+		                'Eroor',
+		                "une erreur s'est produite veuillez vérifier tout les champ.",
+		                'error'
+		            )
+				}else{
+					$.ajax({
+			          type: "POST",
+			          url: "{{URL::to('/addUser') }}",
+			          dataType: "json",
+			          data:{  
+			          	'username':username,
+					    'password':password,
+					    'name':name,
+					    'telephone':telephone
+			      		},
+			          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+			          success:function(data){
+			            if(data){
+			                swal.fire(
+			                    'Eroor',
+			                    "une erreur s'est produite veuillez réessayer svp.",
+			                    'error'
+			                )
+			            }else{
+			            	$('#closeUserModal').click();
+			                swal.fire(
+			                    'Ajouter!',
+			                    "l'Utilisateur a été Ajouter.",
+			                    'success'
+			                )
+			            }
+			          }
 
-	        })
-		}
-		
-	})
+			        })
+				}
+				isWorking = false
+			}
+		})
 
-	$('#addClient').on('click',function () {
-		var nameC       = $('#nameC').val();
-		var telephonneC = $('#telephonneC').val();
-		var adressC     = $('#adressC').val();
-		if ((nameC.length < 4) || (telephonneC.length < 4) || (adressC.length == 0)) {
-			swal.fire(
-                'Eroor',
-                "une erreur s'est produite veuillez vérifier tout les champ.",
-                'error'
-            )
-		}else{
-			$.ajax({
-	          type: "POST",
-	          url: "{{URL::to('/addClient') }}",
-	          dataType: "json",
-	          data:{  
-	          	'name':nameC,
-			    'telephonne':telephonneC,
-			    'adress':adressC
-	      		},
-	          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	          success:function(data){
-	            if(data){
-	                swal.fire(
-	                    'Eroor',
-	                    "une erreur s'est produite veuillez réessayer svp.",
-	                    'error'
-	                )
-	            }else{
-	            	$('#closeClientModal').click();
-	                swal.fire(
-	                    'Ajouter!',
-	                    "le Client a été bien  Ajouter.",
-	                    'success'
-	                )
-	                location.reload();
-	            }
-	          }
+		$('#addClient').on('click',function () {
+			if (!isWorking) {
+	 			isWorking = true;
+				var nameC       = $('#nameC').val();
+				var telephonneC = $('#telephonneC').val();
+				var adressC     = $('#adressC').val();
+				if ((nameC.length < 4) || (telephonneC.length < 4) || (adressC.length == 0)) {
+					swal.fire(
+		                'Eroor',
+		                "une erreur s'est produite veuillez vérifier tout les champ.",
+		                'error'
+		            )
+				}else{
+					$.ajax({
+			          type: "POST",
+			          url: "{{URL::to('/addClient') }}",
+			          dataType: "json",
+			          data:{  
+			          	'name':nameC,
+					    'telephonne':telephonneC,
+					    'adress':adressC
+			      		},
+			          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+			          success:function(data){
+			            if(data){
+			                swal.fire(
+			                    'Eroor',
+			                    "une erreur s'est produite veuillez réessayer svp.",
+			                    'error'
+			                )
+			            }else{
+			            	$('#closeClientModal').click();
+			                swal.fire(
+			                    'Ajouter!',
+			                    "le Client a été bien  Ajouter.",
+			                    'success'
+			                )
+			                location.reload();
+			            }
+			          }
 
-	        })
-		}
-		
-	})
-
+			        })
+				}
+				isWorking = false
+			}
+		})
+	});
 
 </script>
 @yield('scripts')

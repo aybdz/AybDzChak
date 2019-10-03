@@ -179,15 +179,21 @@ class StatisticsController extends Controller
 
     private function getRecetOfDay($user , $i)
 	{
-		$amount = Transaction::where('idUser',$user->id)->whereDate('created_at',Carbon::today())->sum('amount');
-		$data   = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone, 'amount' => $amount);
+		$amount = Transaction::where('idUser',$user->id)->where('type','!=',"Commande d'achat")
+		->whereDate('created_at',Carbon::today())->sum('amount');
+		$amountProvider = Transaction::where('idUser',$user->id)->where('type',"Commande d'achat")
+		->whereDate('created_at',Carbon::today())->sum('amount');
+		$data   = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone,'amountProvider' => $amountProvider ,'amount' => $amount);
 		$this->transactions[$i] = $data;
 	}
 
 	private function getRecetOfYesterday($user , $i)
 	{
-		$amount        = Transaction::where('idUser',$user->id)->whereDate('created_at',Carbon::yesterday())->sum('amount');
-		$data          = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone, 'amount' => $amount);		
+		$amount        = Transaction::where('idUser',$user->id)->where('type','!=',"Commande d'achat")
+		->whereDate('created_at',Carbon::yesterday())->sum('amount');
+		$amountProvider        = Transaction::where('idUser',$user->id)->where('type',"Commande d'achat")
+		->whereDate('created_at',Carbon::yesterday())->sum('amount');
+		$data          = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone,'amountProvider' => $amountProvider , 'amount' => $amount);		
 		$this->tranYesterday[$i] =  $data;
 	}
 
@@ -196,8 +202,11 @@ class StatisticsController extends Controller
     	$now      = Carbon::now();
 		$from     = $now->startOfMonth()->toDateString();
 		$to       = $now->endOfMonth()->toDateString();
-		$amount   = Transaction::where('idUser',$user->id)->whereBetween('created_at', [$from, $to])->sum('amount');
-		$data     = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone, 'amount' => $amount);
+		$amount   = Transaction::where('idUser',$user->id)->where('type','!=',"Commande d'achat")
+		->whereBetween('created_at', [$from, $to])->sum('amount');
+		$amountProvider   = Transaction::where('idUser',$user->id)->where('type',"Commande d'achat")
+		->whereBetween('created_at', [$from, $to])->sum('amount');
+		$data     = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone,'amountProvider' => $amountProvider , 'amount' => $amount);
 		$this->tranWeek[$i] = $data;
 	}
 
@@ -206,8 +215,11 @@ class StatisticsController extends Controller
     	$now       = Carbon::now();
 		$from      = $now->startOfMonth()->toDateString();
 		$to        = $now->endOfMonth()->toDateString();
-		$amount    = Transaction::where('idUser',$user->id)->whereBetween('created_at', [$from, $to])->sum('amount');
-		$data      = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone, 'amount' => $amount);
+		$amount    = Transaction::where('idUser',$user->id)->where('type','!=',"Commande d'achat")
+		->whereBetween('created_at', [$from, $to])->sum('amount');
+		$amountProvider    = Transaction::where('idUser',$user->id)->where('type',"Commande d'achat")
+		->whereBetween('created_at', [$from, $to])->sum('amount');
+		$data      = array('idUser' => $user->id, 'userName' => $user->userName,'name' => $user->name, 'telephone' => $user->telephone, 'amountProvider' => $amountProvider, 'amount' => $amount);
 		$this->tranMonth[$i] =  $data;
 	}
 

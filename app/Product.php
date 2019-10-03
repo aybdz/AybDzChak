@@ -21,7 +21,7 @@ class Product extends Model
     }
 
     public function StoreProduct(){
-        return $this->hasOne('App\StoreProduct',  'id', 'idProduct');
+        return $this->hasOne('App\StoreProduct',  'idProduct', 'id');
     }
 
 }

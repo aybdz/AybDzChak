@@ -136,7 +136,7 @@
                                     </thead>
                                     <tbody class="kt-datatable__body ps ps--active-y" >
                                         @foreach($clients as $client)
-                                            <tr data-row="0" id="rowClient'.{{$client->id}}.'" class="kt-datatable__row" style="left: 0px;">
+                                            <tr data-row="0" id="rowClient{{$client->id}}" class="kt-datatable__row" style="left: 0px;">
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <span >
                                                         <label >
@@ -253,25 +253,46 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#userTable').DataTable();
-    });
-</script>
-<script type="text/javascript">
-    function delete_Client(id) {
-            swal.fire({
-                title: 'Êtes-vous sûr?',
-                text: "Vous ne pourrez pas revenir en arrière!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Oui, supprimez-le!',
-                cancelButtonText: 'Non, annulez!',
-                reverseButtons: true
-            }).then(function(result){
-                if (result.value) {
+        var isWorking = false;
+        $('.editClient').on('click',function(){
+            if (!isWorking) {
+                isWorking = true;
+                $('#id').val("");
+                $('#name').val("");
+                $('#adress').val("");
+                $('#telephonne').val("");
+                $('#id').val($(this).data('id'));
+                $('#name').val($(this).data('name'));
+                $('#adress').val($(this).data('adress'));
+                $('#telephonne').val($(this).data('telephonne'));
+                isWorking = false;
+            }
+        })
+            
+        $('#updateClient').on('click',function () {
+            if (!isWorking) {
+                isWorking = true;
+                var id         = $('#id').val();
+                var name       = $('#name').val();
+                var adress     = $('#adress').val();
+                var telephonne = $('#telephonne').val();
+                if ((name.length < 4) || (adress.length == 0)||(telephonne.length == 0)) {
+                    swal.fire(
+                        'Eroor',
+                        "une erreur s'est produite veuillez vérifier tout les champ.",
+                        'error'
+                    )
+                }else{
                     $.ajax({
                       type: "POST",
-                      url: "{{URL::to('/deleteClient') }}",
+                      url: "{{URL::to('/editClient') }}",
                       dataType: "json",
-                      data:{'id':id},
+                      data:{  
+                        'id'         :id,
+                        'name'       :name,
+                        'adress'     :adress,
+                        'telephonne' :telephonne
+                        },
                       headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                       success:function(data){
                         if(data){
@@ -281,87 +302,70 @@
                                 'error'
                             )
                         }else{
-                            $('#rowClient'+id).remove();
+                            $('#closeClientUpdateModal').click();
                             swal.fire(
-                                'Supprimé!',
-                                "Le Client a été supprimé.",
+                                'Modifier!',
+                                "le Client a été Modifier.",
                                 'success'
                             )
+
                         }
                       }
 
                     })
-                    
-                    // result.dismiss can be 'cancel', 'overlay',
-                    // 'close', and 'timer'
-                } else if (result.dismiss === 'cancel') {
-                    swal.fire(
-                        'Annulé',
-                        'Votre produit est en sécurité :)',
-                        'error'
-                    )
-
                 }
-            });
+                isWorking = false;
+            }
+        })
+
+    });
+    function delete_Client(id) {
+        swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas revenir en arrière!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimez-le!',
+            cancelButtonText: 'Non, annulez!',
+            reverseButtons: true
+        }).then(function(result){
+            if (result.value) {
+                $.ajax({
+                  type: "POST",
+                  url: "{{URL::to('/deleteClient') }}",
+                  dataType: "json",
+                  data:{'id':id},
+                  headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                  success:function(data){
+                    if(data){
+                        swal.fire(
+                            'Eroor',
+                            "une erreur s'est produite veuillez réessayer svp.",
+                            'error'
+                        )
+                    }else{
+                        $('#rowClient'+id).remove();
+                        swal.fire(
+                            'Supprimé!',
+                            "Le Client a été supprimé.",
+                            'success'
+                        )
+                    }
+                  }
+
+                })
+                
+                // result.dismiss can be 'cancel', 'overlay',
+                // 'close', and 'timer'
+            } else if (result.dismiss === 'cancel') {
+                swal.fire(
+                    'Annulé',
+                    'Votre produit est en sécurité :)',
+                    'error'
+                )
+
+            }
+        });
     }
-
-    $('.editClient').on('click',function(){
-        $('#id').val("");
-        $('#name').val("");
-        $('#adress').val("");
-        $('#telephonne').val("");
-        $('#id').val($(this).data('id'));
-        $('#name').val($(this).data('name'));
-        $('#adress').val($(this).data('adress'));
-        $('#telephonne').val($(this).data('telephonne'));
-    })
-        
-    $('#updateClient').on('click',function () {
-        var id         = $('#id').val();
-        var name       = $('#name').val();
-        var adress     = $('#adress').val();
-        var telephonne = $('#telephonne').val();
-        if ((name.length < 4) || (adress.length == 0)||(telephonne.length == 0)) {
-            swal.fire(
-                'Eroor',
-                "une erreur s'est produite veuillez vérifier tout les champ.",
-                'error'
-            )
-        }else{
-            $.ajax({
-              type: "POST",
-              url: "{{URL::to('/editClient') }}",
-              dataType: "json",
-              data:{  
-                'id'         :id,
-                'name'       :name,
-                'adress'     :adress,
-                'telephonne' :telephonne
-                },
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success:function(data){
-                if(data){
-                    swal.fire(
-                        'Eroor',
-                        "une erreur s'est produite veuillez réessayer svp.",
-                        'error'
-                    )
-                }else{
-                    $('#closeClientUpdateModal').click();
-                    swal.fire(
-                        'Modifier!',
-                        "le Client a été Modifier.",
-                        'success'
-                    )
-
-                }
-              }
-
-            })
-        }
-        
-    })
-
-    
 </script>
 @endsection

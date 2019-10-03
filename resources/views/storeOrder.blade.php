@@ -293,7 +293,7 @@
                                                     <span >
                                                         @if($order->Product->StoreProduct != null)
                                                         <span class="kt-font-bold">{{(int)$order->Product->StoreProduct->priceV*(int)$order->qty.',00  DA'}} </span>
-                                                        <?php $totalVente = $totalVente+ (int)$order->Product->StoreProduct->priceV*(int)$order->qty; ?>
+                                                        <?php $totalVente = $totalVente + (((int)$order->Product->StoreProduct->priceV)*(int)$order->qty); ?>
                                                         @else
                                                             <span class="kt-font-bold">00  DA </span>
                                                         @endif

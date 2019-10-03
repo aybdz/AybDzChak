@@ -448,6 +448,8 @@
  <script type="text/javascript">
  	
  	$(document).ready(function(){
+ 		var isWorking = false;
+
  		$('#BCauto').change(function () {
  			if(this.checked) {
 			   	swal.fire(
@@ -466,16 +468,88 @@
 
 
  		$('#ConfirmCmd').on('click',function() {
- 			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(/\,/g, '');
- 			if (parseFloat(t) == 0)
-			{
-				swal.fire(
-                    'Eroor!',
-                    "aucun produit n'a été ajouté.",
-                    'error'
-                )
-			}else{
+ 			if (!isWorking) {
+ 				isWorking = true;
+	 			var tc = $('#totalCartVal').val();
+	 			var t = tc.replace(/\,/g, '');
+	 			if (parseFloat(t) == 0)
+				{
+					swal.fire(
+	                    'Eroor!',
+	                    "aucun produit n'a été ajouté.",
+	                    'error'
+	                )
+				}else{
+		 			swal.fire({
+		                title: 'Êtes-vous sure de vouloire confirmer cette commande ?',
+		                text: "Vous ne pourrez pas revenir en arrière!",
+		                type: 'warning',
+		                showCancelButton: true,
+		                confirmButtonText: 'Oui, Confirmé!',
+		                cancelButtonText: 'Non, annulez!',
+		                reverseButtons: true
+		            }).then(function(result){
+		                if (result.value) {
+		                    $.ajax({
+		                      type: "POST",
+		                      url: "{{URL::to('/confirmerCommandeAchat') }}",
+		                      dataType: "json",
+		                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		                      success:function(data){
+		                        if(data){
+		                            swal.fire(
+		                                'Eroor',
+		                                "une erreur s'est produite veuillez réessayer svp.",
+		                                'error'
+		                            )
+		                        }else{
+		                        	swal.fire({
+									  position: 'top-end',
+									  type: 'success',
+									  title: 'La commande a été bien enregistré !',
+									  showConfirmButton: false,
+									  timer: 1000
+									})
+		                            $('#tabProduct').load(' #tabProduct');
+									$('#totalCart').load(' #totalCart');   
+		                        }
+		                      }
+
+		                    })
+		                    
+		                    // result.dismiss can be 'cancel', 'overlay',
+		                    // 'close', and 'timer'
+		                } else if (result.dismiss === 'cancel') {
+		                }
+		            });
+		        }
+				isWorking = false
+		    }
+ 		})
+
+ 		$('#addItemClientBtn').on('click', function (e) {
+ 			if (!isWorking) {
+ 				isWorking = true;
+	 			var tc = $('#totalCartVal').val();
+	 			var t = tc.replace(/\,/g, '');
+	 			if (parseFloat(t) == 0)
+				{
+					$('#closeAddItemClient').click();
+					swal.fire(
+	                    'Eroor!',
+	                    "aucun produit n'a été ajouté.",
+	                    'error'
+	                )
+				}else{
+					$('#addItemClient').modal('show')
+				}
+				isWorking = false;
+		    }
+ 		})
+
+ 		$('#cmdConfirmation').on('click',function () {
+ 			if (!isWorking) {
+ 				isWorking = true;
 	 			swal.fire({
 	                title: 'Êtes-vous sure de vouloire confirmer cette commande ?',
 	                text: "Vous ne pourrez pas revenir en arrière!",
@@ -486,10 +560,20 @@
 	                reverseButtons: true
 	            }).then(function(result){
 	                if (result.value) {
+						var idClient = 	$('#IdClient').val();
+						var verse    =  $('#verse').val();
+						var totalCmd =	$('#totalCmd').val();
+						var reste    =	$('#reste').val();
 	                    $.ajax({
 	                      type: "POST",
-	                      url: "{{URL::to('/confirmerCommandeAchat') }}",
+	                      url: "{{URL::to('/ClientCommandeProvider') }}",
 	                      dataType: "json",
+						  data:{    
+						  		'idClient':idClient,
+								'verse'	  :verse,
+								'totalCmd':totalCmd,
+								'reste'	  :reste
+			                   },
 	                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 	                      success:function(data){
 	                        if(data){
@@ -500,14 +584,15 @@
 	                            )
 	                        }else{
 	                        	swal.fire({
-								  position: 'top-end',
-								  type: 'success',
-								  title: 'La commande a été bien enregistré !',
-								  showConfirmButton: false,
-								  timer: 1000
-								})
+									  position: 'top-end',
+									  type: 'success',
+									  title: 'La commande a été bien enregistré !',
+									  showConfirmButton: false,
+									  timer: 1000
+									})  
 	                            $('#tabProduct').load(' #tabProduct');
-								$('#totalCart').load(' #totalCart');   
+								$('#totalCart').load(' #totalCart');
+								$('#CloseConfirmeCommande').click();   
 	                        }
 	                      }
 
@@ -516,433 +601,396 @@
 	                    // result.dismiss can be 'cancel', 'overlay',
 	                    // 'close', and 'timer'
 	                } else if (result.dismiss === 'cancel') {
+
 	                }
 	            });
-	        }
-
- 		})
-
- 		$('#addItemClientBtn').on('click', function (e) {
- 			var tc = $('#totalCartVal').val();
- 			var t = tc.replace(/\,/g, '');
- 			if (parseFloat(t) == 0)
-			{
-				$('#closeAddItemClient').click();
-				swal.fire(
-                    'Eroor!',
-                    "aucun produit n'a été ajouté.",
-                    'error'
-                )
-			}else{
-				$('#addItemClient').modal('show')
-			}
- 		})
-
- 		$('#cmdConfirmation').on('click',function () {
- 			swal.fire({
-                title: 'Êtes-vous sure de vouloire confirmer cette commande ?',
-                text: "Vous ne pourrez pas revenir en arrière!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Oui, Confirmé!',
-                cancelButtonText: 'Non, annulez!',
-                reverseButtons: true
-            }).then(function(result){
-                if (result.value) {
-					var idClient = 	$('#IdClient').val();
-					var verse    =  $('#verse').val();
-					var totalCmd =	$('#totalCmd').val();
-					var reste    =	$('#reste').val();
-                    $.ajax({
-                      type: "POST",
-                      url: "{{URL::to('/ClientCommandeProvider') }}",
-                      dataType: "json",
-					  data:{    
-					  		'idClient':idClient,
-							'verse'	  :verse,
-							'totalCmd':totalCmd,
-							'reste'	  :reste
-		                   },
-                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                      success:function(data){
-                        if(data){
-                            swal.fire(
-                                'Eroor',
-                                "une erreur s'est produite veuillez réessayer svp.",
-                                'error'
-                            )
-                        }else{
-                        	swal.fire({
-								  position: 'top-end',
-								  type: 'success',
-								  title: 'La commande a été bien enregistré !',
-								  showConfirmButton: false,
-								  timer: 1000
-								})  
-                            $('#tabProduct').load(' #tabProduct');
-							$('#totalCart').load(' #totalCart');
-							$('#CloseConfirmeCommande').click();   
-                        }
-                      }
-
-                    })
-                    
-                    // result.dismiss can be 'cancel', 'overlay',
-                    // 'close', and 'timer'
-                } else if (result.dismiss === 'cancel') {
-
-                }
-            });
+	        	isWorking = false;
+		    }
  		})
 
  		$('body').on('mouseout, keyup ,change','#verse',function () {
-			var tc    = $('#totalCartVal').val();
-			var v     = $('#verse').val();
-			if (v == '') {
-				v= 0;
-			}
-			var t     = tc.replace(/\,/g, '')//replace(",", "");
-			var reste = parseFloat(parseFloat(t)-parseFloat(v));
- 			if ( reste < 0) {
-	            $('#verse').val('')
-	            $('#verse').val(t)
-	            swal.fire(
-                    'Eroor',
-                    "attention le montant insert est supérieur de la commande ! ",
-                    'error'
-                )
-	        }else{
-	        	$('#reste').val(reste)
-	        }
+ 			if (!isWorking) {
+ 				isWorking = true;
+				var tc    = $('#totalCartVal').val();
+				var v     = $('#verse').val();
+				if (v == '') {
+					v= 0;
+				}
+				var t     = tc.replace(/\,/g, '')//replace(",", "");
+				var reste = parseFloat(parseFloat(t)-parseFloat(v));
+	 			if ( reste < 0) {
+		            $('#verse').val('')
+		            $('#verse').val(t)
+		            swal.fire(
+	                    'Eroor',
+	                    "attention le montant insert est supérieur de la commande ! ",
+	                    'error'
+	                )
+		        }else{
+		        	$('#reste').val(reste)
+		        }
+				isWorking = false;
+		    }
  		})
 
  		$('body').on('mouseout,  keyup ,change','.prixA',delay(function(){
-			var prixA   = $(this).val();
- 			var rowid   = $(this).data('id');
- 			$.ajax({
-	              type: "POST",
-	              url: "{{URL::to('/updatePriceA') }}",
-	              dataType: "json",
-				  data:{    
-				  		'rowid':rowid,
-						'prixA':prixA
-	                   },
-	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	              success:function(data){
-	                if(data.err){
-	                    swal.fire(
-	                        'Eroor',
-	                        "une erreur s'est produite veuillez réessayer svp.",
-	                        'error'
-	                    )
-	                }else{
+ 			if (!isWorking) {
+ 				isWorking = true;
+				var prixA   = $(this).val();
+				if (prixA == '') {
+					prixA= 0;
+				}
+	 			var rowid   = $(this).data('id');
+	 			$.ajax({
+		              type: "POST",
+		              url: "{{URL::to('/updatePriceA') }}",
+		              dataType: "json",
+					  data:{    
+					  		'rowid':rowid,
+							'prixA':prixA
+		                   },
+		              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		              success:function(data){
+		                if(data.err){
+		                    swal.fire(
+		                        'Eroor',
+		                        "une erreur s'est produite veuillez réessayer svp.",
+		                        'error'
+		                    )
+		                }else{
 
-	                   $('#tabProduct').empty();
-	                   	var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-	                	var op = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
-							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
-							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
-							op += '<div class="kt-user-card-v2__details">'                                
-							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+		                   $('#tabProduct').empty();
+		                   	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+		                	var op = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+								op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+								op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+								op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+								op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+								op += '<div class="kt-user-card-v2__details">'                                
+								op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
-							
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
-							
-							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
-							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
-							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
-	                	}
-						$('#tabProduct').append(op);
-						//$('#tabProduct').load(' #tabProduct');
-						$('#totalCart').load(' #totalCart');   
-	                }
-	              }
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+								
+								op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+								op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+								op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+								op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+		                	}
+							$('#tabProduct').append(op);
+							//$('#tabProduct').load(' #tabProduct');
+							$('#totalCart').load(' #totalCart');   
+		                }
+		              }
 
-            })
+	            })
+	            isWorking = false;
+		    }
  		},700)
  		)
 
  		$('body').on('mouseout,  keyup ,change','.prixV',delay(function(){
-			var prixV   = $(this).val();
- 			var rowid   = $(this).data('id');
- 			$.ajax({
-	              type: "POST",
-	              url: "{{URL::to('/updatePriceV') }}",
-	              dataType: "json",
-				  data:{'rowid':rowid,
-						'prixV':prixV
-	                   },
-	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	              success:function(data){
-	                if(data.err){
-	                    swal.fire(
-	                        'Eroor',
-	                        "une erreur s'est produite veuillez réessayer svp.",
-	                        'error'
-	                    )
-	                }else{
-	                    $('#tabProduct').empty();
-	                    var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-	                	var op = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
-							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
-							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
-							op += '<div class="kt-user-card-v2__details">'                                
-							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+ 			if (!isWorking) {
+ 				isWorking = true;
+				var prixV = $(this).val();
+				if (prixV == '') {
+					prixV = 0;
+				}
+	 			var rowid = $(this).data('id');
+	 			$.ajax({
+		              type: "POST",
+		              url: "{{URL::to('/updatePriceV') }}",
+		              dataType: "json",
+					  data:{'rowid':rowid,
+							'prixV':prixV
+		                   },
+		              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		              success:function(data){
+		                if(data.err){
+		                    swal.fire(
+		                        'Eroor',
+		                        "une erreur s'est produite veuillez réessayer svp.",
+		                        'error'
+		                    )
+		                }else{
+		                    $('#tabProduct').empty();
+		                    var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+		                	var op = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+								op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+								op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+								op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+								op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+								op += '<div class="kt-user-card-v2__details">'                                
+								op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
-							
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
-							
-							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
-							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
-							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
-	                	}
-						$('#tabProduct').append(op);
-						//$('#tabProduct').load(' #tabProduct');
-						$('#totalCart').load(' #totalCart');    
-	                }
-	              }
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+								
+								op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+								op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+								op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+								op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+		                	}
+							$('#tabProduct').append(op);
+							//$('#tabProduct').load(' #tabProduct');
+							$('#totalCart').load(' #totalCart');    
+		                }
+		              }
 
-            })},700)
+	            })
+	 			isWorking = false
+		    }
+ 		},700)
  		)
 
  		$('.addToModel').on('click', function () {
- 			$('#ClientName').empty();
- 			$('#ClientName').append(' <i class="la la-user"></i>'+$(this).data('name'));
- 			$('#ClientPhone').empty();
- 			$('#ClientPhone').append('<i class="la la-phone"></i> '+$(this).data('phone'));
- 			$('#ClientCredit').empty();
- 			$('#ClientCredit').append('<i class="la la-money"></i> '+$(this).data('credit')+' DA');
- 			$('#totalCmd').val($('#totalCartVal').val());
- 			$('#reste').val($('#totalCartVal').val());
- 			$('#IdClient').val($(this).data('id'))
- 			$('#closeAddItemClient').click();
+ 			if (!isWorking) {
+ 				isWorking = true;
+	 			$('#ClientName').empty();
+	 			$('#ClientName').append(' <i class="la la-user"></i>'+$(this).data('name'));
+	 			$('#ClientPhone').empty();
+	 			$('#ClientPhone').append('<i class="la la-phone"></i> '+$(this).data('phone'));
+	 			$('#ClientCredit').empty();
+	 			$('#ClientCredit').append('<i class="la la-money"></i> '+$(this).data('credit')+' DA');
+	 			$('#totalCmd').val($('#totalCartVal').val());
+	 			$('#reste').val($('#totalCartVal').val());
+	 			$('#IdClient').val($(this).data('id'))
+	 			$('#closeAddItemClient').click();
+				isWorking = false;
+		    }
  		})
         $('#addClientTable').DataTable();
 
     
 	  	$('body').on("mouseout,  keyup ,change ",'#bareCode',delay(function(){
-		  	if ($('#BCauto').is(':checked')){
-		  		var id = $('#bareCode').val();
-		 		$.ajax({
-	              type: "POST",
-	              url: "{{URL::to('/addCartProvider') }}",
-	              dataType: "json",
-	              data:{'id':id},
-	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	              success:function(data){
-	                if((!data.err)){
-	                	var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-	                	$('#tabProduct').empty();
-	                	var op = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	console.log(cart)
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
-							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
-							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
-							op += '<div class="kt-user-card-v2__details">'                                
-							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+	  		if (!isWorking) {
+ 				isWorking = true;
+			  	if ($('#BCauto').is(':checked')){
+			  		var id = $('#bareCode').val();
+			 		$.ajax({
+		              type: "POST",
+		              url: "{{URL::to('/addCartProvider') }}",
+		              dataType: "json",
+		              data:{'id':id},
+		              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		              success:function(data){
+		                if((!data.err)){
+		                	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+		                	$('#tabProduct').empty();
+		                	var op = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	console.log(cart)
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+								op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+								op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+								op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+								op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+								op += '<div class="kt-user-card-v2__details">'                                
+								op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
 
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
-							
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
-							
-							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
-							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
-							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
-	                	}
-						$('#tabProduct').append(op);
-						//$('#tabProduct').load(' #tabProduct');
-						$('#totalCart').load(' #totalCart');   
-	                }else if (data.err == 'more') {
-	                	$('#tabMoreProduct').empty();
-	                	var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-						var opm = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		opm += '<tr  class="kt-datatable__row">'
-							
-							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
-							
-							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
-							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
-							opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+								
+								op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+								op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+								op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+								op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+		                	}
+							$('#tabProduct').append(op);
+							//$('#tabProduct').load(' #tabProduct');
+							$('#totalCart').load(' #totalCart');   
+		                }else if (data.err == 'more') {
+		                	$('#tabMoreProduct').empty();
+		                	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+							var opm = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		opm += '<tr  class="kt-datatable__row">'
+								
+								opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
+								
+								opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
+								opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
+								opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
 
-							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
-							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
-							
-							
-							opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
-							
-							opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
-							
-							opm += '</tr>';
-	                	}
-						$('#tabMoreProduct').append(opm);
-						$('#moreBtn').click()
-	                }
-	                $('#bareCode').val("");
-	              }
-	        	})
-			}
+								opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
+								opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
+								
+								
+								opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
+								
+								opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
+								
+								opm += '</tr>';
+		                	}
+							$('#tabMoreProduct').append(opm);
+							$('#moreBtn').click()
+		                }
+		                $('#bareCode').val("");
+		              }
+		        	})
+				}
+				isWorking = false;
+		    }
 		 },500)
 		)
 		
 		$('body').submit('#bareCodeFrom',function(e){
-			e.preventDefault();
-		  	if (!($('#BCauto').is(':checked'))){
-		  		var id = $('#bareCode').val();
-		 		$.ajax({
-	              type: "POST",
-	              url: "{{URL::to('/addCartProvider') }}",
-	              dataType: "json",
-	              data:{'id':id},
-	              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-	              success:function(data){
-	                if((!data.err)){
-	                	var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-	                	$('#tabProduct').empty();
-	                	var op = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
-							op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-							op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].id+'</label></span></td>'
-							op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-							op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
-							op += '<div class="kt-user-card-v2__details">'                                
-							op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
-							op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixAice+'" ></div></td>'
-							
-							op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
-							
-							op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
-							op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-							op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
-							op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
-	                	}
-						$('#tabProduct').append(op);
-						//$('#tabProduct').load(' #tabProduct');
-						$('#totalCart').load(' #totalCart');   
-	                }else if (data.err == 'more') {
-	                	$('#tabMoreProduct').empty();
-	                	var cart = $.map(data.product, function(value, index) {
-						    return [value];
-						});
-						var opm = '';
-	                	var source = "{!! asset('image/') !!}";
-	                	for(var i =0;i<cart.length;i++)
-	                	{
-	                		opm += '<tr  class="kt-datatable__row">'
-							
-							opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
-							
-							opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
-							opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
-							opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
+			if (!isWorking) {
+ 				isWorking = true;
+				e.preventDefault();
+			  	if (!($('#BCauto').is(':checked'))){
+			  		var id = $('#bareCode').val();
+			 		$.ajax({
+		              type: "POST",
+		              url: "{{URL::to('/addCartProvider') }}",
+		              dataType: "json",
+		              data:{'id':id},
+		              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		              success:function(data){
+		                if((!data.err)){
+		                	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+		                	$('#tabProduct').empty();
+		                	var op = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+								op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+								op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].id+'</label></span></td>'
+								op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+								op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+								op += '<div class="kt-user-card-v2__details">'                                
+								op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+								op += '<td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 100px;">'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixAice+'" ></div></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+								
+								op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+								op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+								op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+								op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+		                	}
+							$('#tabProduct').append(op);
+							//$('#tabProduct').load(' #tabProduct');
+							$('#totalCart').load(' #totalCart');   
+		                }else if (data.err == 'more') {
+		                	$('#tabMoreProduct').empty();
+		                	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+							var opm = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		opm += '<tr  class="kt-datatable__row">'
+								
+								opm += '<td style="width:15%; padding-right: 10px;" class="first-table-item">'+cart[i].bareCode+'</td>'
+								
+								opm += '<td style="width:40%; padding-left: 0px;" data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic" >'                                
+								opm += '<img alt="photo" src="'+source+'/'+cart[i].img+'"></div>'                          
+								opm += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></td>'
 
-							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
-							opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
+								opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceA+'" ></div></td>'
+								opm += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].id+'" type="number" value="'+cart[i].priceV+'" ></div></td>'
 
-							opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
-							
-							opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
-							
-							opm += '</tr>';
-	                	}
-						$('#tabMoreProduct').append(opm);
-						$('#moreBtn').click()
-	                }
-	                $('#bareCode').val("");
-	              }
-	        	})
-			}
+								opm += '<td style="width:15%; padding-right: 10px;"><input class="form-control" style="width: 80px; text-align: center;"  type="number" value="'+cart[i].qty+'" disabled="disabled"></td>'
+								
+								opm += '<td style="width:15%; padding-right: 10px;"><a href="#"   class="btn btn-success  btn-elevate btn-circle btn-icon addMorePrduct" data-id='+cart[i].id+'><i class="kt-nav__link-icon flaticon2-add-1"></i></a></td>'
+								
+								opm += '</tr>';
+		                	}
+							$('#tabMoreProduct').append(opm);
+							$('#moreBtn').click()
+		                }
+		                $('#bareCode').val("");
+		              }
+		        	})
+				}
+				isWorking = false;
+		    }
 		 }
 		)
-	$('body').on('click','.addMorePrduct',function () {
-		var id = $(this).data('id');
-		$.ajax({
-              type: "POST",
-              url: "{{URL::to('/addCartPlusProvider') }}",
-              dataType: "json",
-              data:{'id':id},
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success:function(data){
+		$('body').on('click','.addMorePrduct',function () {
+			if (!isWorking) {
+	 				isWorking = true;
+				var id = $(this).data('id');
+				$.ajax({
+		              type: "POST",
+		              url: "{{URL::to('/addCartPlusProvider') }}",
+		              dataType: "json",
+		              data:{'id':id},
+		              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		              success:function(data){
 
-	              	console.log(data)
-                if(!data.err || data.message == 'stock'){
-                	var cart = $.map(data.product, function(value, index) {
-					    return [value];
-					});
-                	$('#tabProduct').empty();
-                	var op = '';
-                	var source = "{!! asset('image/') !!}";
-                	for(var i =0;i<cart.length;i++)
-                	{
-                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
-						op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
-						op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
-						op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
-						op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
-						op += '<div class="kt-user-card-v2__details">'                                
-						op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
-						
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
-						
-						op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" style="width: 100px;" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
-						
-						op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
-						op += '<span style="overflow: visible; position: relative; width: 80px; " >'
-						op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
-						op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
-                	}
-					$('#tabProduct').append(op);
-					//$('#tabProduct').load(' #tabProduct');
-					$('#totalCart').load(' #totalCart'); 
-					$('#closeModalMoreProduct').click();
-                }
-                $('#bareCode').val("");
-              }
-        	})
-	})
+			              	console.log(data)
+		                if(!data.err || data.message == 'stock'){
+		                	var cart = $.map(data.product, function(value, index) {
+							    return [value];
+							});
+		                	$('#tabProduct').empty();
+		                	var op = '';
+		                	var source = "{!! asset('image/') !!}";
+		                	for(var i =0;i<cart.length;i++)
+		                	{
+		                		op += '<tr  id="row'+cart[i].rowId+'" data-row="0" class="kt-datatable__row" style="left: 0px;">'
+								op += '<td class="kt-datatable__cell" data-field="RecordID"><span style="width: 150px;">'
+								op += '<label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">'+cart[i].options.bareCode+'</label></span></td>'
+								op += '<td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span style="width: 200px;"><div class="kt-user-card-v2"><div class="kt-user-card-v2__pic">'                                
+								op += '<img alt="photo" src="'+source+'/'+cart[i].options.img+'"></div>'
+								op += '<div class="kt-user-card-v2__details">'                                
+								op += '<div class="kt-user-card-v2__name">'+cart[i].name+'</div></div></div></span></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixA"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].price+'" ></div></td>'
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control prixV"  style="width: 100px;"  data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].options.prixV+'" ></div></td>'
+								
+								op += '<td data-field="Status" class="kt-datatable__cell"><div class="kt-user-card-v2__details" ><input class="form-control pQty" style="width: 100px;" data-id="'+cart[i].rowId+'" type="number" value="'+cart[i].qty+'" ></div></td>'
+								
+								op += '<td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">'
+								op += '<span style="overflow: visible; position: relative; width: 80px; " >'
+								op += '<a href="#" data-rowid="'+cart[i].rowId+'"   class="btn btn-danger btn-elevate btn-circle btn-icon deletePrduct" >'
+								op += '<i class="kt-nav__link-icon flaticon-delete"></i></a></span></td></tr>';
+		                	}
+							$('#tabProduct').append(op);
+							//$('#tabProduct').load(' #tabProduct');
+							$('#totalCart').load(' #totalCart'); 
+							$('#closeModalMoreProduct').click();
+		                }
+		                $('#bareCode').val("");
+		              }
+		        	})
+				isWorking = false;
+		    }
+		})
 
 	function delay(callback, ms) {
 	  var timer = 0;
@@ -955,7 +1003,9 @@
 	  };
 	}
  	
-	 	$('body').on('mouseout,  keyup ,change','.pQty',delay(function(){
+ 	$('body').on('mouseout,  keyup ,change','.pQty',delay(function(){
+ 		if (!isWorking) {
+				isWorking = true;
 			var id  = $(this).data('id');
 			var qty = $(this).val();
 			if (qty != '') {
@@ -1001,66 +1051,70 @@
 	                	}
 						$('#tabProduct').append(op);
 						//$('#tabProduct').load(' #tabProduct');
-						$('#totalCart').load(' #totalCart'); 
 						$('#totalCart').load(' #totalCart');   
 		            }
 		          }
 		    	})
 	    	}
-	 	},500))
+	    	isWorking = false;
+	    }
+ 	},500))
 
  	
  	$('body').on('click','.deletePrduct',function () {
-        var id  = $(this).data('rowid');
- 		swal.fire({
-            title: 'Êtes-vous sûr?',
-            text: "Vous ne pourrez pas revenir en arrière!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Oui, supprimez-le!',
-            cancelButtonText: 'Non, annulez!',
-            reverseButtons: true
-        }).then(function(result){
-            if (result.value) {
-                $.ajax({
-                  type: "POST",
-                  url: "{{URL::to('/deleteItemProvider') }}",
-                  dataType: "json",
-                  data:{'id':id},
-                  headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                  success:function(data){
-                    if(data){
-                        swal.fire(
-                            'Eroor',
-                            "une erreur s'est produite veuillez réessayer svp.",
-                            'error'
-                        )
-                    }else{
-                        $('#row'+id).remove();
-                        swal.fire(
-                            'Supprimé!',
-                            'Votre Produit a été supprimé.',
-                            'success'
-                        )
-                    }
-                  }
+ 		if (!isWorking) {
+ 			isWorking = true;
+	        var id  = $(this).data('rowid');
+	 		swal.fire({
+	            title: 'Êtes-vous sûr?',
+	            text: "Vous ne pourrez pas revenir en arrière!",
+	            type: 'warning',
+	            showCancelButton: true,
+	            confirmButtonText: 'Oui, supprimez-le!',
+	            cancelButtonText: 'Non, annulez!',
+	            reverseButtons: true
+	        }).then(function(result){
+	            if (result.value) {
+	                $.ajax({
+	                  type: "POST",
+	                  url: "{{URL::to('/deleteItemProvider') }}",
+	                  dataType: "json",
+	                  data:{'id':id},
+	                  headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+	                  success:function(data){
+	                    if(data){
+	                        swal.fire(
+	                            'Eroor',
+	                            "une erreur s'est produite veuillez réessayer svp.",
+	                            'error'
+	                        )
+	                    }else{
+	                        $('#row'+id).remove();
+							$('#totalCart').load(' #totalCart'); 
+	                        swal.fire(
+	                            'Supprimé!',
+	                            'Votre Produit a été supprimé.',
+	                            'success'
+	                        )
+	                    }
+	                  }
 
-                })
-                
-                // result.dismiss can be 'cancel', 'overlay',
-                // 'close', and 'timer'
-            } else if (result.dismiss === 'cancel') {
-                swal.fire(
-                    'Annulé',
-                    'Votre produit est en sécurité :)',
-                    'error'
-                )
+	                })
+	                
+	                // result.dismiss can be 'cancel', 'overlay',
+	                // 'close', and 'timer'
+	            } else if (result.dismiss === 'cancel') {
+	                swal.fire(
+	                    'Annulé',
+	                    'Votre produit est en sécurité :)',
+	                    'error'
+	                )
 
-            }
-        });
+	            }
+	        });
+	        isWorking = false;
+	    }
  	})
-        
- 
 		
 	});   
 </script>

@@ -165,6 +165,12 @@
 												<div class="kt-widget12__info">												
 													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{(int)$val['amount']-abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
 											</div>
 										</div>
 									@endforeach
@@ -191,6 +197,12 @@
 												</div>
 												<div class="kt-widget12__info">												
 													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{(int)$val['amount']-abs((int)$val['amountProvider'])}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
@@ -219,6 +231,12 @@
 												<div class="kt-widget12__info">												
 													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
 												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{(int)$val['amount']-abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
 											</div>
 										</div>
 									@endforeach
@@ -245,6 +263,12 @@
 												</div>
 												<div class="kt-widget12__info">												
 													<h5 class="kt-widget31__username">{{$val['amount']}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{abs((int)$val['amountProvider'])}}.00 DA </h5>
+												</div>
+												<div class="kt-widget12__info">												
+													<h5 class="kt-widget31__username">{{(int)$val['amount']-abs((int)$val['amountProvider'])}}.00 DA </h5>
 												</div>
 											</div>
 										</div>
