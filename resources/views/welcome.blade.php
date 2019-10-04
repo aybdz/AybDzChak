@@ -606,7 +606,7 @@
 		        }
 				isWorking = false
 		    }
- 		},700))
+ 		},500))
 
  		$('.addToModel').on('click', function () {
  			if (!isWorking) {
@@ -718,7 +718,7 @@
 				}
 				isWorking = false
 		    }
-		 },700)
+		 },500)
 		)
 		
 		$('body').submit('#bareCodeFrom',function(e){
@@ -894,40 +894,41 @@
  				isWorking = true;
 				var id  = $(this).data('id');
 				var qty = $(this).val();
-				if (qty != '') {
-			 		$.ajax({
-			          type: "POST",
-			          url: "{{URL::to('/addCartStock') }}",
-			          dataType: "json",
-			          data:{'id':id, 'qty':qty},
-			          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-			          success:function(data){
-			            if(data.err){
-			            	if (data.message=='stock')
-			            	{
-			            		swal.fire(
-			                        'Eroor',
-			                        "le produit ñ est plus dans le stock (max = "+data.qty+" )",
-			                        'error'
-			                    )
-			                    $("#pQty"+id).val(data.cQty);
-			            	}else{
-			            		swal.fire(
-				                    'Eroor',
-				                    "une erreur s'est produite veuillez réessayer svp.",
-				                    'error'
-				                )
-			            	}
-			            }else{
+				if (qty == '') {
+					qty = 0;
+				}
+		 		$.ajax({
+		          type: "POST",
+		          url: "{{URL::to('/addCartStock') }}",
+		          dataType: "json",
+		          data:{'id':id, 'qty':qty},
+		          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		          success:function(data){
+		            if(data.err){
+		            	if (data.message=='stock')
+		            	{
+		            		swal.fire(
+		                        'Eroor',
+		                        "le produit ñ est plus dans le stock (max = "+data.qty+" )",
+		                        'error'
+		                    )
+		                    $("#pQty"+id).val(data.cQty);
+		            	}else{
+		            		swal.fire(
+			                    'Eroor',
+			                    "une erreur s'est produite veuillez réessayer svp.",
+			                    'error'
+			                )
+		            	}
+		            }else{
 
-								$('#totalCart').load(' #totalCart');   
-			            }
-			          }
-			    	})
-		    	}
+							$('#totalCart').load(' #totalCart');   
+		            }
+		          }
+		    	})
 				isWorking = false;
 		    }
-		},700)
+		},500)
 	 	)
 
  	
