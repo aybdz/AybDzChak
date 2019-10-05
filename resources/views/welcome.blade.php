@@ -877,7 +877,14 @@
 			isWorking = false;
 	    }
 	})
-
+	function disableBtn() {
+		$('#addItemClientBtn').attr("disabled", true);
+		$('#ConfirmCmd').attr("disabled", true);
+	}
+	function enableBtn() {
+		$('#addItemClientBtn').attr("disabled", false);
+		$('#ConfirmCmd').attr("disabled", false);
+	}
 	function delay(callback, ms) {
 	  var timer = 0;
 	  return function() {
@@ -897,6 +904,7 @@
 				if (qty == '') {
 					qty = 0;
 				}
+				disableBtn()
 		 		$.ajax({
 		          type: "POST",
 		          url: "{{URL::to('/addCartStock') }}",
@@ -924,6 +932,8 @@
 
 							$('#totalCart').load(' #totalCart');   
 		            }
+
+		            enableBtn()
 		          }
 		    	})
 				isWorking = false;
