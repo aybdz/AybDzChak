@@ -23,6 +23,7 @@ Route::middleware('web')->group(function () {
 
 	// product route 
 	Route::get('/products', 'ProductController@index')->name('products');
+	Route::post('/generateBareCode', 'ProductController@generate_BareCode')->name('generateBareCode');
 	Route::get('/AddProduct/{id}', 'ProductController@showIndex')->name('AddProduct');
 	Route::post('/deleteProduct', 'ProductController@removeProduct')->name('deleteProduct');
 	Route::post('/StoreProduct', 'ProductController@store')->name('StoreProduct');

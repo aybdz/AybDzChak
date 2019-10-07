@@ -156,6 +156,7 @@ if($data != null && !empty($data))
 									<span class="input-group-text btn btn-primary"> <i class="fas fa-barcode"></i></span>
 								</div>
 								<input type="text" name="codeBarre" id="codeBarre" class="form-control" value="{{$codeBarre}}" placeholder="513165165165" aria-describedby="basic-addon1" {{$disabled}} required>
+                                <input type="button" class="btn btn-primary" id="generateBareCode" value="Générer un code à barres">
 							</div>
 						</div>
 						<div class="form-group ">
@@ -190,7 +191,37 @@ if($data != null && !empty($data))
 				<!--end::Form-->
 			</div>
 
-			<!--end::Portlet--
+			<!--end::Portlet-->
 		</div>
     </div>
+    <script>
+        $(document).ready(function(){
+            var isWorking = false;
+            $('#generateBareCode').click(function () {
+                if (!isWorking) {
+                    $.ajax({
+                      type: "POST",
+                      data:{},
+                      url: "{{URL::to('/generateBareCode') }}",
+                      dataType: "json",
+                      headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                      success:function(data){
+                        if(data != null){
+                            $('#codeBarre').val(data)
+                            $('#codeBarre').attr("disabled", true);
+                            $('#generateBareCode').attr("disabled", true);
+                        }else{
+                            swal.fire(
+                                'Eroor',
+                                "le produit ñ est plus dans le stock (max = "+data.qty+" )",
+                                'error'
+                            )   
+                        }
+                      }
+                    })
+                    isWorking = false;
+                }
+            })
+        })
+    </script>
 @endsection
