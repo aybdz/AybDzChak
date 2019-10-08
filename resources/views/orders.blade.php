@@ -156,7 +156,7 @@
                                                     <strong>{{$order->total.' DA'}}</strong>
                                                 </td>
                                                 <td class="kt-datatable__cell" >
-                                                        {{\Carbon\Carbon::parse($order->created_at)->format('j  F Y / h:i')}}
+                                                        {{\Carbon\Carbon::parse($order->created_at)->format('j - m - Y / h:i')}}
                                                 </td>
                                                 <td >
                                                     <a href="{{ url('order/'.$order->id) }}"    class="kt-nav__link" >

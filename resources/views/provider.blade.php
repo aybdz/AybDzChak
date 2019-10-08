@@ -258,7 +258,7 @@ if (is_array($provider)){
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
                                                
-                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('j  F Y / H:i')}}
+                                                    {{\Carbon\Carbon::parse($stock->created_at)->format('j - m - Y / H:i')}}
                                                 
                                             </td>
                                         </tr>
@@ -346,7 +346,7 @@ if (is_array($provider)){
                                                 </td>
                                                 <td >
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j  F Y / H:i')}}
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j - m - Y  / H:i')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -408,6 +408,7 @@ if (is_array($provider)){
 <script type="text/javascript">
     $(document).ready(function() {
         $('#stockTable').DataTable().order( [ 7, 'desc' ] ).draw();
+        $('#tranTable').DataTable().order( [ 4, 'desc' ] ).draw();
     });
 </script>
 <script type="text/javascript">

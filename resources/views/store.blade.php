@@ -255,7 +255,7 @@
                                                 </div>
                                             </td>
                                             <td class="fournisseur-table" data-field="RecordID">
-                                                {{\Carbon\Carbon::parse($order->created_at)->format('j  m Y / H:i')}}
+                                                {{\Carbon\Carbon::parse($order->created_at)->format('j - m - Y / H:i')}}
                                             </td>
                                         </tr>
                                     @endforeach

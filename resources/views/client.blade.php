@@ -255,7 +255,7 @@
                                                 </td>
                                                 <td >
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j  F Y / h:i')}}
+                                                        {{\Carbon\Carbon::parse($tran->created_at)->format('j - m - Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 
@@ -340,7 +340,7 @@
                                                 </td>
                                                 <td class="kt-datatable__cell" data-field="RecordID">
                                                     <strong >
-                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('j  F Y / h:i')}}
+                                                        {{\Carbon\Carbon::parse($Order->created_at)->format('j - m - Y / h:i')}}
                                                     </strong>
                                                 </td>
                                                 

@@ -467,6 +467,16 @@
  		})
 
 
+ 		function disableBtn() {
+		$('#addItemClientBtn').attr("disabled", true);
+		$('#ConfirmCmd').attr("disabled", true);
+		}
+		function enableBtn() {
+			$('#addItemClientBtn').attr("disabled", false);
+			$('#ConfirmCmd').attr("disabled", false);
+		}
+
+
  		$('#ConfirmCmd').on('click',function() {
  			if (!isWorking) {
  				isWorking = true;
@@ -1009,6 +1019,7 @@
 			var id  = $(this).data('id');
 			var qty = $(this).val();
 			if (qty != '') {
+				disableBtn()
 		 		$.ajax({
 		          type: "POST",
 		          url: "{{URL::to('/addCartStockProvider') }}",
@@ -1053,6 +1064,7 @@
 						//$('#tabProduct').load(' #tabProduct');
 						$('#totalCart').load(' #totalCart');   
 		            }
+		          	enableBtn();
 		          }
 		    	})
 	    	}
