@@ -356,6 +356,10 @@
 
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="{{ asset('assets/js/pages/crud/datatables/basic/headers.js') }}" type="text/javascript"></script>
+		
+        
+	    <script type="text/javascript" src="{{ asset('js/jquery-barcode.js')}}"></script>
+	    <script type="text/javascript" src="{{ asset('js/jQuery.print.js')}}"></script>
 		<!--end::Page Scripts -->
 </body>
 </html>

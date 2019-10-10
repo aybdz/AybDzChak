@@ -28,6 +28,8 @@ Route::middleware('web')->group(function () {
 	Route::post('/deleteProduct', 'ProductController@removeProduct')->name('deleteProduct');
 	Route::post('/StoreProduct', 'ProductController@store')->name('StoreProduct');
 	Route::post('/AddStock', 'ProductController@AddStock')->name('AddStock');
+	Route::post('/generateBareCode', 'ProductController@generate_BareCode')->name('generateBareCode');
+	//Route::get('/printCodeBar/{id}', 'ProductController@printCodeBar')->name('printCodeBar');
 	// histoque 
 	Route::get('/details/{id}', 'ProductController@showDetails')->name('details');
 

@@ -189,7 +189,12 @@
                                                                     <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
                                                                 </li>
                                                                 <li class="kt-nav__separator"></li>
-                                                                
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#"  rel="nofollow"  data-codebare="{{$product->bareCode}}" class="kt-nav__link codeBarePrint">
+                                                                        <i class="kt-nav__link-icon  flaticon-edit-1"></i>
+                                                                        <span class="kt-nav__link-text">imprimé code a barre</span>
+                                                                    </a>
+                                                                </li>
                                                                 <li class="kt-nav__item">
                                                                     <a href="#"  onclick="delete_Product('{{$product->id}}')"   class="kt-nav__link" >
                                                                         <i class="kt-nav__link-icon flaticon2-delete"></i>
@@ -335,7 +340,7 @@
         </div>
     </div>
 <script type="text/javascript">
-     function add_Product(id,qty,priceA,priceV) {
+    function add_Product(id,qty,priceA,priceV) {
         $('#Qty').val("")
         $('#idp').val("")
         $('#prixA').val("")
@@ -443,11 +448,80 @@
 </script>
     <!--end::Modal-->
 @endif
+<div class="modal fade" id="bareCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Code a bare</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div style="margin-top:22px; "> </div>
+                        <div id="demo"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-wide-2" id="closeModal" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="print" class="btn btn-primary btn-wide-2">Imprimé</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#productTable').DataTable();
+
+        var settings = {
+            barWidth: 2,
+            barHeight: 50,
+            moduleSize: 5,
+            showHRI: true,
+            addQuietZone: true,
+            marginHRI: 5,
+            bgColor: "#FFFFFF",
+            color: "#000000",
+            fontSize: 10,
+            output: "css",
+            posX: 0,
+            posY: 0
+        };
+        $('.codeBarePrint').on('click',function () {
+            var cb = $(this).data('codebare');
+            $("#demo").barcode( cb.toString(), // Value barcode (dependent on the type of barcode)
+            "code93", // type (string)
+            settings);
+            let timerInterval
+            Swal.fire({
+              title: 'Chargement!',
+              html: 'Ce sera fini dans <strong></stringrong> millisecondes.',
+              timer: 1000,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  Swal.getContent().querySelector('strong')
+                    .textContent = Swal.getTimerLeft()
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.timer
+              ) {
+                $('#bareCodeModal').modal('show')
+              }
+            })
+        })
         
-    });
+        $('#print').on('click',function () {
+            $("#demo").print();
+        })
+          
+        });
 </script>
 <script type="text/javascript">
     function delete_Product(id) {

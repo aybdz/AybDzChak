@@ -35,6 +35,12 @@ class ProductController extends Controller
         }
     }
 
+    public function printCodeBar($id)
+    {   
+        $product = Product::findOrFail($id);
+        return view('codeBar')->with('product',$product);
+    }
+
     public function showIndex($id)
     {
         $data = null;
