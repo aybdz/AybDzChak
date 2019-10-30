@@ -422,6 +422,7 @@
  <script type="text/javascript">
  	
  	$(document).ready(function(){
+ 		$("#bareCode").focus();
  		var isWorking = false;
  		$('#BCauto').change(function () {
  			if(this.checked) {
