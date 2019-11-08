@@ -160,9 +160,9 @@ class OrderProviderController extends Controller
     public function storeForProvider(Request $request)
     {
         $idProvider = $request->idClient;
-        $verse      = $request->verse;
+        $verse      = (int)str_replace(',','',$request->verse);
         $total      = $request->totalCmd;
-        $reste      = $request->reste;
+        $reste      = (int)str_replace(',','',$request->reste);
         $pc         = new ProviderController();
         $pc->editCredit($idProvider,$reste);
         $err        = $this->SaveOrder($verse,$idProvider);

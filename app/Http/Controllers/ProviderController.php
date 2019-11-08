@@ -183,14 +183,14 @@ class ProviderController extends Controller
         if ($provider != null) {
             switch ($op) {
                 case '+':
-                    $provider->credit = $provider->credit + (int)$amount;
+                    $provider->credit = (int)$provider->credit + (int)$amount;
                     $save             = $provider->save();
                     if ($save) {
                         $err          = false;
                     }
                     break;
                 case '-':
-                    $provider->credit = $provider->credit - (int)$amount;
+                    $provider->credit = (int)$provider->credit - (int)$amount;
                     $save             = $provider->save();
                     if ($save) {
                         $err          = false;
