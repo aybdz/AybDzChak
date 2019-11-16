@@ -68,7 +68,7 @@ class OrderController extends Controller
                     $product = $product->first();
                     $qty     = $this->getStock($product->id);
                     if (($product->qty - (int)$qty) > 0) {
-                        Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+                        Cart::add($product->id,$product->name,10,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
                         $err             = false;
                         $data['product'] = Cart::content();
                     }else{
@@ -93,7 +93,7 @@ class OrderController extends Controller
         if($product != null){
             $qty     = $this->getStock($product->id);
             if (($product->qty - (int)$qty) > 0) {
-                Cart::add($product->id,$product->name,1,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
+                Cart::add($product->id,$product->name,10,$product->priceV, ['img' => $product->img,'bareCode' => $product->bareCode]);
                 $err             = false;
                 $data['product'] = Cart::content();
             }else{

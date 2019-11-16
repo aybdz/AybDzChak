@@ -45,7 +45,7 @@ class OrderProviderController extends Controller
                     $product = $product->first();
                     $rowId   = $this->getRowId($product->id);
                     if ($rowId == 0) {
-                        Cart::instance('Provider')->add($product->id,$product->name,1,$product->priceA, ['img' => $product->img,'bareCode' => $product->bareCode,'prixV' => $product->priceV]);
+                        Cart::instance('Provider')->add($product->id,$product->name,10,$product->priceA, ['img' => $product->img,'bareCode' => $product->bareCode,'prixV' => $product->priceV]);
                     }else{
                         $cart    = Cart::instance('Provider')->get($request->id);
                         Cart::instance('Provider')->update($rowId, (int)$cart->qty++);
@@ -71,7 +71,7 @@ class OrderProviderController extends Controller
         if($product != null){
             $rowId   = $this->getRowId($product->id);
             if ($rowId == 0) {
-                Cart::instance('Provider')->add($product->id,$product->name,1,$product->priceA, ['img' => $product->img,'bareCode' => $product->bareCode,'prixV' => $product->priceV]);
+                Cart::instance('Provider')->add($product->id,$product->name,10,$product->priceA, ['img' => $product->img,'bareCode' => $product->bareCode,'prixV' => $product->priceV]);
             }else{
                 $cart    = Cart::instance('Provider')->get($request->id);
                 Cart::instance('Provider')->update($rowId, (int)$cart->qty++);
