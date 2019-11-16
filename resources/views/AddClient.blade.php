@@ -19,12 +19,14 @@ if(isset($id))
 
 $name       = "";
 $telephonne = "";
+$credit     = 0;
 $adress     = "";
 $img        = "";
 
 if($data != null && !empty($data))
 {
     $name       = $data["name"];
+    $credit     = $data["credit"];
     $telephonne = $data["telephonne"];
     $adress     = $data["adress"];
     $img        = $data["img"];
@@ -130,7 +132,7 @@ if($data != null && !empty($data))
 				<div class="kt-portlet__head">
 					<div class="kt-portlet__head-label">
 						<h3 class="kt-portlet__head-title">
-							Produits
+							Clients
 						</h3>
 					</div>
 				</div>
@@ -189,6 +191,17 @@ if($data != null && !empty($data))
 								</div>
 							</div>
 						</div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">Credit</span>
+                                </div>
+                                <input type="number" class="form-control" name="credit" value="{{$credit}}"  required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text flaticon-coins"></span>
+                                </div>
+                            </div>
+                        </div>
 						<div class="form-group ">
 							<div class="input-group ">
 								<div class="input-group-prepend">

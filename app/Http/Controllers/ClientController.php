@@ -41,6 +41,7 @@ class ClientController extends Controller
             if ($id != 0) {
                 $client             = Client::findOrFail($id);
                 $data["name"]       = $client->name;
+                $data["credit"]     = $client->credit;
                 $data["telephonne"] = $client->telephonne;
                 $data["adress"]     = $client->adress;
                 $data["img"]        = $client->img;
@@ -58,6 +59,9 @@ class ClientController extends Controller
             $client->name       = $request->name;
             $client->telephonne = $request->telephonne;
             $client->adress     = $request->adress;
+            if ($request->credit != '' && is_numeric($request->credit)) {
+                $client->credit = $request->credit;
+            }
             if($request->file('photo')!= null){
                 $imageName   = $client->id . '.' . $request->file('photo')->getClientOriginalExtension();
                 $request->file('photo')->move(base_path() . '/public/image/client/', $imageName);

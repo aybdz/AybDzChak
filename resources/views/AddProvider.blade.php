@@ -18,12 +18,14 @@ if(isset($id))
 }
 
 $name       = "";
+$credit     = 0;
 $telephonne = "";
 $adress     = "";
 
 if($data != null && !empty($data))
 {
 	$name       = $data["name"];
+    $credit     = $data["credit"];
 	$telephonne = $data["telephonne"];
 	$adress     = $data["adress"];
 }
@@ -128,21 +130,32 @@ if($data != null && !empty($data))
 				<div class="kt-portlet__head">
 					<div class="kt-portlet__head-label">
 						<h3 class="kt-portlet__head-title">
-							Produits
+							Fournisseur
 						</h3>
 					</div>
 				</div>
 				@if( isset($err))
-					@if($err)
-						<div class="alert alert-danger" role="alert">
-						  {{$message}}
-						</div>
-					@else
-						<div class="alert alert-success" role="alert">
-						  {{$message}}
-						</div>
-					@endif
-				@endif
+                    @if($err)
+                        <div class="alert alert-danger" role="alert">
+                          {{$message}}
+                        </div>
+                    @else
+                        <div class="alert alert-success" role="alert">
+                          {{$message}}
+                        </div>
+                    @endif
+                @endif
+                @if (\Session::has('err'))
+                    @if(\Session::get('err'))
+                        <div class="alert alert-danger">
+                            Une erreur est survenu veuillez réessayer svp!
+                        </div>
+                    @else
+                        <div class="alert alert-success">
+                            Le crédit a été bien enregistré
+                        </div>
+                    @endif
+                @endif
 				<!--begin::Form-->
 				<form class="kt-form" method="POST" action="{{ url('/StoreProvider') }}" enctype="multipart/form-data">
 					{{ csrf_field() }}
@@ -165,6 +178,17 @@ if($data != null && !empty($data))
 								<label class="custom-file-label" for="customFile">Choisir le fichier</label>
 							</div>
 						</div>
+                        <div class="form-group ">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  btn btn-primary">Credit</span>
+                                </div>
+                                <input type="number" class="form-control" name="credit" value="{{$credit}}"  required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text flaticon-coins"></span>
+                                </div>
+                            </div>
+                        </div>
 						<div class="form-group ">
 							<div class="input-group">
 								<div class="input-group-prepend">

@@ -105,6 +105,7 @@ class ProviderController extends Controller
             if ($id != 0) {
 				$products           = Provider::findOrFail($id);
 				$data["name"]       = $products->name;
+                $data["credit"]     = $products->credit;
 				$data["telephonne"] = $products->telephonne;
 				$data["adress"]     = $products->adress;
             }
@@ -133,6 +134,9 @@ class ProviderController extends Controller
             }
 
 			$provider->name       = $request->name ;
+            if ($request->credit != '' && is_numeric($request->credit)) {
+                $provider->credit = $request->credit;
+            }
 			$provider->telephonne = $request->telephonne ;
 			$provider->adress     = $request->adress ;
 			$provider->idUser     = Auth::user()->id;
@@ -145,11 +149,11 @@ class ProviderController extends Controller
                     $save          = $provider->save();
                     if ($save) {
                         $err     = false;
-                        $message = "le produit a éte bien ajouter";
+                        $message = "le Fournisseur a éte bien ajouter";
                     }
                 }else{
                     $err     = false;
-                    $message = "le produit a éte bien ajouter";
+                    $message = "le Fournisseur a éte bien ajouter";
                 }
             }
         }
@@ -158,7 +162,7 @@ class ProviderController extends Controller
 			$data["telephonne"] = $request->telephonne;
 			$data["adress"]     = $request->adress;
         }
-        return view('AddProvider')->with('id',$request->idp)->with("err",$err)->with("message",$message)->with("data",$data);
+        return redirect()->back()->with('id',$request->idp)->with("err",$err)->with("message",$message)->with("data",$data);
     }
 
     public function addCreditProvider(Request $request)
