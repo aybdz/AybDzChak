@@ -56,15 +56,16 @@
 					<div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
 						<div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
 							<ul class="kt-menu__nav ">
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/dashboard') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-home"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/products') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-open-box"></i><span class="kt-menu__link-text">Produits</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/orders') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-shopping-basket"></i><span class="kt-menu__link-text">Commandes</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/users') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-user-outline-symbol"></i><span class="kt-menu__link-text">Utilisateurs</span></a></li>
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/clients') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">Clients</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'dashboard' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/dashboard') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-home"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'products' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/products') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-open-box"></i><span class="kt-menu__link-text">Produits</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'orders' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/orders') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-shopping-basket"></i><span class="kt-menu__link-text">Commandes</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'users' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/users') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-user"></i><span class="kt-menu__link-text">Utilisateurs</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'clients' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/clients') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-users"></i><span class="kt-menu__link-text">Clients</span></a></li>
 
 								@if(Auth::user()->type == "su")
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/stores') }}" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-store-alt	"></i><span class="kt-menu__link-text">Magasin</span></a></li>
-								<li class="kt-menu__item kt-menu__item--submenu kt-menu__item" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+								<li class="kt-menu__item {{Route::currentRouteName() == 'stores' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/stores') }}" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-store-alt	"></i><span class="kt-menu__link-text">Magasin</span></a></li>
+								<li class="kt-menu__item kt-menu__item--submenu kt-menu__item 
+								{{(Route::currentRouteName() == 'orderProvider' || Route::currentRouteName() == 'providers' ) ? 'kt-menu__item--submenu kt-menu__item--open' : ' '}}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
 								    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								        <rect id="bound" x="0" y="0" width="24" height="24"/>
 								        <path d="M18.1446364,11.84388 L17.4471627,16.0287218 C17.4463569,16.0335568 17.4455155,16.0383857 17.4446387,16.0432083 C17.345843,16.5865846 16.8252597,16.9469884 16.2818833,16.8481927 L4.91303792,14.7811299 C4.53842737,14.7130189 4.23500006,14.4380834 4.13039941,14.0719812 L2.30560137,7.68518803 C2.28007524,7.59584656 2.26712532,7.50338343 2.26712532,7.4104669 C2.26712532,6.85818215 2.71484057,6.4104669 3.26712532,6.4104669 L16.9929851,6.4104669 L17.606173,3.78251876 C17.7307772,3.24850086 18.2068633,2.87071314 18.7552257,2.87071314 L20.8200821,2.87071314 C21.4717328,2.87071314 22,3.39898039 22,4.05063106 C22,4.70228173 21.4717328,5.23054898 20.8200821,5.23054898 L19.6915238,5.23054898 L18.1446364,11.84388 Z" id="Combined-Shape" fill="#000000" opacity="0.3"/>
@@ -73,13 +74,13 @@
 								</svg></span><span class="kt-menu__link-text">Fournisseurs</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
 									<div class="kt-menu__submenu " kt-hidden-height="120" style=""><span class="kt-menu__arrow"></span>
 										<ul class="kt-menu__subnav">
-											<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/orderProvider') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-shopping-basket"></i><span class="kt-menu__link-text">Commande d'achat</span></a></li>
-											<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/providers') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-shopping-cart-1"></i><span class="kt-menu__link-text">Fournisseurs</span></a></li>
+											<li class="kt-menu__item {{Route::currentRouteName() == 'orderProvider' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/orderProvider') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-shopping-basket"></i><span class="kt-menu__link-text">Commande d'achat</span></a></li>
+											<li class="kt-menu__item {{Route::currentRouteName() == 'providers' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/providers') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-cart"></i><span class="kt-menu__link-text">Fournisseurs</span></a></li>
 											
 										</ul>
 									</div>
 								</li>
-								<li class="kt-menu__item " aria-haspopup="true"><a href="{{ url('/statistics') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Statistiques</span></a></li>
+								<li class="kt-menu__item {{Route::currentRouteName() == 'statistics' ? 'kt-menu__item--active' : ' '}}" aria-haspopup="true"><a href="{{ url('/statistics') }}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-coins"></i><span class="kt-menu__link-text">Statistiques</span></a></li>
 								@endif
 								
 							</ul>
